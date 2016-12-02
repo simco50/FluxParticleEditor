@@ -7,18 +7,20 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using Newtonsoft.Json;
 using ParticleEditor.Annotations;
 using ParticleEditor.Data;
 using ParticleEditor.Views;
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ParticleEditor.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-
         public MainViewModel()
         {
             ParticleSystem = new ParticleSystem();

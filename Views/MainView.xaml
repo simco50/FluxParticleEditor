@@ -8,7 +8,7 @@
         xmlns:converters="clr-namespace:ParticleEditor.Converters"
         x:Class="ParticleEditor.Views.MainView"
         mc:Ignorable="d"
-        Title="Particle Editor" Height="720" Width="1240" Icon="/ParticleEditor;component/Resources/Logo.png">
+        Title="Particle Editor" Height="720" Width="1240" Icon="/ParticleEditor;component/Resources/Logo.png" Background="White">
     <Window.DataContext>
         <ViewModels:MainViewModel/>
     </Window.DataContext>
@@ -58,9 +58,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="220"/>
                 </Grid.RowDefinitions>
-                <GridSplitter Grid.Row="1" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" Height="5" HorizontalAlignment="Stretch"/>
+                <GridSplitter Grid.Row="1" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" Height="5" HorizontalAlignment="Stretch" RenderTransformOrigin="0.516,2.4"/>
                 <!--Parameters-->
                 <Grid Grid.Row="0">
                     <ScrollViewer>
@@ -70,34 +70,35 @@
 
                 <!--Settings-->
                 <Grid Grid.Row="2">
-                       <Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200*"/>
                         <ColumnDefinition Width="290*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="63"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="34"/>
                         </Grid.RowDefinitions>
-                        <Button Content="Import particle..." Command="{Binding ImportParticleCommand}" VerticalAlignment="Top" Margin="5,5,5,0" Grid.Row="0" Height="20"/>
-                        <Button Content="Export particle..." Command="{Binding ExportParticleCommand}" VerticalAlignment="Top" Margin="5,30,5,0" Height="20" Grid.Row="0"/>
-                        <Image Margin="3,0,5,30" Source="/ParticleEditor;component/Resources/TransparentBackground.png" VerticalAlignment="Bottom" Grid.Row="1"/>
-                        <Image Margin="3,0,5,30" Source="{Binding SpriteImage}" VerticalAlignment="Bottom" Grid.Row="1"/>
-                        <Button Content="Load image..." Command="{Binding LoadImageCommand}" VerticalAlignment="Bottom" Margin="5,0,5,5" Grid.Row="1"/>
+                        <Button Content="Import particle..." Command="{Binding ImportParticleCommand}" VerticalAlignment="Top" Margin="5,5,5,0" Grid.Row="0" Height="25"/>
+                        <Button Content="Export particle..." Command="{Binding ExportParticleCommand}" VerticalAlignment="Top" Margin="5,35,5,0" Height="25" Grid.Row="0"/>
+                        <Image  Source="/ParticleEditor;component/Resources/TransparentBackground.png" Grid.Row="1" Margin="3"/>
+                        <Image Source="{Binding SpriteImage}" Grid.Row="1" Margin="3"/>
+                        <Button Content="Load image..." Command="{Binding LoadImageCommand}" VerticalAlignment="Bottom" Margin="5,0,5,5" Grid.Row="2" Height="25"/>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Label Content="Sorting Mode" Margin="0,4,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="88"/>
+                        <Label Content="Sorting Mode" Margin="0,4,0,0" VerticalAlignment="Top"/>
                         <ComboBox Margin="0,30,0,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={StaticResource SortingModeConverter}}">
                             <Label Content="Front to back"/>
                             <Label Content="Back to front"/>
                             <Label Content="Oldest first"/>
                             <Label Content="Youngest first"/>
                         </ComboBox>
-                        <ComboBox Margin="0,78,0,0" VerticalAlignment="Top" SelectedIndex="0">
+                        <ComboBox Margin="0,87,0,0" VerticalAlignment="Top" SelectedIndex="0">
                             <Label Content="Alpha blend"/>
                         </ComboBox>
-                        <Label Content="Blending type" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="88"/>
-                        <Label Content="Background color: " Margin="0,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Blending type" Margin="0,61,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Background color: " Margin="0,118,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
             </Grid>
