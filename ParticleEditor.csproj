@@ -93,6 +93,7 @@
     <Compile Include="Data\ParticleSystem\ParticleSystem.cs" />
     <Compile Include="Data\Vector3.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ParameterPanelViewModel.cs" />
     <Compile Include="ViewModels\ParticleVisualizerViewModel.cs" />

@@ -140,9 +140,17 @@ namespace ParticleEditor.ViewModels
         }
         private void ShowHelpWindow()
         {
-            HelpWindowView helpWindow = new HelpWindowView();
-            helpWindow.ShowInTaskbar = false;
-            helpWindow.Show();
+            if (Application.Current.MainWindow.OwnedWindows.Count > 0)
+            {
+                Application.Current.MainWindow.OwnedWindows[0]?.Focus();
+            }
+            else
+            {   
+                HelpWindowView helpWindow = new HelpWindowView();
+                helpWindow.ShowInTaskbar = false;
+                helpWindow.Owner = Application.Current.MainWindow;
+                helpWindow.ShowDialog();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
