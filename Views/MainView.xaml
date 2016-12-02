@@ -1,0 +1,126 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ParticleEditor.Views"
+        xmlns:ViewModels="clr-namespace:ParticleEditor.ViewModels" 
+        xmlns:converters="clr-namespace:ParticleEditor.Converters"
+        x:Class="ParticleEditor.Views.MainView"
+        mc:Ignorable="d"
+        Title="Particle Editor" Height="720" Width="1240" Icon="/ParticleEditor;component/Resources/Logo.png">
+    <Window.DataContext>
+        <ViewModels:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <converters:SortingModeToInt x:Key="SortingModeConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Menu bar-->
+        <Grid Grid.Row="0">
+            <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_Import..." Command="{Binding ImportParticleCommand}"/>
+                        <MenuItem Header="_Export..." Command="{Binding ExportParticleCommand}"/>
+                        <MenuItem Header="_Exit" Command="{Binding ShutdownCommand}"/>
+                    </MenuItem>
+                    <MenuItem Header="_Edit">
+                        <MenuItem Header="_Undo"/>
+                        <MenuItem Header="_Redo"/>
+                    </MenuItem>
+                    <MenuItem Header="_Help">
+                        <MenuItem Header="_About Particle Editor" Command="{Binding ShowHelpWindowCommand}"/>
+                    </MenuItem>
+                </Menu>
+                <StackPanel/>
+            </DockPanel>
+        </Grid>
+
+        <!--Main view-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1" Width="5" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+
+            <!--Left side-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+                <GridSplitter Grid.Row="1" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" Height="5" HorizontalAlignment="Stretch"/>
+                <!--Parameters-->
+                <Grid Grid.Row="0">
+                    <ScrollViewer>
+                        <local:ParameterView/>
+                    </ScrollViewer>
+                </Grid>
+
+                <!--Settings-->
+                <Grid Grid.Row="2">
+                       <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="290*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Content="Import particle..." Command="{Binding ImportParticleCommand}" VerticalAlignment="Top" Margin="5,5,5,0" Grid.Row="0" Height="20"/>
+                        <Button Content="Export particle..." Command="{Binding ExportParticleCommand}" VerticalAlignment="Top" Margin="5,30,5,0" Height="20" Grid.Row="0"/>
+                        <Image Margin="3,0,5,30" Source="/ParticleEditor;component/Resources/TransparentBackground.png" VerticalAlignment="Bottom" Grid.Row="1"/>
+                        <Image Margin="3,0,5,30" Source="{Binding SpriteImage}" VerticalAlignment="Bottom" Grid.Row="1"/>
+                        <Button Content="Load image..." Command="{Binding LoadImageCommand}" VerticalAlignment="Bottom" Margin="5,0,5,5" Grid.Row="1"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Label Content="Sorting Mode" Margin="0,4,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="88"/>
+                        <ComboBox Margin="0,30,0,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={StaticResource SortingModeConverter}}">
+                            <Label Content="Front to back"/>
+                            <Label Content="Back to front"/>
+                            <Label Content="Oldest first"/>
+                            <Label Content="Youngest first"/>
+                        </ComboBox>
+                        <ComboBox Margin="0,78,0,0" VerticalAlignment="Top" SelectedIndex="0">
+                            <Label Content="Alpha blend"/>
+                        </ComboBox>
+                        <Label Content="Blending type" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="88"/>
+                        <Label Content="Background color: " Margin="0,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <!--Right side-->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="8" HorizontalAlignment="Stretch"/>
+
+                <!--Particle view-->
+                <Grid Grid.Row="0">
+                    <local:ParticleVisualizerView/>
+                </Grid>
+                <!--Timeline-->
+                <Grid Grid.Row="2">
+                    <ScrollViewer>
+                        <local:TimelineView/>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

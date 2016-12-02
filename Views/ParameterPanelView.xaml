@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="ParticleEditor.Views.ParameterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ParticleEditor.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="300">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Column="0">
+                <StackPanel>
+                    <Button Content="Test" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+                    <Button Content="Test" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+                    <Button Content="Test" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+                    <Button Content="Test" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+                    <Button Content="Test" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+                </StackPanel>
+            </Grid>
+            <Grid Column="1">
+                <StackPanel>
+                    <TextBox Text="Test" FontSize="20" Height="30" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBox Text="Test" FontSize="20" Height="30" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBox Text="Test" FontSize="20" Height="30" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBox Text="Test" FontSize="20" Height="30" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBox Text="Test" FontSize="20" Height="30" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
