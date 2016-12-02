@@ -70,9 +70,9 @@ namespace ParticleEditor.Data
         [JsonProperty("Size")]
         public KeyFramedValue<float> Size { get; set; } = new KeyFramedValue<float>(1.0f);
         [JsonProperty("Velocity")]
-        public KeyFramedValue<Vector3> Velocity { get; set; } = new KeyFramedValue<Vector3>(new Vector3());
+        public KeyFramedValue<Vector3> Velocity { get; set; } = new KeyFramedValue<Vector3>(new Vector3(0, 0, 0));
         [JsonProperty("LocalVelocity")]
-        public KeyFramedValue<Vector3> LocalVelocity { get; set; } = new KeyFramedValue<Vector3>(new Vector3());
+        public KeyFramedValue<Vector3> LocalVelocity { get; set; } = new KeyFramedValue<Vector3>(new Vector3(0, 0, 0));
         [JsonProperty("Color")]
         public KeyFramedValue<Vector3> Color { get; set; } = new KeyFramedValue<Vector3>(new Vector3(1.0f, 1.0f, 1.0f));
         [JsonProperty("Transparancy")]
