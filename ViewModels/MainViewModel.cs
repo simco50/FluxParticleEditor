@@ -25,6 +25,7 @@ namespace ParticleEditor.ViewModels
         public MainViewModel()
         {
             ParticleSystem = new ParticleSystem();
+            string[] lol = Enum.GetNames(typeof(ParticleBlendMode));
         }
 
         private static  ParticleSystem _particleSystem;

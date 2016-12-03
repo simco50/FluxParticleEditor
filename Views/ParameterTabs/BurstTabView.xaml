@@ -4,34 +4,54 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParticleEditor.Views.ParameterTabs"
+             xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <StackPanel>
-                <Label Content="0"/>
-                <Label Content="4"/>
-                <Label Content="6"/>
-            </StackPanel>
+        <Grid.DataContext>
+            <parameterTabs:BurstTabViewModel/>
+        </Grid.DataContext>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Time" Grid.Column="0" FontWeight="Bold"/>
+            <Label Content="Particles" Grid.Column="1" FontWeight="Bold"/>
         </Grid>
-        <Grid Grid.Column="1">
-            <StackPanel>
-                <Label Content="100"/>
-                <Label Content="50"/>
-                <Label Content="600"/>
-            </StackPanel>
+        <Grid Grid.Row="1">
+            <ListBox ItemsSource="{Binding ParticleSystem.Bursts}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="{Binding Key}" Grid.Column="0"/>
+                            <Label Content="{Binding Value}" Grid.Column="1"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
-        <Grid Grid.Column="2">
-            <StackPanel>
-                <Button Content="-"/>
-                <Button Content="-"/>
-                <Button Content="-"/>
-            </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="0" Grid.Column="0"/>
+            <TextBox Text="0" Grid.Column="1"/>
+            <Button Command="{Binding AddBurstCommand}" Content="+" Grid.Column="2"/>
         </Grid>
     </Grid>
 </UserControl>

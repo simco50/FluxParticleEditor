@@ -8,5 +8,6 @@ namespace ParticleEditor.ViewModels
 {
     class ParticleVisualizerViewModel
     {
+    
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,8 +8,31 @@ using Newtonsoft.Json;
 
 namespace ParticleEditor.Data.ParticleSystem
 {
+    public enum ParticleSortingMode
+    {
+        [Description("Front to back")]
+        FrontToBack = 0,
+        [Description("Back to front")]
+        BackToFront = 1,
+        [Description("Oldest first")]
+        OldestFirst = 2,
+        [Description("Youngest first")]
+        YoungestFirst = 3,
+    }
+
+    public enum ParticleBlendMode
+    {
+        [Description("Alpha blending")]
+        AlphaBlend = 0,
+        [Description("Additive")]
+        AdditiveBlend = 1,
+    }
+
     public class ParticleSystem
     {
+        public ParticleSystem()
+        {}
+
         [JsonProperty("Version")]
         public int Version = 1;
         //General
@@ -81,21 +105,9 @@ namespace ParticleEditor.Data.ParticleSystem
         public KeyFramedValueFloat Rotation { get; set; } = new KeyFramedValueFloat(0.0f);
 
         //Rendering
-        public enum ParticleSortingMode
-        {
-            FrontToBack = 0,
-            BackToFront = 1,
-            OldestFirst = 2,
-            YoungestFirst = 3,
-        }
         [JsonProperty("SortingMode")]
         public ParticleSortingMode SortingMode { get; set; } = ParticleSortingMode.FrontToBack;
 
-        public enum ParticleBlendMode
-        {
-            AlphaBlend = 0,
-            AdditiveBlend = 1,
-        }
         [JsonProperty("BlendMode")]
         public ParticleBlendMode BlendMode { get; set; } = ParticleBlendMode.AlphaBlend;
 
