@@ -21,8 +21,6 @@ namespace ParticleEditor.Views
 {
     public partial class MainView : Window
     {
-        private ParticleSystem _particleSystem = new ParticleSystem();
-
         public MainView()
         {
             InitializeComponent();

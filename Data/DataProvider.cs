@@ -16,13 +16,14 @@ namespace ParticleEditor.Data
         public static bool IsDesignMode
             => (bool)(DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue);
 
-        public static string DataPath { get; } = @"D:\2016-2017\S5 - Tool Development\Exam\ParticleEditor\bin\Debug\";
+        public static string DataPath { get; } = "D:/2016-2017/S5 - Tool Development/Exam/ParticleEditor/bin/Debug";
 
         private static readonly string FallbackImage = "../../Resources/ErrorTexture.jpg";
         public static ImageSource ToImageSource(string filePath)
         {
             string rootPath = IsDesignMode ? DataPath : "";
-            string fileName = $"{rootPath}{filePath}";
+            string fileName = Path.Combine(rootPath, filePath);
+            fileName = Path.GetFullPath(fileName);
 
             byte[] data;
             if (File.Exists(fileName))

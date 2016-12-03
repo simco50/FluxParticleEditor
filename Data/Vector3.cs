@@ -25,6 +25,24 @@ namespace ParticleEditor.Data
             Z = z;
         }
 
+        public static Vector3 operator+(Vector3 a, Vector3 b)
+        {
+            Vector3 r = new Vector3();
+            r.X = a.X + b.X;
+            r.Y = a.Y + b.Y;
+            r.Z = a.Z + b.Z;
+            return r;
+        }
+
+        public static Vector3 operator *(Vector3 a, float b)
+        {
+            Vector3 r = new Vector3();
+            r.X = a.X * b;
+            r.Y = a.Y * b;
+            r.Z = a.Z * b;
+            return r;
+        }
+
         public float X, Y, Z;
     }
 }

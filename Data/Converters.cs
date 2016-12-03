@@ -9,8 +9,7 @@ using ParticleEditor.Data;
 
 namespace ParticleEditor.Converters
 {
-    [ValueConversion(typeof(ParticleSystem.ParticleSortingMode), typeof(int))]
-    public class SortingModeToInt : IValueConverter
+    public class EnumToInt : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -19,7 +18,7 @@ namespace ParticleEditor.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (ParticleSystem.ParticleSortingMode) value;
+            return Enum.ToObject(targetType, value);
         }
     }
 }

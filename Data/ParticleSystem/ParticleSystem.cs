@@ -45,10 +45,10 @@ namespace ParticleEditor.Data
         //Shape
         public enum ShapeType
         {
-            CIRCLE,
-            SPHERE,
-            CONE,
-            EDGE,
+            CIRCLE = 0,
+            SPHERE = 1,
+            CONE = 2,
+            EDGE = 3,
         };
         public class ShapeData
         {
@@ -68,27 +68,38 @@ namespace ParticleEditor.Data
 
         //Animation
         [JsonProperty("Size")]
-        public KeyFramedValue<float> Size { get; set; } = new KeyFramedValue<float>(1.0f);
+        public KeyFramedValueFloat Size { get; set; } = new KeyFramedValueFloat(1.0f);
         [JsonProperty("Velocity")]
-        public KeyFramedValue<Vector3> Velocity { get; set; } = new KeyFramedValue<Vector3>(new Vector3(0, 0, 0));
+        public KeyFramedValueVector3 Velocity { get; set; } = new KeyFramedValueVector3(new Vector3(0, 0, 0));
         [JsonProperty("LocalVelocity")]
-        public KeyFramedValue<Vector3> LocalVelocity { get; set; } = new KeyFramedValue<Vector3>(new Vector3(0, 0, 0));
+        public KeyFramedValueVector3 LocalVelocity { get; set; } = new KeyFramedValueVector3(new Vector3(0, 0, 0));
         [JsonProperty("Color")]
-        public KeyFramedValue<Vector3> Color { get; set; } = new KeyFramedValue<Vector3>(new Vector3(1.0f, 1.0f, 1.0f));
+        public KeyFramedValueVector3 Color { get; set; } = new KeyFramedValueVector3(new Vector3(1.0f, 1.0f, 1.0f));
         [JsonProperty("Transparancy")]
-        public KeyFramedValue<float> Transparancy { get; set; } = new KeyFramedValue<float>(1.0f);
+        public KeyFramedValueFloat Transparancy { get; set; } = new KeyFramedValueFloat(1.0f);
         [JsonProperty("Rotation")]
-        public KeyFramedValue<float> Rotation { get; set; } = new KeyFramedValue<float>(0.0f);
+        public KeyFramedValueFloat Rotation { get; set; } = new KeyFramedValueFloat(0.0f);
 
         //Rendering
         public enum ParticleSortingMode
         {
-            FrontToBack,
-            BackToFront,
-            OldestFirst,
-            YoungestFirst,
+            FrontToBack = 0,
+            BackToFront = 1,
+            OldestFirst = 2,
+            YoungestFirst = 3,
         }
+        [JsonProperty("SortingMode")]
         public ParticleSortingMode SortingMode { get; set; } = ParticleSortingMode.FrontToBack;
+
+        public enum ParticleBlendMode
+        {
+            AlphaBlend = 0,
+            AdditiveBlend = 1,
+        }
+        [JsonProperty("BlendMode")]
+        public ParticleBlendMode BlendMode { get; set; } = ParticleBlendMode.AlphaBlend;
+
+        [JsonProperty("ImagePath")]
         public string ImagePath { get; set; } = "../../Resources/DefaultParticleImage.png";
     }
 }

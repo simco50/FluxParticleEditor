@@ -7,39 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="300">
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Column="0">
-                <StackPanel>
-                    <Button Content="Test" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Button Content="Test" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Button Content="Test" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Button Content="Test" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Button Content="Test" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                </StackPanel>
-            </Grid>
-            <Grid Column="1">
-                <StackPanel>
-                    <TextBox Text="0" Height="20" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                    <TextBox Text="0" Height="20" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                    <TextBox Text="0" Height="20" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                    <TextBox Text="0" Height="20" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="0" Height="20" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                        <TextBox Grid.Column="1" Text="0" Height="20" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                        <TextBox Grid.Column="2" Text="0" Height="20" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Slider Value="0.2" Height="20" Maximum="1"></Slider>
-                </StackPanel>
-            </Grid>
-        </Grid>
+        
     </Grid>
 </UserControl>
