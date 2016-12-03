@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using Newtonsoft.Json;
 using ParticleEditor.Annotations;
 using ParticleEditor.Data;
+using ParticleEditor.Data.ParticleSystem;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -26,15 +27,14 @@ namespace ParticleEditor.ViewModels
             ParticleSystem = new ParticleSystem();
         }
 
-        private ParticleSystem _particleSystem;
-        public ParticleSystem ParticleSystem
+        private static  ParticleSystem _particleSystem;
+        public static ParticleSystem ParticleSystem
         {
             get { return _particleSystem; }
             set
             {
                 _particleSystem = value;
-                SpriteImage = DataProvider.ToImageSource(_particleSystem.ImagePath);
-                OnPropertyChanged("ParticleSystem");
+                //SpriteImage = DataProvider.ToImageSource(_particleSystem.ImagePath);
             }
         }
 

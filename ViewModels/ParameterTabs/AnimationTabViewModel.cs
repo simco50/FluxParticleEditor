@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParticleEditor.Data.ParticleSystem
+namespace ParticleEditor.ViewModels.ParameterTabs
 {
-    class Particle
+    class AnimationTabViewModel
     {
-
-        public void Reset()
-        {
-        }
     }
 }

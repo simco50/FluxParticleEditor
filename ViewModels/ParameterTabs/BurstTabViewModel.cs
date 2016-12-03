@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParticleEditor.ViewModels
+namespace ParticleEditor.ViewModels.ParameterTabs
 {
-    class ParameterPanelViewModel
+    class BurstTabViewModel
     {
     }
 }

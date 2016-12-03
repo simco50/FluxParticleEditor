@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="ParticleEditor.Views.ParameterTabs.GeneralTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ParticleEditor.Views.ParameterTabs"
+             xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.DataContext>
+            <parameterTabs:GeneralTabViewModel/>
+        </Grid.DataContext>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <StackPanel>
+                <Label Content="Duration"/>
+                <Label Content="Loop"/>
+                <Label Content="Lifetime"/>
+                <Label Content="Lifetime variance"/>
+                <Label Content="Start velocity"/>
+                <Label Content="Start velocity variance"/>
+                <Label Content="Start size"/>
+                <Label Content="Start size variance"/>
+                <Label Content="Random start rotation"/>
+                <Label Content="Play on Awake"/>
+                <Label Content="Max particles"/>
+                <Label Content="Emission"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <StackPanel>
+                <TextBox Text="{Binding ParticleSystem.Duration}" HorizontalContentAlignment="Right"/>
+                <CheckBox IsChecked="{Binding ParticleSystem.Loop}" Height="26" HorizontalAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.Lifetime}" HorizontalContentAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.LifetimeVariance}" HorizontalContentAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.StartVelocity}" HorizontalContentAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.StartVelocityVariance}" HorizontalContentAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.StartSize}" HorizontalContentAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.StartVelocityVariance}" HorizontalContentAlignment="Right"/>
+                <CheckBox IsChecked="{Binding ParticleSystem.RandomStartRotation}"  Height="26" HorizontalAlignment="Right"/>
+                <CheckBox IsChecked="{Binding ParticleSystem.PlayOnAwake}" Height="26" HorizontalAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.MaxParticles}" HorizontalContentAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.Emission}" HorizontalContentAlignment="Right"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

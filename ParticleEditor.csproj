@@ -99,7 +99,9 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ParameterPanelViewModel.cs" />
+    <Compile Include="ViewModels\ParameterTabs\AnimationTabViewModel.cs" />
+    <Compile Include="ViewModels\ParameterTabs\BurstTabViewModel.cs" />
+    <Compile Include="ViewModels\ParameterTabs\GeneralTabViewModel.cs" />
     <Compile Include="ViewModels\ParticleVisualizerViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
     <Compile Include="Views\HelpWindowView.xaml.cs">
@@ -110,6 +112,15 @@
     </Compile>
     <Compile Include="Views\ParameterPanelView.xaml.cs">
       <DependentUpon>ParameterPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ParameterTabs\AnimationTabView.xaml.cs">
+      <DependentUpon>AnimationTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ParameterTabs\BurstTabView.xaml.cs">
+      <DependentUpon>BurstTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ParameterTabs\GeneralTabView.xaml.cs">
+      <DependentUpon>GeneralTabView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ParticleVisualizerView.xaml.cs">
       <DependentUpon>ParticleVisualizerView.xaml</DependentUpon>
@@ -156,6 +167,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ParameterPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ParameterTabs\AnimationTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ParameterTabs\BurstTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ParameterTabs\GeneralTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

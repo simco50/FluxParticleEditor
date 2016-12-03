@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParticleEditor.Data
+namespace ParticleEditor.Data.ParticleSystem
 {
     public class ParticleEmitter
     {

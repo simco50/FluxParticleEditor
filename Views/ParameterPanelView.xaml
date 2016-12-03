@@ -1,12 +1,26 @@
-﻿<UserControl x:Class="ParticleEditor.Views.ParameterView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParticleEditor.Views"
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:parameterTabs="clr-namespace:ParticleEditor.Views.ParameterTabs"
+             x:Class="ParticleEditor.Views.ParameterView"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="300">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="General" Custom:ControlsHelper.HeaderFontSize="18">
+                <parameterTabs:GeneralTabView/>
+            </TabItem>
+            <TabItem Header="Burst" Custom:ControlsHelper.HeaderFontSize="18">
+                <parameterTabs:BurstTabView/>
+            </TabItem>
+            <TabItem Header="Animation" Custom:ControlsHelper.HeaderFontSize="18">
+                <parameterTabs:AnimationTabView/>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </UserControl>
