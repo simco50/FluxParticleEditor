@@ -8,7 +8,7 @@
         xmlns:converters="clr-namespace:ParticleEditor.Converters"
         x:Class="ParticleEditor.Views.MainView"
         mc:Ignorable="d"
-        Title="Particle Editor" Height="720" Width="1240" Icon="/ParticleEditor;component/Resources/Logo.png" Background="White">
+        Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="700" Icon="/ParticleEditor;component/Resources/Logo.png" Background="White">
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
@@ -47,9 +47,9 @@
         <!--Main view-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" MinWidth="300" MaxWidth="500"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*" MinWidth="700"/>
             </Grid.ColumnDefinitions>
             <GridSplitter Grid.Column="1" Width="5" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
 
@@ -57,19 +57,15 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="220"/>
                 </Grid.RowDefinitions>
-                <GridSplitter Grid.Row="1" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" Height="5" HorizontalAlignment="Stretch" RenderTransformOrigin="0.516,2.4"/>
                 <!--Parameters-->
                 <Grid Grid.Row="0">
-                    <ScrollViewer>
-                        <local:ParameterView/>
-                    </ScrollViewer>
+                    <local:ParameterView/>
                 </Grid>
 
                 <!--Settings-->
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200*"/>
                         <ColumnDefinition Width="290*"/>
@@ -106,9 +102,9 @@
             <!--Right side-->
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="5*" MinHeight="300"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*" MinHeight="150" MaxHeight="300"/>
                 </Grid.RowDefinitions>
                 <GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="8" HorizontalAlignment="Stretch"/>
 

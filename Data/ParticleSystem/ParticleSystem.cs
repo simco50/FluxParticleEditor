@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using ParticleEditor.Annotations;
 
 namespace ParticleEditor.Data.ParticleSystem
 {
@@ -77,15 +79,15 @@ namespace ParticleEditor.Data.ParticleSystem
         public class ShapeData
         {
             [JsonProperty("ShapeType")]
-            public ShapeType ShapeType = ShapeType.CONE;
+            public ShapeType ShapeType { get; set; } = ShapeType.CONE;
             [JsonProperty("Radius")]
-            public float Radius = 1.0f;
+            public float Radius { get; set; } = 1.0f;
             [JsonProperty("EmitFromShell")]
-            public bool EmitFromShell = false;
+            public bool EmitFromShell { get; set; } = false;
             [JsonProperty("EmitFromVolume")]
-            public bool EmitFromVolume = false;
+            public bool EmitFromVolume { get; set; } = false;
             [JsonProperty("Angle")]
-            public float Angle = 30.0f;
+            public float Angle { get; set; } = 30.0f;
         };
         [JsonProperty("Shape")]
         public ShapeData Shape { get; set; } = new ShapeData();

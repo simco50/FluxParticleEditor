@@ -5,15 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParticleEditor.Views.ParameterTabs"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             xmlns:converters="clr-namespace:ParticleEditor.Converters"
+             xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <Grid.DataContext>
-            <parameterTabs:GeneralTabViewModel/>
+            <viewModels:MainViewModel/>
         </Grid.DataContext>
+
+        <Grid.Resources>
+            <converters:EnumToInt x:Key="EnumConverter"/>
+        </Grid.Resources>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -28,8 +34,15 @@
                 <Label Content="Start size variance"/>
                 <Label Content="Random start rotation"/>
                 <Label Content="Play on Awake"/>
+                <Separator Height="5"/>
                 <Label Content="Max particles"/>
                 <Label Content="Emission"/>
+                <Separator Height="5"/>
+                <Label Content="Shape"/>
+                <Label Content="Radius"/>
+                <Label Content="Emit from shell"/>
+                <Label Content="Emit from volume"/>
+                <Label Content="Angle"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1">
@@ -44,8 +57,20 @@
                 <TextBox Text="{Binding ParticleSystem.StartVelocityVariance}" HorizontalContentAlignment="Right"/>
                 <CheckBox IsChecked="{Binding ParticleSystem.RandomStartRotation}"  Height="26" HorizontalAlignment="Right"/>
                 <CheckBox IsChecked="{Binding ParticleSystem.PlayOnAwake}" Height="26" HorizontalAlignment="Right"/>
+                <Separator Height="5"/>
                 <TextBox Text="{Binding ParticleSystem.MaxParticles}" HorizontalContentAlignment="Right"/>
                 <TextBox Text="{Binding ParticleSystem.Emission}" HorizontalContentAlignment="Right"/>
+                <Separator Height="5"/>
+                <ComboBox SelectedIndex="{Binding ParticleSystem.Shape.ShapeType, Converter={StaticResource EnumConverter}}">
+                    <Label Content="Circle"/>
+                    <Label Content="Sphere"/>
+                    <Label Content="Cone"/>
+                    <Label Content="Edge"/>
+                </ComboBox>
+                <TextBox Text="{Binding ParticleSystem.Shape.Radius}" HorizontalContentAlignment="Right"/>
+                <CheckBox IsChecked="{Binding ParticleSystem.Shape.EmitFromShell}" Height="26" HorizontalAlignment="Right"/>
+                <CheckBox IsChecked="{Binding ParticleSystem.Shape.EmitFromVolume}" Height="26" HorizontalAlignment="Right"/>
+                <TextBox Text="{Binding ParticleSystem.Shape.Angle}" HorizontalContentAlignment="Right"/>
             </StackPanel>
         </Grid>
     </Grid>

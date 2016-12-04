@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using ParticleEditor.Annotations;
 using ParticleEditor.Data;
 using ParticleEditor.Data.ParticleSystem;
+using ParticleEditor.Debugging;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -25,17 +26,22 @@ namespace ParticleEditor.ViewModels
         public MainViewModel()
         {
             ParticleSystem = new ParticleSystem();
-            string[] lol = Enum.GetNames(typeof(ParticleBlendMode));
-        }
 
-        private static  ParticleSystem _particleSystem;
-        public static ParticleSystem ParticleSystem
+            DebugLog.LogEvent += AppLogger.LogInfo;
+            //FileLogger fileLogger = new FileLogger("ParticleEditor.log");
+           // DebugLog.LogEvent += fileLogger.LogInfo;
+            DebugLog.Log("Application initialized");
+        }
+        public ApplicationLogger AppLogger { get; set; } = new ApplicationLogger();
+
+        private  ParticleSystem _particleSystem;
+        public ParticleSystem ParticleSystem
         {
             get { return _particleSystem; }
             set
             {
                 _particleSystem = value;
-                //SpriteImage = DataProvider.ToImageSource(_particleSystem.ImagePath);
+                SpriteImage = DataProvider.ToImageSource(_particleSystem.ImagePath);
             }
         }
 
@@ -70,12 +76,14 @@ namespace ParticleEditor.ViewModels
                 return;
             try
             {
+                DebugLog.Log($"Import from {dialog.FileName}...", "Json import");
                 string data = File.ReadAllText(dialog.FileName);
                 ParticleSystem = JsonConvert.DeserializeObject<ParticleSystem>(data);
+                DebugLog.Log("Import successful");
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Import failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                DebugLog.Log(exception.Message, "Json import failed!", LogSeverity.Warning);
             }
         }
 
@@ -92,12 +100,14 @@ namespace ParticleEditor.ViewModels
                 return;
             try
             {
+                DebugLog.Log($"Export to '{dialog.FileName}'...", "Json export");
                 string data = JsonConvert.SerializeObject(ParticleSystem, Formatting.Indented);
                 File.WriteAllText(dialog.FileName, data);
+                DebugLog.Log("Export successful", "Json export");
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Export failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                DebugLog.Log(exception.Message, "Json export failed!", LogSeverity.Warning);
             }
             HasUnsavedChanges = false;
         }
@@ -135,6 +145,7 @@ namespace ParticleEditor.ViewModels
         private void Shutdown()
         {
             CheckForUnsavedChanges();
+            DebugLog.Log("Application shutdown");
             Application.Current.Shutdown();
         }
 

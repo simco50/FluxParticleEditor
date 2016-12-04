@@ -12,15 +12,23 @@
     <Grid>
         <TabControl>
             <TabItem Header="General" Custom:ControlsHelper.HeaderFontSize="18">
-                <parameterTabs:GeneralTabView/>
+                <ScrollViewer>
+                    <parameterTabs:GeneralTabView/>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Burst" Custom:ControlsHelper.HeaderFontSize="18">
-                <parameterTabs:BurstTabView/>
+                <ScrollViewer>
+                    <parameterTabs:BurstTabView/>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Animation" Custom:ControlsHelper.HeaderFontSize="18">
-                <parameterTabs:AnimationTabView/>
+                <ScrollViewer>
+                    <parameterTabs:AnimationTabView/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Debug" Custom:ControlsHelper.HeaderFontSize="18">
+                <parameterTabs:DebugTabView/>
             </TabItem>
         </TabControl>
-
     </Grid>
 </UserControl>

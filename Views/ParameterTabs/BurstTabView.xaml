@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParticleEditor.Views.ParameterTabs"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.DataContext>
-            <parameterTabs:BurstTabViewModel/>
+            <viewModels:MainViewModel/>
         </Grid.DataContext>
 
         <Grid.RowDefinitions>
@@ -51,7 +52,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Text="0" Grid.Column="0"/>
             <TextBox Text="0" Grid.Column="1"/>
-            <Button Command="{Binding AddBurstCommand}" Content="+" Grid.Column="2"/>
+            <Button Content="+" Grid.Column="2"/>
         </Grid>
     </Grid>
 </UserControl>

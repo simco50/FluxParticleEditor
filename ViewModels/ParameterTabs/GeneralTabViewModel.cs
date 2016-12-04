@@ -9,14 +9,6 @@ namespace ParticleEditor.ViewModels.ParameterTabs
 {
     class GeneralTabViewModel
     {
-        public ParticleSystem ParticleSystem
-        {
-            get { return MainViewModel.ParticleSystem; }
-        }
 
-        public GeneralTabViewModel()
-        {
-
-        }
     }
 }
