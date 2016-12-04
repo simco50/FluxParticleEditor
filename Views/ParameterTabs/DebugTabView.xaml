@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
+             xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <Grid.DataContext>
-            <viewModels:MainViewModel/>
+            <parameterTabs:DebugTabViewModel/>
         </Grid.DataContext>
-        <ItemsControl BorderThickness="0" ItemsSource="{Binding AppLogger.Entries}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+        <ItemsControl BorderThickness="0" ItemsSource="{Binding MainViewModel.AppLogger.Entries}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>

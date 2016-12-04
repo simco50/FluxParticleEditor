@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using ParticleEditor.Annotations;
+using ParticleEditor.Helpers;
 
 namespace ParticleEditor.Data.ParticleSystem
 {
@@ -66,7 +62,7 @@ namespace ParticleEditor.Data.ParticleSystem
         [JsonProperty("Emission")]
         public int Emission { get; set; } = 10;
         [JsonProperty("Bursts")]
-        public SortedDictionary<float, int> Bursts { get; set; } = new SortedDictionary<float, int>();
+        public ObservableDictionary<float, int> Bursts { get; set; } = new ObservableDictionary<float, int>();
 
         //Shape
         public enum ShapeType

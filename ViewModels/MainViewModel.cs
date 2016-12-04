@@ -12,9 +12,9 @@ using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using Newtonsoft.Json;
 using ParticleEditor.Annotations;
-using ParticleEditor.Data;
 using ParticleEditor.Data.ParticleSystem;
 using ParticleEditor.Debugging;
+using ParticleEditor.Helpers;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -28,9 +28,9 @@ namespace ParticleEditor.ViewModels
             ParticleSystem = new ParticleSystem();
 
             DebugLog.LogEvent += AppLogger.LogInfo;
-            //FileLogger fileLogger = new FileLogger("ParticleEditor.log");
-           // DebugLog.LogEvent += fileLogger.LogInfo;
-            DebugLog.Log("Application initialized");
+            FileLogger fileLogger = new FileLogger("ParticleEditor.log");
+            DebugLog.LogEvent += fileLogger.LogInfo;
+            DebugLog.Log("Initialized", "Application");
         }
         public ApplicationLogger AppLogger { get; set; } = new ApplicationLogger();
 
@@ -145,7 +145,7 @@ namespace ParticleEditor.ViewModels
         private void Shutdown()
         {
             CheckForUnsavedChanges();
-            DebugLog.Log("Application shutdown");
+            DebugLog.Log("Shutdown", "Application");
             Application.Current.Shutdown();
         }
 

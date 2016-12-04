@@ -3,15 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ParticleEditor.Views.ParameterTabs"
-             xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
+             xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.DataContext>
-            <viewModels:MainViewModel/>
+            <parameterTabs:BurstTabViewModel/>
         </Grid.DataContext>
+        
+        <Grid.Resources>
+            <helpers:StringToFloat x:Key="StringToFloat"></helpers:StringToFloat>
+        </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -28,7 +32,7 @@
             <Label Content="Particles" Grid.Column="1" FontWeight="Bold"/>
         </Grid>
         <Grid Grid.Row="1">
-            <ListBox ItemsSource="{Binding ParticleSystem.Bursts}">
+            <ListBox ItemsSource="{Binding MainViewModel.ParticleSystem.Bursts.Collection}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -50,9 +54,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <TextBox Text="0" Grid.Column="0"/>
-            <TextBox Text="0" Grid.Column="1"/>
-            <Button Content="+" Grid.Column="2"/>
+            <TextBox Name="Text_Key" Text="0" Grid.Column="0"/>
+            <TextBox Name="Text_Value" Text="0" Grid.Column="1"/>
+            <Button Content="+" Command="{Binding AddBurstCommand}" CommandParameter="{Binding ElementName=Text_Key, Path=Text}" Grid.Column="2"/>
         </Grid>
     </Grid>
 </UserControl>

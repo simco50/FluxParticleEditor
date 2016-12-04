@@ -89,19 +89,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Converters.cs" />
-    <Compile Include="Data\DataProvider.cs" />
+    <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\DataProvider.cs" />
     <Compile Include="Data\ParticleSystem\KeyFramedValue.cs" />
     <Compile Include="Data\ParticleSystem\Particle.cs" />
     <Compile Include="Data\ParticleSystem\ParticleEmitter.cs" />
     <Compile Include="Data\ParticleSystem\ParticleSystem.cs" />
     <Compile Include="Data\Vector3.cs" />
     <Compile Include="Debugging\DebugLog.cs" />
+    <Compile Include="Helpers\ObservableDictionary.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\AnimationTabViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\BurstTabViewModel.cs" />
+    <Compile Include="ViewModels\ParameterTabs\DebugTabViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\GeneralTabViewModel.cs" />
     <Compile Include="ViewModels\ParticleVisualizerViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />

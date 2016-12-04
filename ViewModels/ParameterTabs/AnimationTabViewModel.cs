@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParticleEditor.ViewModels.ParameterTabs
 {
-    class AnimationTabViewModel
+    public class AnimationTabViewModel
     {
     }
 }

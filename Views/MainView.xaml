@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ParticleEditor.Views"
         xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels" 
-        xmlns:converters="clr-namespace:ParticleEditor.Converters"
+        xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
         x:Class="ParticleEditor.Views.MainView"
         mc:Ignorable="d"
         Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="700" Icon="/ParticleEditor;component/Resources/Logo.png" Background="White">
@@ -14,7 +14,7 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <converters:EnumToInt x:Key="EnumToIntConverter"/>
+        <helpers:EnumToInt x:Key="EnumToIntConverter"/>
     </Window.Resources>
 
     <Grid>

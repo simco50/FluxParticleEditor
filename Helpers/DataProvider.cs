@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ParticleEditor.Debugging;
 
-namespace ParticleEditor.Data
+namespace ParticleEditor.Helpers
 {
     public static class DataProvider
     {
