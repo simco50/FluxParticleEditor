@@ -97,7 +97,7 @@
     <Compile Include="Data\ParticleSystem\ParticleSystem.cs" />
     <Compile Include="Data\Vector3.cs" />
     <Compile Include="Debugging\DebugLog.cs" />
-    <Compile Include="Helpers\ObservableDictionary.cs" />
+    <Compile Include="Helpers\SimonObservableDictionary.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -112,9 +112,6 @@
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ParameterPanelView.xaml.cs">
-      <DependentUpon>ParameterPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ParameterTabs\AnimationTabView.xaml.cs">
       <DependentUpon>AnimationTabView.xaml</DependentUpon>
@@ -169,10 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ParameterPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

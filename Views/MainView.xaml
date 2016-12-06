@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:ParticleEditor.Views"
         xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels" 
         xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:parameterTabs="clr-namespace:ParticleEditor.Views.ParameterTabs"
         x:Class="ParticleEditor.Views.MainView"
         mc:Ignorable="d"
         Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="700" Icon="/ParticleEditor;component/Resources/Logo.png" Background="White">
@@ -61,7 +63,24 @@
                 </Grid.RowDefinitions>
                 <!--Parameters-->
                 <Grid Grid.Row="0">
-                    <local:ParameterView/>
+                    <TabControl>
+                        <TabItem Header="General" controls:ControlsHelper.HeaderFontSize="18">
+                            <ScrollViewer>
+                                <parameterTabs:GeneralTabView/>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Burst" controls:ControlsHelper.HeaderFontSize="18">
+                            <parameterTabs:BurstTabView/>
+                        </TabItem>
+                        <TabItem Header="Animation" controls:ControlsHelper.HeaderFontSize="18">
+                            <ScrollViewer>
+                                <parameterTabs:AnimationTabView/>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Debug" controls:ControlsHelper.HeaderFontSize="18">
+                            <parameterTabs:DebugTabView/>
+                        </TabItem>
+                    </TabControl>
                 </Grid>
 
                 <!--Settings-->
@@ -114,9 +133,7 @@
                 </Grid>
                 <!--Timeline-->
                 <Grid Grid.Row="2">
-                    <ScrollViewer>
-                        <local:TimelineView/>
-                    </ScrollViewer>
+                    <local:TimelineView/>
                 </Grid>
             </Grid>
         </Grid>

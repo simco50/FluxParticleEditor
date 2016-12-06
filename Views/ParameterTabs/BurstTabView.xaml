@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ParticleEditor.Views.ParameterTabs.BurstTabView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,33 +6,38 @@
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ParticleEditor.Views.ParameterTabs.BurstTabView"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <helpers:BurstConverter x:Key="BurstConverter"/>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.DataContext>
             <parameterTabs:BurstTabViewModel/>
         </Grid.DataContext>
-        
-        <Grid.Resources>
-            <helpers:StringToFloat x:Key="StringToFloat"></helpers:StringToFloat>
-        </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+            <Border BorderBrush="#FF727272" BorderThickness="0,0,0,1">
+        <Grid Grid.Row="0" Background="#CCD6D6D6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Time" Grid.Column="0" FontWeight="Bold"/>
-            <Label Content="Particles" Grid.Column="1" FontWeight="Bold"/>
+            <Label Content="> TIME" Grid.Column="0" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
+            <Label Content="> PARTICLES" Grid.Column="1" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
         </Grid>
+            </Border>
         <Grid Grid.Row="1">
-            <ListBox ItemsSource="{Binding MainViewModel.ParticleSystem.Bursts.Collection}">
+            <ListBox ItemsSource="{Binding MainViewModel.ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -43,20 +48,31 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="{Binding Key}" Grid.Column="0"/>
                             <Label Content="{Binding Value}" Grid.Column="1"/>
+                            <Button Content="-" Command="{Binding DataContext.RemoveBurstCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Key}" Grid.Column="2"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
         <Grid Grid.Row="2">
+            <Separator/>
+        </Grid>
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <TextBox Name="Text_Key" Text="0" Grid.Column="0"/>
-            <TextBox Name="Text_Value" Text="0" Grid.Column="1"/>
-            <Button Content="+" Command="{Binding AddBurstCommand}" CommandParameter="{Binding ElementName=Text_Key, Path=Text}" Grid.Column="2"/>
+            <TextBox x:Name="Text_Key" Text="0" Grid.Column="0"/>
+            <TextBox x:Name="Text_Value" Text="0" Grid.Column="1"/>
+            <Button Content="+" Command="{Binding AddBurstCommand}" Grid.Column="2">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource BurstConverter}">
+                        <Binding ElementName="Text_Key" Path="Text"/>
+                        <Binding ElementName="Text_Value" Path="Text"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

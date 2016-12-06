@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
 using ParticleEditor.Helpers;
+
 
 namespace ParticleEditor.Data.ParticleSystem
 {
@@ -29,42 +31,52 @@ namespace ParticleEditor.Data.ParticleSystem
     public class ParticleSystem
     {
         public ParticleSystem()
-        {}
+        {
+        }
 
-        [JsonProperty("Version")]
-        public int Version = 1;
+        [JsonProperty("Version")] public int Version = 1;
         //General
         [JsonProperty("Duration")]
         public float Duration { get; set; } = 1.0f;
+
         [JsonProperty("Loop")]
         public bool Loop { get; set; } = true;
+
         [JsonProperty("Lifetime")]
         public float Lifetime { get; set; } = 1.0f;
 
         [JsonProperty("LifetimeVariance")]
         public float LifetimeVariance { get; set; } = 0.0f;
+
         [JsonProperty("StartVelocity")]
         public float StartVelocity { get; set; } = 1.0f;
+
         [JsonProperty("StartVelocityVariance")]
         public float StartVelocityVariance { get; set; } = 0.0f;
+
         [JsonProperty("StartSize")]
         public float StartSize { get; set; } = 1.0f;
+
         [JsonProperty("StartSizeVariance")]
         public float StartSizeVariance { get; set; } = 0.0f;
+
         [JsonProperty("RandomStartRotation")]
         public bool RandomStartRotation { get; set; } = false;
+
         [JsonProperty("PlayOnAwake")]
         public bool PlayOnAwake { get; set; } = true;
+
         [JsonProperty("MaxParticles")]
         public int MaxParticles { get; set; } = 100;
 
         //Emission
         [JsonProperty("Emission")]
         public int Emission { get; set; } = 10;
+
         [JsonProperty("Bursts")]
         public ObservableDictionary<float, int> Bursts { get; set; } = new ObservableDictionary<float, int>();
 
-        //Shape
+    //Shape
         public enum ShapeType
         {
             CIRCLE = 0,

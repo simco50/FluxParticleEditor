@@ -1,47 +1,40 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using ParticleEditor.Annotations;
 
 namespace ParticleEditor.Helpers
 {
-    public class ObservableDictionary<K, V>
+    public class ObservableDictionary<K, V> : ObservableCollection<ObservablePair<K, V>>
     {
-        public ObservableCollection<ObservablePair<K, V>> Collection { get; set; } =
-            new ObservableCollection<ObservablePair<K, V>>();
-
-        public bool Add(K key, V value)
+        public ObservableDictionary()
         {
-            ObservablePair<K, V> v = new ObservablePair<K, V>(key, value);
-            foreach (var p in Collection)
-            {
-                if (p.Key.Equals(key))
-                    return false;
-            }
-            Collection.Add(v);
-            return true;
         }
 
-        public void AddOverwrite(K key, V value)
+        public bool AddUnique(K key, V value)
         {
-            foreach (var p in Collection)
+            foreach (var p in Items)
             {
                 if (p.Key.Equals(key))
                 {
                     p.Value = value;
-                    return;
+                    return false;
                 }
             }
-            Collection.Add(new ObservablePair<K, V>(key, value));
+            Add(new ObservablePair<K, V>(key, value));
+            return true;
         }
 
         public bool Remove(K key)
         {
-            foreach (var p in Collection)
+            foreach (var p in Items)
             {
                 if (p.Key.Equals(key))
                 {
-                    Collection.Remove(p);
+                    Remove(p);
                     return true;
                 }
             }
@@ -52,16 +45,16 @@ namespace ParticleEditor.Helpers
         {
             get
             {
-                foreach (var p in Collection)
+                foreach (var p in Items)
                 {
                     if (p.Equals(k))
                         return p.Value;
                 }
-                return Collection[-1].Value;
+                return Items[-1].Value;
             }
             set
             {
-                AddOverwrite(k, value);
+                AddUnique(k, value);
             }
         }
     }
