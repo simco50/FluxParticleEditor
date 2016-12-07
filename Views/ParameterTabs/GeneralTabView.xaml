@@ -4,20 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
-             xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
-             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ParticleEditor.Views.ParameterTabs.GeneralTabView"
+             x:Class="ParticleEditor.Views.ParameterTabs.GeneralTabView"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300" x:Name="UserControl">
     <Grid>
-
         <Grid.Resources>
             <helpers:EnumToInt x:Key="EnumConverter"/>
         </Grid.Resources>
-
-        <Grid.DataContext>
-            <parameterTabs:GeneralTabViewModel/>
-        </Grid.DataContext>
-
         <StackPanel>
             <Expander IsExpanded="True" Background="#CCD6D6D6" Header="System" BorderBrush="{x:Null}">
                 <StackPanel>
@@ -27,7 +20,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Duration" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.Duration}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Duration}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The duration of one cycle"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -35,7 +28,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Loop" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding MainViewModel.ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -43,7 +36,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Lifetime" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.Lifetime}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Lifetime}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime of a particle"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -51,7 +44,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Lifetime variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.LifetimeVariance}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.MaxParticles}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime variance of a particle"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -59,7 +52,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start velocity" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.StartVelocity}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartVelocity}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="Velocity in the spawn direction"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -67,7 +60,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start velocity variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.StartVelocityVariance}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartVelocityVariance}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The velocity variance"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -75,7 +68,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start size" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.StartSize}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartSize}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size of the particles"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -83,7 +76,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start size variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.StartSizeVariance}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartSizeVariance}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size variance of the particles"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -91,7 +84,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Random start rotation" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding MainViewModel.ParticleSystem.RandomStartRotation}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.RandomStartRotation}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -99,7 +92,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Play on awake" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding MainViewModel.ParticleSystem.PlayOnAwake}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.PlayOnAwake}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -111,7 +104,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Max particles" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.MaxParticles}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.MaxParticles}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The maximum amount of particles at the same time"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -119,7 +112,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Emission" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.Emission}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Emission}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The particle spawn rate per second"/>
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -131,7 +124,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Shape" Grid.Column="0"/>
-                        <ComboBox Grid.Column="1" SelectedIndex="{Binding MainViewModel.ParticleSystem.Shape.ShapeType, Converter={StaticResource EnumConverter}}">
+                        <ComboBox Grid.Column="1" SelectedIndex="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.ShapeType, Converter={StaticResource EnumConverter}}" ToolTip="The emission shape of the system">
                             <Label Content="Circle"/>
                             <Label Content="Sphere"/>
                             <Label Content="Cone"/>
@@ -144,7 +137,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Radius" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.Shape.Radius}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.Radius}" Grid.Column="1" HorizontalContentAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -152,7 +145,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Emit from shell" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding MainViewModel.ParticleSystem.Shape.EmitFromShell}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.EmitFromShell}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -160,7 +153,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Emit from volume" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding MainViewModel.ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -168,7 +161,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Angle" Grid.Column="0"/>
-                        <TextBox Text="{Binding MainViewModel.ParticleSystem.Shape.Angle}" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.Angle}" Grid.Column="1" HorizontalContentAlignment="Right"/>
                     </Grid>
                 </StackPanel>
             </Expander>

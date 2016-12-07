@@ -6,7 +6,7 @@
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid x:Name="Root" >
         <Grid.DataContext>
             <parameterTabs:AnimationTabViewModel/>
         </Grid.DataContext>

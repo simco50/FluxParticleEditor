@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParticleEditor.Data.ParticleSystem;
 
 namespace ParticleEditor.Views.ParameterTabs
 {
@@ -23,6 +24,15 @@ namespace ParticleEditor.Views.ParameterTabs
         public GeneralTabView()
         {
             InitializeComponent();
+        }
+
+        public static readonly DependencyProperty ParticleSystemProperty = DependencyProperty.Register(
+            "ParticleSystem", typeof(ParticleSystem), typeof(GeneralTabView), new PropertyMetadata(default(ParticleSystem)));
+
+        public ParticleSystem ParticleSystem
+        {
+            get { return (ParticleSystem) GetValue(ParticleSystemProperty); }
+            set { SetValue(ParticleSystemProperty, value); }
         }
     }
 }

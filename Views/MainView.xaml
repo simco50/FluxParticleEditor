@@ -10,7 +10,7 @@
         xmlns:parameterTabs="clr-namespace:ParticleEditor.Views.ParameterTabs"
         x:Class="ParticleEditor.Views.MainView"
         mc:Ignorable="d"
-        Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="700" Icon="/ParticleEditor;component/Resources/Logo.png" Background="White">
+        Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="700" Icon="/ParticleEditor;component/Resources/Logo.png" Background="White" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
@@ -18,6 +18,13 @@
     <Window.Resources>
         <helpers:EnumToInt x:Key="EnumToIntConverter"/>
     </Window.Resources>
+    
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewParticleCommand}"/>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveFileCommand}"/>
+        <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenFileCommand}"/>
+        <KeyBinding Key="F1" Command="{Binding ShowHelpWindowCommand}"/>
+    </Window.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,17 +36,75 @@
         <Grid Grid.Row="0">
             <DockPanel>
                 <Menu DockPanel.Dock="Top">
-                    <MenuItem Header="_File">
-                        <MenuItem Header="_Import..." Command="{Binding ImportParticleCommand}"/>
-                        <MenuItem Header="_Export..." Command="{Binding ExportParticleCommand}"/>
-                        <MenuItem Header="_Exit" Command="{Binding ShutdownCommand}"/>
+                    <Menu.Resources>
+                        <Style TargetType="Image">
+                            <Setter Property="Width" Value="18"/>
+                            <Setter Property="Height" Value="18"/>
+                        </Style>
+                    </Menu.Resources>
+                    <MenuItem Header="File">
+                        <MenuItem Header="New" Command="{Binding NewParticleCommand}" InputGestureText="Ctrl+N">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/New.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Open..." Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Open.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Save" Command="{Binding SaveFileCommand}" InputGestureText="Ctrl+S">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Save.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Save as..." Command="{Binding SaveAsFileCommand}">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/SaveAs.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Exit" Command="{Binding ShutdownCommand}" InputGestureText="Alt+F4">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Exit.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="_Edit">
-                        <MenuItem Header="_Undo"/>
-                        <MenuItem Header="_Redo"/>
+                    <MenuItem Header="Edit">
+                        <MenuItem Header="Undo" InputGestureText="Ctrl+Z">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Undo.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Redo" InputGestureText="Ctrl+Y">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Redo.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Cut" Command="ApplicationCommands.Cut" InputGestureText="Ctrl+X">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Cut.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Copy" Command="ApplicationCommands.Copy" InputGestureText="Ctrl+C">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Copy.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Paste" Command="ApplicationCommands.Paste" InputGestureText="Ctrl+V">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Paste.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="_Help">
-                        <MenuItem Header="_About Particle Editor" Command="{Binding ShowHelpWindowCommand}"/>
+                    <MenuItem Header="Help">
+                        <MenuItem Header="About Particle Editor" Command="{Binding ShowHelpWindowCommand}" InputGestureText="F1">
+                            <MenuItem.Icon>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Info.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                 </Menu>
                 <StackPanel/>
@@ -59,62 +124,61 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="220"/>
+                    <RowDefinition Height="180"/>
                 </Grid.RowDefinitions>
                 <!--Parameters-->
                 <Grid Grid.Row="0">
                     <TabControl>
                         <TabItem Header="General" controls:ControlsHelper.HeaderFontSize="18">
                             <ScrollViewer>
-                                <parameterTabs:GeneralTabView/>
+                                <parameterTabs:GeneralTabView ParticleSystem="{Binding ParticleSystem}"/>
                             </ScrollViewer>
                         </TabItem>
                         <TabItem Header="Burst" controls:ControlsHelper.HeaderFontSize="18">
-                            <parameterTabs:BurstTabView/>
+                            <parameterTabs:BurstTabView ParticleSystem="{Binding ParticleSystem}"/>
                         </TabItem>
                         <TabItem Header="Animation" controls:ControlsHelper.HeaderFontSize="18">
-                            <ScrollViewer>
-                                <parameterTabs:AnimationTabView/>
-                            </ScrollViewer>
+                            <parameterTabs:AnimationTabView/>
                         </TabItem>
                         <TabItem Header="Debug" controls:ControlsHelper.HeaderFontSize="18">
                             <parameterTabs:DebugTabView/>
                         </TabItem>
                     </TabControl>
                 </Grid>
-
                 <!--Settings-->
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200*"/>
-                        <ColumnDefinition Width="290*"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="63"/>
                             <RowDefinition/>
                             <RowDefinition Height="34"/>
                         </Grid.RowDefinitions>
-                        <Button Content="Import particle..." Command="{Binding ImportParticleCommand}" VerticalAlignment="Top" Margin="5,5,5,0" Grid.Row="0" Height="25"/>
-                        <Button Content="Export particle..." Command="{Binding ExportParticleCommand}" VerticalAlignment="Top" Margin="5,35,5,0" Height="25" Grid.Row="0"/>
-                        <Image  Source="/ParticleEditor;component/Resources/TransparentBackground.png" Grid.Row="1" Margin="3"/>
-                        <Image Source="{Binding SpriteImage}" Grid.Row="1" Margin="3"/>
-                        <Button Content="Load image..." Command="{Binding LoadImageCommand}" VerticalAlignment="Bottom" Margin="5,0,5,5" Grid.Row="2" Height="25"/>
+                        <Image Source="/ParticleEditor;component/Resources/TransparentBackground.png" Grid.Row="0" Margin="3"/>
+                        <Image Source="{Binding SpriteImage}" Grid.Row="0" Margin="3"/>
+                        <Button Content="Load image..." Command="{Binding LoadImageCommand}" VerticalAlignment="Bottom" Margin="5,0,5,5" Grid.Row="1" Height="25" ToolTip="Load an image for the particles"/>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Label Content="Sorting Mode" Margin="0,4,0,0" VerticalAlignment="Top"/>
-                        <ComboBox Margin="0,30,0,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={StaticResource EnumToIntConverter}}">
+                        <Label Content="Sorting Mode" VerticalAlignment="Top"/>
+                        <ComboBox Margin="5,26,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={StaticResource EnumToIntConverter}}">
                             <Label Content="Front to back"/>
                             <Label Content="Back to front"/>
                             <Label Content="Oldest first"/>
                             <Label Content="Youngest first"/>
                         </ComboBox>
-                        <ComboBox Margin="0,87,0,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.BlendMode, Converter={StaticResource EnumToIntConverter}}">
+                        <ComboBox Margin="5,82,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.BlendMode, Converter={StaticResource EnumToIntConverter}}">
                             <Label Content="Alpha blend"/>
                             <Label Content="Additive"/>
                         </ComboBox>
-                        <Label Content="Blending type" Margin="0,61,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Background color: " Margin="0,118,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Blending type" Margin="0,56,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Background color: " Margin="0,113,0,0" VerticalAlignment="Top"/>
+                        <Rectangle Fill="{Binding BackgroundColor}" Stroke="Black" Margin="5,139,5,15">
+                        <Rectangle.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding OpenColorPickerCommand}"/>
+                        </Rectangle.InputBindings>
+                        </Rectangle>
                     </Grid>
                 </Grid>
             </Grid>
@@ -126,7 +190,6 @@
                     <RowDefinition Height="2*" MinHeight="150" MaxHeight="300"/>
                 </Grid.RowDefinitions>
                 <GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="8" HorizontalAlignment="Stretch"/>
-
                 <!--Particle view-->
                 <Grid Grid.Row="0">
                     <local:ParticleVisualizerView/>

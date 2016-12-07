@@ -12,12 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParticleEditor.Debugging;
 
 namespace ParticleEditor.Views.ParameterTabs
 {
-    /// <summary>
-    /// Interaction logic for DebugTabView.xaml
-    /// </summary>
     public partial class DebugTabView : UserControl
     {
         public DebugTabView()

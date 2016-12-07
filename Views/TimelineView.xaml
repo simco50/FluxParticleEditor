@@ -1,12 +1,18 @@
-﻿<UserControl x:Class="ParticleEditor.Views.TimelineView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParticleEditor.Views"
+             xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
+             xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MahApps.Metro" x:Class="ParticleEditor.Views.TimelineView"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="600">
-    <Grid>
+             d:DesignHeight="200" d:DesignWidth="600" x:Name="UserControl">
+    <Grid x:Name="Root">
+        <Grid.DataContext>
+            <viewModels:TimelineViewModel/>
+        </Grid.DataContext>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -19,21 +25,17 @@
             <Button Content="Play" HorizontalAlignment="Left" Width="60"/>
             <Button Content="Stop" HorizontalAlignment="Left" Margin="60,0,0,0" Width="60"/>
             <Button Content="Reset" HorizontalAlignment="Left" Margin="120,0,0,0" Width="59.5"/>
-            <Label Content="0.0/5.0" Margin="180,0,0,0" HorizontalAlignment="Left" Width="113"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-
-            </Grid>
+            <Grid Grid.Column="0"/>
             <Grid Grid.Column="1">
-                <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
-                    
-                </ScrollViewer>
+                <Label Content="{Binding ParticleSystem.Lifetime, ElementName=UserControl}"/>
             </Grid>
         </Grid>
     </Grid>
 </UserControl>
+

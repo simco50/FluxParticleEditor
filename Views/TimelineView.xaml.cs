@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParticleEditor.Data.ParticleSystem;
+using ParticleEditor.ViewModels;
+using ParticleEditor.Views.ParameterTabs;
 
 namespace ParticleEditor.Views
 {
@@ -22,7 +25,7 @@ namespace ParticleEditor.Views
     {
         public TimelineView()
         {
-            InitializeComponent();
+            InitializeComponent();    
         }
     }
 }

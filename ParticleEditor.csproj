@@ -62,6 +62,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\MahApps.Metro.1.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -89,22 +90,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\ApplicationHelper.cs" />
     <Compile Include="Helpers\Converters.cs" />
-    <Compile Include="Helpers\DataProvider.cs" />
-    <Compile Include="Data\ParticleSystem\KeyFramedValue.cs" />
-    <Compile Include="Data\ParticleSystem\Particle.cs" />
-    <Compile Include="Data\ParticleSystem\ParticleEmitter.cs" />
-    <Compile Include="Data\ParticleSystem\ParticleSystem.cs" />
-    <Compile Include="Data\Vector3.cs" />
+    <Compile Include="Helpers\ImageLoader.cs" />
+    <Compile Include="Helpers\ParticleFormatter.cs" />
+    <Compile Include="Model\ParticleSystem\KeyFramedValue.cs" />
+    <Compile Include="Model\ParticleSystem\Particle.cs" />
+    <Compile Include="Model\ParticleSystem\ParticleEmitter.cs" />
+    <Compile Include="Model\ParticleSystem\ParticleSystem.cs" />
+    <Compile Include="Model\Vector3.cs" />
     <Compile Include="Debugging\DebugLog.cs" />
-    <Compile Include="Helpers\SimonObservableDictionary.cs" />
+    <Compile Include="Helpers\ObservableDictionary.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\AnimationTabViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\BurstTabViewModel.cs" />
-    <Compile Include="ViewModels\ParameterTabs\DebugTabViewModel.cs" />
-    <Compile Include="ViewModels\ParameterTabs\GeneralTabViewModel.cs" />
     <Compile Include="ViewModels\ParticleVisualizerViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
     <Compile Include="Views\HelpWindowView.xaml.cs">
@@ -204,7 +205,26 @@
     <Resource Include="Resources\TransparentBackground.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Graphics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Exit.png" />
+    <Resource Include="Resources\Icons\Info.png" />
+    <Resource Include="Resources\Icons\New.png" />
+    <Resource Include="Resources\Icons\Open.png" />
+    <Resource Include="Resources\Icons\Save.png" />
+    <Resource Include="Resources\Icons\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Redo.png" />
+    <Resource Include="Resources\Icons\SaveAs.png" />
+    <Resource Include="Resources\Icons\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Copy.png" />
+    <Resource Include="Resources\Icons\Cut.png" />
+    <Resource Include="Resources\Icons\Paste.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

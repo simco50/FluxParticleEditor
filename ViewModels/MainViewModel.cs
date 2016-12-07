@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -25,14 +21,14 @@ namespace ParticleEditor.ViewModels
     {
         public MainViewModel()
         {
-            ParticleSystem = new ParticleSystem();
+            ParticleSystem = ParticleFormatter.MakeNewSystem();
 
-            DebugLog.LogEvent += AppLogger.LogInfo;
             FileLogger fileLogger = new FileLogger("ParticleEditor.log");
             DebugLog.LogEvent += fileLogger.LogInfo;
+            ApplicationLogger appLogger = new ApplicationLogger();
+            DebugLog.LogEvent += appLogger.LogInfo;
             DebugLog.Log("Initialized", "Application");
         }
-        public ApplicationLogger AppLogger { get; set; } = new ApplicationLogger();
 
         private  ParticleSystem _particleSystem;
         public ParticleSystem ParticleSystem
@@ -41,7 +37,8 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _particleSystem = value;
-                SpriteImage = DataProvider.ToImageSource(_particleSystem.ImagePath);
+                SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
+                OnPropertyChanged("ParticleSystem");
             }
         }
 
@@ -61,55 +58,44 @@ namespace ParticleEditor.ViewModels
             set { _hasUnsavedChanged = value; }
         }
 
-        public RelayCommand ImportParticleCommand{
-            get { return new RelayCommand(ImportParticle); }
+        private SolidColorBrush _backgroundColor = new SolidColorBrush(Color.FromRgb(50, 50, 50));
+        public SolidColorBrush BackgroundColor
+        {
+            get { return _backgroundColor; }
+            set
+            {
+                _backgroundColor = value;
+                OnPropertyChanged("BackgroundColor");
+            }
         }
-        private void ImportParticle()
+
+        public RelayCommand OpenFileCommand{
+            get { return new RelayCommand(OpenFile); }
+        }
+        private void OpenFile()
         {
             CheckForUnsavedChanges();
-
-            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.DefaultExt = ".json";
-            dialog.Filter = "Json (.json) | *.json";
-            bool? success = dialog.ShowDialog();
-            if (success == false)
-                return;
-            try
-            {
-                DebugLog.Log($"Import from {dialog.FileName}...", "Json import");
-                string data = File.ReadAllText(dialog.FileName);
-                ParticleSystem = JsonConvert.DeserializeObject<ParticleSystem>(data);
-                DebugLog.Log("Import successful");
-            }
-            catch (Exception exception)
-            {
-                DebugLog.Log(exception.Message, "Json import failed!", LogSeverity.Warning);
-            }
+            ParticleSystem system = ParticleFormatter.Open();
+            if (system != null) ParticleSystem = system;
         }
 
-        public RelayCommand ExportParticleCommand{
-            get { return new RelayCommand(ExportParticle); }
+        public RelayCommand SaveFileCommand{
+            get { return new RelayCommand(SaveFile); }
         }
-        private void ExportParticle()
+        private void SaveFile()
         {
-            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.DefaultExt = ".json";
-            dialog.Filter = "Json (.json) | *.json";
-            bool? success = dialog.ShowDialog();
-            if (success == false)
-                return;
-            try
-            {
-                DebugLog.Log($"Export to '{dialog.FileName}'...", "Json export");
-                string data = JsonConvert.SerializeObject(ParticleSystem, Formatting.Indented);
-                File.WriteAllText(dialog.FileName, data);
-                DebugLog.Log("Export successful", "Json export");
-            }
-            catch (Exception exception)
-            {
-                DebugLog.Log(exception.Message, "Json export failed!", LogSeverity.Warning);
-            }
-            HasUnsavedChanges = false;
+            if(ParticleFormatter.Save(ParticleSystem))
+                HasUnsavedChanges = false;
+        }
+
+        public RelayCommand SaveAsFileCommand
+        {
+            get { return new RelayCommand(SaveAsFile); }
+        }
+        private void SaveAsFile()
+        {
+            if (ParticleFormatter.SaveAs(ParticleSystem))
+                HasUnsavedChanges = false;
         }
 
         private void CheckForUnsavedChanges()
@@ -121,7 +107,7 @@ namespace ParticleEditor.ViewModels
                         "Your current particle system has unsaved changes, would you like to save it first?",
                         "Unsaved changes!", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
-                    ExportParticle();
+                    SaveFile();
             }
         }
 
@@ -136,7 +122,7 @@ namespace ParticleEditor.ViewModels
             if (success == false)
                 return;
             ParticleSystem.ImagePath = dialog.FileName;
-            SpriteImage = DataProvider.ToImageSource(_particleSystem.ImagePath);
+            SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
         }
 
         public RelayCommand ShutdownCommand {
@@ -167,8 +153,33 @@ namespace ParticleEditor.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public RelayCommand OpenColorPickerCommand
+        {
+            get { return new RelayCommand(OpenColorPicker);}
+        }
 
+        private void OpenColorPicker()
+        {
+            ColorDialog dialog = new ColorDialog();
+            dialog.SolidColorOnly = true;
+            dialog.AnyColor = true;
+            dialog.FullOpen = true;
+            dialog.Color = System.Drawing.Color.FromArgb(BackgroundColor.Color.R, BackgroundColor.Color.G, BackgroundColor.Color.B);
+            DialogResult result = dialog.ShowDialog();
+            if (result != DialogResult.OK)
+                return;
+            BackgroundColor = new SolidColorBrush(Color.FromRgb(dialog.Color.R, dialog.Color.G, dialog.Color.B));
+        }
+
+        public RelayCommand NewParticleCommand { get { return new RelayCommand(NewParticle);} }
+        private void NewParticle()
+        {
+            CheckForUnsavedChanges();
+            ParticleSystem = ParticleFormatter.MakeNewSystem();
+            DebugLog.Log("Reset particle system", "Application");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

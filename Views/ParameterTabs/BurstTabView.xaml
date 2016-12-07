@@ -7,14 +7,13 @@
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ParticleEditor.Views.ParameterTabs.BurstTabView"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" x:Name="UserControl">
 
     <UserControl.Resources>
         <helpers:BurstConverter x:Key="BurstConverter"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Name="Root">
         <Grid.DataContext>
             <parameterTabs:BurstTabViewModel/>
         </Grid.DataContext>
@@ -37,7 +36,7 @@
         </Grid>
             </Border>
         <Grid Grid.Row="1">
-            <ListBox ItemsSource="{Binding MainViewModel.ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListBox ItemsSource="{Binding ElementName=UserControl, Path=ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -48,7 +47,7 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="{Binding Key}" Grid.Column="0"/>
                             <Label Content="{Binding Value}" Grid.Column="1"/>
-                            <Button Content="-" Command="{Binding DataContext.RemoveBurstCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Key}" Grid.Column="2"/>
+                            <Button Content="-" Command="{Binding DataContext.RemoveBurstCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Key}" Grid.Column="2" ToolTip="Remove burst"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -65,7 +64,7 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="Text_Key" Text="0" Grid.Column="0"/>
             <TextBox x:Name="Text_Value" Text="0" Grid.Column="1"/>
-            <Button Content="+" Command="{Binding AddBurstCommand}" Grid.Column="2">
+            <Button Content="+" Command="{Binding AddBurstCommand}" Grid.Column="2" ToolTip="Add burst">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource BurstConverter}">
                         <Binding ElementName="Text_Key" Path="Text"/>

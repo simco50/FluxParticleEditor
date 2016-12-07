@@ -24,13 +24,7 @@ namespace ParticleEditor.ViewModels.ParameterTabs
 
     public class BurstTabViewModel
     {
-        public MainViewModel MainViewModel
-        {
-            get
-            {
-                return Application.Current.MainWindow.DataContext as MainViewModel;
-            }
-        }
+        public ParticleSystem ParticleSystem { get; set; }
 
         public RelayCommand<Burst> AddBurstCommand
         { get { return new RelayCommand<Burst>(AddBurst);} }
@@ -42,12 +36,12 @@ namespace ParticleEditor.ViewModels.ParameterTabs
                 DebugLog.Log("Input format not valid!", "Add Burst", LogSeverity.Warning);
                 return;
             }
-            if (burst.Time > MainViewModel.ParticleSystem.Duration)
+            if (burst.Time > ParticleSystem.Duration)
             {
-                DebugLog.Log($"The time must be smaller than the duration of the particle system.\nThe duration is {MainViewModel.ParticleSystem.Duration:0.00}s while the given timestamp is {burst.Time:0.00}s.", "Add Burst", LogSeverity.Warning);
+                DebugLog.Log($"The time must be smaller than the duration of the particle system.\nThe duration is {ParticleSystem.Duration:0.00}s while the given timestamp is {burst.Time:0.00}s.", "Add Burst", LogSeverity.Warning);
                 return;
             }
-            MainViewModel.ParticleSystem.Bursts.AddUnique(burst.Time, burst.Amount);
+            ParticleSystem.Bursts.AddUnique(burst.Time, burst.Amount);
         }
 
         public RelayCommand<float> RemoveBurstCommand
@@ -56,7 +50,7 @@ namespace ParticleEditor.ViewModels.ParameterTabs
         private void RemoveBurst(float key)
         {
             Random rand = new Random();
-            if (MainViewModel.ParticleSystem.Bursts.Remove(key) == false)
+            if (ParticleSystem.Bursts.Remove(key) == false)
                 DebugLog.Log($"Key with value {key} does not exists!", "Remove Burst", LogSeverity.Warning);
         }
     }

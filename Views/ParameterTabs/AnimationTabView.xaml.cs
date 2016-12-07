@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParticleEditor.Data.ParticleSystem;
+using ParticleEditor.ViewModels.ParameterTabs;
 
 namespace ParticleEditor.Views.ParameterTabs
 {

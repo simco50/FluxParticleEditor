@@ -19,12 +19,15 @@ namespace ParticleEditor.Debugging
 
     public static class DebugLog
     {
+        public static ObservableCollection<string> Entries { get; set; } = new ObservableCollection<string>();
+
         public delegate void LogDelegate(string what, string source, LogSeverity severity);
         public static event LogDelegate LogEvent;
 
         public static void Log(string what, string source = "", LogSeverity severity = LogSeverity.Info)
         {
             LogEvent?.Invoke(what, source, severity);
+            Entries.Add($"[{DateTime.Now.ToShortTimeString()}] {source} > {what}");
         }
     }
 
@@ -39,7 +42,7 @@ namespace ParticleEditor.Debugging
 
         public FileLogger(string filePath)
         {
-            filePath += DataProvider.IsDesignMode ?  DataProvider.DataPath : "";
+            filePath += ApplicationHelper.IsDesignMode ? ApplicationHelper.DataPath : "";
             _fileStream = new StreamWriter(filePath);
             _fileStream.AutoFlush = true;
         }
@@ -51,7 +54,7 @@ namespace ParticleEditor.Debugging
 
     public class ApplicationLogger : Logger
     {
-        public ObservableCollection<string> Entries { get; set; } = new ObservableCollection<string>();
+        
 
         public override void LogInfo(string what, string source, LogSeverity severity)
         {
@@ -68,7 +71,6 @@ namespace ParticleEditor.Debugging
                 default:
                     throw new ArgumentOutOfRangeException(nameof(severity), severity, null);
             }
-            Entries.Add($"[{DateTime.Now.ToShortTimeString()}] {source} > {what}");
         }
     }
 }

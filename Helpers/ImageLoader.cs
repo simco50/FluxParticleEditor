@@ -12,18 +12,13 @@ using ParticleEditor.Debugging;
 
 namespace ParticleEditor.Helpers
 {
-    public static class DataProvider
+    public static class ImageLoader
     {
-        public static bool IsDesignMode
-            => (bool)(DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue);
-
-        public static string DataPath { get; } = "D:/2016-2017/S5 - Tool Development/Exam/ParticleEditor/bin/Debug/";
-
         private static readonly string FallbackImage = "../../Resources/ErrorTexture.jpg";
         public static ImageSource ToImageSource(string filePath)
         {
             DebugLog.Log($"Loading image at '{filePath}'...");
-            string rootPath = IsDesignMode ? DataPath : "";
+            string rootPath = ApplicationHelper.IsDesignMode ? ApplicationHelper.DataPath : "";
             string fileName = Path.Combine(rootPath, filePath);
             fileName = Path.GetFullPath(fileName);
 
