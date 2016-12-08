@@ -18,10 +18,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#CCD6D6D6">
+        <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
             <Label Content="TIMELINE" FontFamily="Segoe UI Semilight"/>
         </Grid>
-        <Grid Grid.Row="1" Background="#CCFDFDFD">
+        <Grid Grid.Row="1">
             <Button Content="Play" HorizontalAlignment="Left" Width="60"/>
             <Button Content="Stop" HorizontalAlignment="Left" Margin="60,0,0,0" Width="60"/>
             <Button Content="Reset" HorizontalAlignment="Left" Margin="120,0,0,0" Width="59.5"/>

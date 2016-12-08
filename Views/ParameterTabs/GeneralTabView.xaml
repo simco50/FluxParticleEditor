@@ -12,7 +12,7 @@
             <helpers:EnumToInt x:Key="EnumConverter"/>
         </Grid.Resources>
         <StackPanel>
-            <Expander IsExpanded="True" Background="#CCD6D6D6" Header="System" BorderBrush="{x:Null}">
+            <Expander IsExpanded="True" Header="System" BorderBrush="{x:Null}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -96,7 +96,7 @@
                     </Grid>
                 </StackPanel>
             </Expander>
-            <Expander IsExpanded="True" Background="#CCD6D6D6" Header="Emission" BorderBrush="{x:Null}">
+            <Expander IsExpanded="True" Header="Emission" BorderBrush="{x:Null}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -116,7 +116,7 @@
                     </Grid>
                 </StackPanel>
             </Expander>
-            <Expander IsExpanded="True" Background="#CCD6D6D6" Header="Shape" BorderBrush="{x:Null}">
+            <Expander IsExpanded="True" Header="Shape" BorderBrush="{x:Null}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>

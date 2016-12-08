@@ -10,7 +10,6 @@ using System.Windows;
 using GalaSoft.MvvmLight.CommandWpf;
 using ParticleEditor.Annotations;
 using ParticleEditor.Data.ParticleSystem;
-using ParticleEditor.Debugging;
 using ParticleEditor.Helpers;
 using ParticleEditor.Views;
 

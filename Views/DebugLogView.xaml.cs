@@ -10,14 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
-namespace ParticleEditor.Views.ParameterTabs
+namespace ParticleEditor.Views
 {
-    public partial class DebugTabView : UserControl
+    /// <summary>
+    /// Interaction logic for DebugLogView.xaml
+    /// </summary>
+    public partial class DebugLogView : MetroWindow
     {
-        public DebugTabView()
+        public DebugLogView()
         {
             InitializeComponent();
         }

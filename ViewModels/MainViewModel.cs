@@ -6,10 +6,10 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
+using MahApps.Metro;
 using Newtonsoft.Json;
 using ParticleEditor.Annotations;
 using ParticleEditor.Data.ParticleSystem;
-using ParticleEditor.Debugging;
 using ParticleEditor.Helpers;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
@@ -139,18 +139,11 @@ namespace ParticleEditor.ViewModels
             get { return new RelayCommand(ShowHelpWindow);}
         }
         private void ShowHelpWindow()
-        {
-            if (Application.Current.MainWindow.OwnedWindows.Count > 0)
-            {
-                Application.Current.MainWindow.OwnedWindows[0]?.Focus();
-            }
-            else
-            {   
-                HelpWindowView helpWindow = new HelpWindowView();
-                helpWindow.ShowInTaskbar = false;
-                helpWindow.Owner = Application.Current.MainWindow;
-                helpWindow.ShowDialog();
-            }
+        { 
+            HelpWindowView helpWindow = new HelpWindowView();
+            helpWindow.ShowInTaskbar = false;
+            helpWindow.Owner = Application.Current.MainWindow;
+            helpWindow.ShowDialog();
         }
 
         public RelayCommand OpenColorPickerCommand
@@ -177,6 +170,29 @@ namespace ParticleEditor.ViewModels
             CheckForUnsavedChanges();
             ParticleSystem = ParticleFormatter.MakeNewSystem();
             DebugLog.Log("Reset particle system", "Application");
+        }
+
+        public RelayCommand OpenDebugLogView { get { return new RelayCommand(OpenDebugLog);} }
+
+        private void OpenDebugLog()
+        {
+            DebugLogView logWindow = new DebugLogView();
+            logWindow.ShowInTaskbar = false;
+            logWindow.Owner = Application.Current.MainWindow;
+            logWindow.ShowDialog();
+        }
+
+        public RelayCommand<string> ChangeThemeCommand
+        {
+            get { return new RelayCommand<string>(ChangeTheme); }
+        }
+
+        private void ChangeTheme(string theme)
+        {
+            string[] parameters = theme.Split('/');
+            Accent accent = ThemeManager.GetAccent(parameters[1]);
+            AppTheme appTheme = ThemeManager.GetAppTheme(parameters[0]);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, appTheme);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

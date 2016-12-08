@@ -24,18 +24,16 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-            <Border BorderBrush="#FF727272" BorderThickness="0,0,0,1">
-        <Grid Grid.Row="0" Background="#CCD6D6D6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="40"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="> TIME" Grid.Column="0" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
-            <Label Content="> PARTICLES" Grid.Column="1" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
-        </Grid>
-            </Border>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="> TIME" Grid.Column="0" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
+                <Label Content="> PARTICLES" Grid.Column="1" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
+            </Grid>
+            <Grid Grid.Row="1">
             <ListBox ItemsSource="{Binding ElementName=UserControl, Path=ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

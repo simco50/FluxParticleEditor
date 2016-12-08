@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ParticleEditor.Data.ParticleSystem;
-using ParticleEditor.Debugging;
 
 namespace ParticleEditor.Helpers
 {

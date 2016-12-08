@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace ParticleEditor.Views
 {
     /// <summary>
     /// Interaction logic for HelpWindowView.xaml
     /// </summary>
-    public partial class HelpWindowView : Window
+    public partial class HelpWindowView : MetroWindow
     {
         public HelpWindowView()
         {

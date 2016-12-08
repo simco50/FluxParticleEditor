@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ParticleEditor.Helpers;
 
-namespace ParticleEditor.Debugging
+namespace ParticleEditor.Helpers
 {
     public enum LogSeverity
     {

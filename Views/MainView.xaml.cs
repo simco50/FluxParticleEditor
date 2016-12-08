@@ -13,13 +13,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro;
+using MahApps.Metro.Controls;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using ParticleEditor.Data;
+using Application = System.Windows.Application;
 
 namespace ParticleEditor.Views
 {
-    public partial class MainView : Window
+    public partial class MainView : MetroWindow
     {
         public MainView()
         {

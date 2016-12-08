@@ -99,7 +99,7 @@
     <Compile Include="Model\ParticleSystem\ParticleEmitter.cs" />
     <Compile Include="Model\ParticleSystem\ParticleSystem.cs" />
     <Compile Include="Model\Vector3.cs" />
-    <Compile Include="Debugging\DebugLog.cs" />
+    <Compile Include="Helpers\DebugLog.cs" />
     <Compile Include="Helpers\ObservableDictionary.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
@@ -108,6 +108,9 @@
     <Compile Include="ViewModels\ParameterTabs\BurstTabViewModel.cs" />
     <Compile Include="ViewModels\ParticleVisualizerViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
+    <Compile Include="Views\DebugLogView.xaml.cs">
+      <DependentUpon>DebugLogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HelpWindowView.xaml.cs">
       <DependentUpon>HelpWindowView.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\DebugLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HelpWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
