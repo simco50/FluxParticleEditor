@@ -22,9 +22,15 @@
             <Label Content="TIMELINE" FontFamily="Segoe UI Semilight"/>
         </Grid>
         <Grid Grid.Row="1">
-            <Button Content="Play" HorizontalAlignment="Left" Width="60"/>
-            <Button Content="Stop" HorizontalAlignment="Left" Margin="60,0,0,0" Width="60"/>
-            <Button Content="Reset" HorizontalAlignment="Left" Margin="120,0,0,0" Width="59.5"/>
+            <Button HorizontalAlignment="Left" Width="25">
+                <Image Source="/ParticleEditor;component/Resources/Icons/Play.png"/>
+            </Button>
+            <Button HorizontalAlignment="Left" Margin="25,0,0,0" Width="25">
+                <Image Source="/ParticleEditor;component/Resources/Icons/Pause.png"/>
+            </Button>
+            <Button HorizontalAlignment="Left" Margin="50,0,0,0" Width="25">
+                <Image Source="/ParticleEditor;component/Resources/Icons/Stop.png"/>
+            </Button>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>

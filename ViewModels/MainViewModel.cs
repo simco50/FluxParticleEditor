@@ -1,13 +1,11 @@
-﻿using System;
+﻿
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro;
-using Newtonsoft.Json;
 using ParticleEditor.Annotations;
 using ParticleEditor.Data.ParticleSystem;
 using ParticleEditor.Helpers;
@@ -98,7 +96,7 @@ namespace ParticleEditor.ViewModels
                 HasUnsavedChanges = false;
         }
 
-        private void CheckForUnsavedChanges()
+        private async void CheckForUnsavedChanges()
         {
             if (HasUnsavedChanges)
             {

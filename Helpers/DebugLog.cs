@@ -17,9 +17,22 @@ namespace ParticleEditor.Helpers
         Error,
     }
 
+    public struct LogEntry
+    {
+        public LogEntry(string what, string source)
+        {
+            What = what;
+            Source = source;
+            Timestamp = DateTime.Now;
+        }
+        public string Source { get; set; }
+        public string What { get; set; }
+        public DateTime Timestamp { get; set; }
+    }
+
     public static class DebugLog
     {
-        public static ObservableCollection<string> Entries { get; set; } = new ObservableCollection<string>();
+        public static ObservableCollection<LogEntry> Entries { get; set; } = new ObservableCollection<LogEntry>();
 
         public delegate void LogDelegate(string what, string source, LogSeverity severity);
         public static event LogDelegate LogEvent;
@@ -27,7 +40,7 @@ namespace ParticleEditor.Helpers
         public static void Log(string what, string source = "", LogSeverity severity = LogSeverity.Info)
         {
             LogEvent?.Invoke(what, source, severity);
-            Entries.Add($"[{DateTime.Now.ToShortTimeString()}] {source} > {what}");
+            Entries.Add(new LogEntry(what, source));
         }
     }
 
@@ -38,24 +51,26 @@ namespace ParticleEditor.Helpers
 
     public class FileLogger : Logger
     {
-        private StreamWriter _fileStream;
+        private string _filePath;
 
         public FileLogger(string filePath)
         {
-            filePath += ApplicationHelper.IsDesignMode ? ApplicationHelper.DataPath : "";
-            _fileStream = new StreamWriter(filePath);
-            _fileStream.AutoFlush = true;
+            _filePath = (ApplicationHelper.IsDesignMode ? ApplicationHelper.DataPath : "") + filePath;
+            FileStream logFile = File.Create(_filePath);
+            logFile.Close();
         }
         public override void LogInfo(string what, string source, LogSeverity severity)
         {
-            _fileStream.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {source} > {what}");
+            FileStream logFile = File.OpenWrite(_filePath);
+            using (StreamWriter sw = new StreamWriter(logFile))
+            {
+                sw.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {source} > {what}");
+            }
         }
     }
 
     public class ApplicationLogger : Logger
     {
-        
-
         public override void LogInfo(string what, string source, LogSeverity severity)
         {
             switch (severity)

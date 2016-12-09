@@ -8,17 +8,27 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Log" Height="300" Width="300" WindowStyle="ToolWindow" BorderThickness="3" BorderBrush="{DynamicResource AccentColorBrush}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <ItemsControl ItemsSource="{x:Static Helpers:DebugLog.Entries}" Margin="3">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding}" TextWrapping="WrapWithOverflow"/>
-                        <Separator/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Grid>
+    <ScrollViewer>
+        <Grid>
+            <ItemsControl ItemsSource="{x:Static Helpers:DebugLog.Entries}" Margin="3">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Grid Background="{DynamicResource AccentColorBrush}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="2" Grid.Column="0" Text="{Binding Timestamp, StringFormat={}[{0:HH:mm}]}"/>
+                                <TextBlock Margin="2"  Grid.Column="1" Text="{Binding Source}"/>
+                            </Grid>
+                            <TextBlock Margin="2" Text="{Binding What}" TextWrapping="WrapWithOverflow"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </Grid>
+    </ScrollViewer>
 </controls:MetroWindow>
 

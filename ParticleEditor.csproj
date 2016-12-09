@@ -123,9 +123,6 @@
     <Compile Include="Views\ParameterTabs\BurstTabView.xaml.cs">
       <DependentUpon>BurstTabView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ParameterTabs\DebugTabView.xaml.cs">
-      <DependentUpon>DebugTabView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ParameterTabs\GeneralTabView.xaml.cs">
       <DependentUpon>GeneralTabView.xaml</DependentUpon>
     </Compile>
@@ -185,10 +182,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ParameterTabs\DebugTabView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ParameterTabs\GeneralTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,6 +225,14 @@
     <Resource Include="Resources\Icons\Copy.png" />
     <Resource Include="Resources\Icons\Cut.png" />
     <Resource Include="Resources\Icons\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Pause.png" />
+    <Resource Include="Resources\Icons\Play.png" />
+    <Resource Include="Resources\Icons\Stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Log.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

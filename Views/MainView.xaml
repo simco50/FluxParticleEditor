@@ -25,6 +25,7 @@
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveFileCommand}"/>
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenFileCommand}"/>
         <KeyBinding Key="F1" Command="{Binding ShowHelpWindowCommand}"/>
+        <KeyBinding Key="F2" Command="{Binding OpenDebugLogView}"/>
     </Window.InputBindings>
 
     <Grid>
@@ -108,12 +109,13 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Help">
-                        <MenuItem Header="About Particle Editor" Command="{Binding ShowHelpWindowCommand}" InputGestureText="F1">
+                        <MenuItem Header="Show log" Command="{Binding OpenDebugLogView}" InputGestureText="F2">
                             <MenuItem.Icon>
-                                <Image Source="/ParticleEditor;component/Resources/Icons/Info.png"/>
+                                <Image Source="/ParticleEditor;component/Resources/Icons/Log.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Show log" Command="{Binding OpenDebugLogView}">
+                        <Separator/>
+                        <MenuItem Header="About Particle Editor" Command="{Binding ShowHelpWindowCommand}" InputGestureText="F1">
                             <MenuItem.Icon>
                                 <Image Source="/ParticleEditor;component/Resources/Icons/Info.png"/>
                             </MenuItem.Icon>
@@ -152,9 +154,6 @@
                         </TabItem>
                         <TabItem Header="Animation" controls:ControlsHelper.HeaderFontSize="18">
                             <parameterTabs:AnimationTabView/>
-                        </TabItem>
-                        <TabItem Header="Debug" controls:ControlsHelper.HeaderFontSize="18">
-                            <parameterTabs:DebugTabView/>
                         </TabItem>
                     </TabControl>
                 </Grid>

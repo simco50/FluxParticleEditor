@@ -16,7 +16,7 @@ namespace ParticleEditor.Helpers
         private static readonly string FallbackImage = "../../Resources/ErrorTexture.jpg";
         public static ImageSource ToImageSource(string filePath)
         {
-            DebugLog.Log($"Loading image at '{filePath}'...");
+            DebugLog.Log($"Loading image at '{filePath}'...", "Image loading");
             string rootPath = ApplicationHelper.IsDesignMode ? ApplicationHelper.DataPath : "";
             string fileName = Path.Combine(rootPath, filePath);
             fileName = Path.GetFullPath(fileName);
@@ -34,7 +34,7 @@ namespace ParticleEditor.Helpers
             imageData.StreamSource = new MemoryStream(data);
             imageData.EndInit();
             imageData.Freeze();
-            DebugLog.Log($"Image loading successful");
+            DebugLog.Log($"Image loading successful", "Image loading");
             return imageData;
         }
     }
