@@ -16,6 +16,7 @@ namespace ParticleEditor.Graphics.ImageControl
         private DX10RenderCanvas _renderControl;
 
         public ParticleEmitter ParticleEmitter { get; set; }
+        public OrbitCamera Camera { get; set; } = new OrbitCamera();
 
         public void Initialize(Device1 device, RenderTargetView renderTarget, DX10RenderCanvas canvasControl)
         {
@@ -38,8 +39,9 @@ namespace ParticleEditor.Graphics.ImageControl
         public void Update(float deltaT)
         {
             ParticleEmitter.Update(deltaT);
+            Camera.Update(deltaT);
 
-            var viewMat = Matrix.LookAtLH(new Vector3(0, 0, -10), Vector3.Zero, Vector3.UnitY);
+            var viewMat = Matrix.LookAtLH(Camera.Position, Vector3.Zero, Vector3.UnitY);
             var projMat = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, (float)_renderControl.ActualWidth / (float)_renderControl.ActualHeight, 0.1f, 1000f);
             ParticleEmitter.ViewInvVar.SetMatrix(Matrix.Invert(viewMat));
             ParticleEmitter.ViewProjVar.SetMatrix(viewMat * projMat);

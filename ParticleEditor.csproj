@@ -122,6 +122,7 @@
     <Compile Include="Graphics\ImageControl\Disposer.cs" />
     <Compile Include="Graphics\ImageControl\DX10ImageSource.cs" />
     <Compile Include="Graphics\ImageControl\DX10RenderCanvas.cs" />
+    <Compile Include="Graphics\ImageControl\OrbitCamera.cs" />
     <Compile Include="Graphics\ImageControl\ParticleViewport.cs" />
     <Compile Include="Graphics\ImageControl\IDX10Viewport.cs" />
     <Compile Include="Graphics\Interfaces\IEffect.cs" />

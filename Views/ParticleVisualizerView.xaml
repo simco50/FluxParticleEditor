@@ -5,13 +5,44 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
              xmlns:imageControl="clr-namespace:ParticleEditor.Graphics.ImageControl"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:command="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.DataContext>
             <viewModels:ParticleVisualizerViewModel/>
         </Grid.DataContext>
-        <imageControl:DX10RenderCanvas Viewport="{Binding Viewport}" Stretch="Fill"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Width="25"/>
+                <Button Width="25"/>
+                <Slider Width="100" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <imageControl:DX10RenderCanvas Viewport="{Binding Viewport}" Stretch="Fill">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseWheel">
+                        <command:EventToCommand Command="{Binding OnScroll}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseDown">
+                        <command:EventToCommand Command="{Binding OnMouseDown}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseUp">
+                        <command:EventToCommand Command="{Binding OnMouseUp}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <command:EventToCommand Command="{Binding OnMouseLeave}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </imageControl:DX10RenderCanvas>
+        </Grid>
     </Grid>
 </UserControl>
 
