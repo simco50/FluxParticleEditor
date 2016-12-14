@@ -8,9 +8,9 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Log" Height="300" Width="300" WindowStyle="ToolWindow" BorderThickness="3" BorderBrush="{DynamicResource AccentColorBrush}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <ScrollViewer>
+    <ScrollViewer Margin="3">
         <Grid>
-            <ItemsControl ItemsSource="{x:Static Helpers:DebugLog.Entries}" Margin="3">
+            <ItemsControl ItemsSource="{x:Static Helpers:DebugLog.Entries}" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -19,8 +19,8 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Margin="2" Grid.Column="0" Text="{Binding Timestamp, StringFormat={}[{0:HH:mm}]}"/>
-                                <TextBlock Margin="2"  Grid.Column="1" Text="{Binding Source}"/>
+                                <TextBlock Foreground="White" Margin="2" Grid.Column="0" Text="{Binding Timestamp, StringFormat={}[{0:HH:mm}]}"/>
+                                <TextBlock Foreground="White" Margin="2"  Grid.Column="1" Text="{Binding Source}"/>
                             </Grid>
                             <TextBlock Margin="2" Text="{Binding What}" TextWrapping="WrapWithOverflow"/>
                         </StackPanel>

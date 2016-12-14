@@ -1,14 +1,16 @@
-﻿
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using ParticleEditor.Annotations;
 using ParticleEditor.Data.ParticleSystem;
+using ParticleEditor.Graphics.ImageControl;
 using ParticleEditor.Helpers;
+using ParticleEditor.Helpers.Data;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -19,16 +21,44 @@ namespace ParticleEditor.ViewModels
     {
         public MainViewModel()
         {
-            ParticleSystem = ParticleFormatter.MakeNewSystem();
+            //Hook up the log events
+            InitializeLog();
+            DebugLog.Log("Initialized", "Application");
 
+            //Create a new particle system
+            ParticleSystem = ParticleFormatter.MakeNewSystem();
+        }
+
+        #region
+        private void InitializeLog()
+        {
             FileLogger fileLogger = new FileLogger("ParticleEditor.log");
             DebugLog.LogEvent += fileLogger.LogInfo;
             ApplicationLogger appLogger = new ApplicationLogger();
             DebugLog.LogEvent += appLogger.LogInfo;
-            DebugLog.Log("Initialized", "Application");
         }
 
-        private  ParticleSystem _particleSystem;
+        private async void CheckForUnsavedChanges()
+        {
+            if (HasUnsavedChanges)
+            {
+                MetroWindow window = Application.Current.MainWindow as MetroWindow;
+                MetroDialogSettings settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Yes";
+                settings.NegativeButtonText = "No";
+                MessageDialogResult result = await window.ShowMessageAsync("Unsaved changes",
+                    "The current particle system has unsaved changes, would you like to save it first?",
+                    MessageDialogStyle.AffirmativeAndNegative, settings);
+                if (result == MessageDialogResult.Affirmative)
+                    SaveFile();
+            }
+        }
+        #endregion METHODS
+
+        #region
+        public ParticleViewport ParticleViewport { get; set; } = new ParticleViewport();
+
+        private ParticleSystem _particleSystem;
         public ParticleSystem ParticleSystem
         {
             get { return _particleSystem; }
@@ -66,10 +96,10 @@ namespace ParticleEditor.ViewModels
                 OnPropertyChanged("BackgroundColor");
             }
         }
+        #endregion PROPERTIES
 
-        public RelayCommand OpenFileCommand{
-            get { return new RelayCommand(OpenFile); }
-        }
+        #region
+        public RelayCommand OpenFileCommand => new RelayCommand(OpenFile);
         private void OpenFile()
         {
             CheckForUnsavedChanges();
@@ -77,41 +107,21 @@ namespace ParticleEditor.ViewModels
             if (system != null) ParticleSystem = system;
         }
 
-        public RelayCommand SaveFileCommand{
-            get { return new RelayCommand(SaveFile); }
-        }
+        public RelayCommand SaveFileCommand => new RelayCommand(SaveFile);
         private void SaveFile()
         {
             if(ParticleFormatter.Save(ParticleSystem))
                 HasUnsavedChanges = false;
         }
 
-        public RelayCommand SaveAsFileCommand
-        {
-            get { return new RelayCommand(SaveAsFile); }
-        }
+        public RelayCommand SaveAsFileCommand => new RelayCommand(SaveAsFile);
         private void SaveAsFile()
         {
             if (ParticleFormatter.SaveAs(ParticleSystem))
                 HasUnsavedChanges = false;
         }
 
-        private async void CheckForUnsavedChanges()
-        {
-            if (HasUnsavedChanges)
-            {
-                MessageBoxResult result =
-                    MessageBox.Show(
-                        "Your current particle system has unsaved changes, would you like to save it first?",
-                        "Unsaved changes!", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                    SaveFile();
-            }
-        }
-
-        public RelayCommand LoadImageCommand {
-            get { return new RelayCommand(LoadImage);}
-        }
+        public RelayCommand LoadImageCommand => new RelayCommand(LoadImage);
         private void LoadImage()
         {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
@@ -123,9 +133,7 @@ namespace ParticleEditor.ViewModels
             SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
         }
 
-        public RelayCommand ShutdownCommand {
-            get { return new RelayCommand(Shutdown);}
-        }
+        public RelayCommand ShutdownCommand => new RelayCommand(Shutdown);
         private void Shutdown()
         {
             CheckForUnsavedChanges();
@@ -133,9 +141,7 @@ namespace ParticleEditor.ViewModels
             Application.Current.Shutdown();
         }
 
-        public RelayCommand ShowHelpWindowCommand {
-            get { return new RelayCommand(ShowHelpWindow);}
-        }
+        public RelayCommand ShowHelpWindowCommand => new RelayCommand(ShowHelpWindow);
         private void ShowHelpWindow()
         { 
             HelpWindowView helpWindow = new HelpWindowView();
@@ -144,11 +150,7 @@ namespace ParticleEditor.ViewModels
             helpWindow.ShowDialog();
         }
 
-        public RelayCommand OpenColorPickerCommand
-        {
-            get { return new RelayCommand(OpenColorPicker);}
-        }
-
+        public RelayCommand OpenColorPickerCommand => new RelayCommand(OpenColorPicker);
         private void OpenColorPicker()
         {
             ColorDialog dialog = new ColorDialog();
@@ -162,7 +164,7 @@ namespace ParticleEditor.ViewModels
             BackgroundColor = new SolidColorBrush(Color.FromRgb(dialog.Color.R, dialog.Color.G, dialog.Color.B));
         }
 
-        public RelayCommand NewParticleCommand { get { return new RelayCommand(NewParticle);} }
+        public RelayCommand NewParticleCommand => new RelayCommand(NewParticle);
         private void NewParticle()
         {
             CheckForUnsavedChanges();
@@ -170,8 +172,7 @@ namespace ParticleEditor.ViewModels
             DebugLog.Log("Reset particle system", "Application");
         }
 
-        public RelayCommand OpenDebugLogView { get { return new RelayCommand(OpenDebugLog);} }
-
+        public RelayCommand OpenDebugLogView => new RelayCommand(OpenDebugLog);
         private void OpenDebugLog()
         {
             DebugLogView logWindow = new DebugLogView();
@@ -180,11 +181,7 @@ namespace ParticleEditor.ViewModels
             logWindow.ShowDialog();
         }
 
-        public RelayCommand<string> ChangeThemeCommand
-        {
-            get { return new RelayCommand<string>(ChangeTheme); }
-        }
-
+        public RelayCommand<string> ChangeThemeCommand => new RelayCommand<string>(ChangeTheme);
         private void ChangeTheme(string theme)
         {
             string[] parameters = theme.Split('/');
@@ -192,6 +189,8 @@ namespace ParticleEditor.ViewModels
             AppTheme appTheme = ThemeManager.GetAppTheme(parameters[0]);
             ThemeManager.ChangeAppStyle(Application.Current, accent, appTheme);
         }
+
+#endregion COMMANDS
 
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

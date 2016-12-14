@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ParticleEditor.Data.ParticleSystem;
 
-namespace ParticleEditor.Helpers
+namespace ParticleEditor.Helpers.Data
 {
     public static class ParticleFormatter
     {

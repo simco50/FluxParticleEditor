@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using ParticleEditor.Helpers;
 
 namespace ParticleEditor.Helpers
@@ -44,12 +46,12 @@ namespace ParticleEditor.Helpers
         }
     }
 
-    public abstract class Logger
+    public interface ILogger
     {
-        abstract public void LogInfo(string what, string source, LogSeverity severity);
+        void LogInfo(string what, string source, LogSeverity severity);
     }
 
-    public class FileLogger : Logger
+    public class FileLogger : ILogger
     {
         private string _filePath;
 
@@ -59,26 +61,29 @@ namespace ParticleEditor.Helpers
             FileStream logFile = File.Create(_filePath);
             logFile.Close();
         }
-        public override void LogInfo(string what, string source, LogSeverity severity)
+        public void LogInfo(string what, string source, LogSeverity severity)
         {
-            FileStream logFile = File.OpenWrite(_filePath);
-            using (StreamWriter sw = new StreamWriter(logFile))
+            using (StreamWriter sw = File.AppendText(_filePath))
             {
                 sw.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {source} > {what}");
             }
         }
     }
 
-    public class ApplicationLogger : Logger
+    public class ApplicationLogger : ILogger
     {
-        public override void LogInfo(string what, string source, LogSeverity severity)
+        public void LogInfo(string what, string source, LogSeverity severity)
         {
             switch (severity)
             {
                 case LogSeverity.Info:
                     break;
                 case LogSeverity.Warning:
-                    MessageBox.Show(what, source, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MetroWindow window = Application.Current.MainWindow as MetroWindow;
+                    MetroDialogSettings settings = new MetroDialogSettings();
+                    settings.AnimateHide = false;
+                    settings.AnimateShow = false;
+                    window.ShowMessageAsync(source, what, MessageDialogStyle.Affirmative, settings);
                     break;
                 case LogSeverity.Error:
                     MessageBox.Show(what, source, MessageBoxButton.OK, MessageBoxImage.Error);

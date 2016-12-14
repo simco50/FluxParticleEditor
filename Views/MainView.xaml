@@ -8,25 +8,27 @@
         xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:parameterTabs="clr-namespace:ParticleEditor.Views.ParameterTabs"
+        xmlns:ImageControl="clr-namespace:ParticleEditor.Graphics.ImageControl"
         x:Class="ParticleEditor.Views.MainView"
         mc:Ignorable="d"
-        Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="700" Icon="/ParticleEditor;component/Resources/Logo.png" WindowStartupLocation="CenterScreen"
+        Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="00" Icon="/ParticleEditor;component/Resources/Logo.png" WindowStartupLocation="CenterScreen"
         BorderThickness="3" BorderBrush="{DynamicResource AccentColorBrush}">
-    <Window.DataContext>
-        <viewModels:MainViewModel/>
-    </Window.DataContext>
 
-    <Window.Resources>
+    <controls:MetroWindow.Resources>
         <helpers:EnumToInt x:Key="EnumToIntConverter"/>
-    </Window.Resources>
-    
-    <Window.InputBindings>
+    </controls:MetroWindow.Resources>
+
+    <controls:MetroWindow.DataContext>
+        <viewModels:MainViewModel/>
+    </controls:MetroWindow.DataContext>
+
+    <controls:MetroWindow.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewParticleCommand}"/>
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveFileCommand}"/>
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenFileCommand}"/>
         <KeyBinding Key="F1" Command="{Binding ShowHelpWindowCommand}"/>
         <KeyBinding Key="F2" Command="{Binding OpenDebugLogView}"/>
-    </Window.InputBindings>
+    </controls:MetroWindow.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -39,7 +41,7 @@
             <DockPanel>
                 <Menu DockPanel.Dock="Top">
                     <Menu.Resources>
-                        <Style TargetType="Image">
+                        <Style TargetType="{x:Type Image}">
                             <Setter Property="Width" Value="18"/>
                             <Setter Property="Height" Value="18"/>
                         </Style>
@@ -76,7 +78,7 @@
                     <MenuItem Header="Edit">
                         <MenuItem Header="Undo" InputGestureText="Ctrl+Z">
                             <MenuItem.Icon>
-                                <Image Source="/ParticleEditor;component/Resources/Icons/Undo.png"/>
+                                <Image Source="./Resources/Icons/Undo.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Header="Redo" InputGestureText="Ctrl+Y">
@@ -102,10 +104,10 @@
                         </MenuItem>
                         <Separator/>
                         <MenuItem Header="Themes">
-                            <MenuItem Header="BaseDark/Lime" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
-                            <MenuItem Header="BaseDark/Crimson" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
-                            <MenuItem Header="BaseLight/Red" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
-                            <MenuItem Header="BaseLight/Blue" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+                            <MenuItem Header="BaseDark/Lime" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"/>
+                            <MenuItem Header="BaseDark/Crimson" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"/>
+                            <MenuItem Header="BaseLight/Red" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"/>
+                            <MenuItem Header="BaseLight/Blue" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"/>
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Help">
@@ -139,7 +141,7 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="190"/>
                 </Grid.RowDefinitions>
                 <!--Parameters-->
                 <Grid Grid.Row="0">
@@ -165,45 +167,44 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                    <Grid Grid.Row ="0">
-                        <Label Content="SETTINGS" Background="{DynamicResource AccentColorBrush}"/>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="34"/>
-                        </Grid.RowDefinitions>
-                        <Image Source="/ParticleEditor;component/Resources/TransparentBackground.png" Grid.Row="0" Margin="3"/>
-                        <Image Source="{Binding SpriteImage}" Grid.Row="0" Margin="3"/>
-                        <Button Content="Load image..." Command="{Binding LoadImageCommand}" VerticalAlignment="Bottom" Margin="5,0,5,5" Grid.Row="1" Height="25" ToolTip="Load an image for the particles"/>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <Label Content="Sorting Mode" VerticalAlignment="Top"/>
-                        <ComboBox Margin="5,26,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={StaticResource EnumToIntConverter}}">
-                            <Label Content="Front to back"/>
-                            <Label Content="Back to front"/>
-                            <Label Content="Oldest first"/>
-                            <Label Content="Youngest first"/>
-                        </ComboBox>
-                        <ComboBox Margin="5,82,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.BlendMode, Converter={StaticResource EnumToIntConverter}}">
-                            <Label Content="Alpha blend"/>
-                            <Label Content="Additive"/>
-                        </ComboBox>
-                        <Label Content="Blending type" Margin="0,56,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Background color: " Margin="0,113,0,0" VerticalAlignment="Top"/>
-                        <Rectangle Fill="{Binding BackgroundColor}" Stroke="Black" Margin="5,139,5,15">
-                        <Rectangle.InputBindings>
-                            <MouseBinding Gesture="LeftClick" Command="{Binding OpenColorPickerCommand}"/>
-                        </Rectangle.InputBindings>
-                        </Rectangle>
-                    </Grid>
-                    </Grid>
+                        <Grid Grid.Row ="0">
+                            <Label Content="SETTINGS" Background="{DynamicResource AccentColorBrush}"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="34"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="/ParticleEditor;component/Resources/TransparentBackground.png" Grid.Row="0" Margin="3"/>
+                                <Image Source="{Binding SpriteImage}" Grid.Row="0" Margin="3"/>
+                                <Button Content="Load image..." Command="{Binding LoadImageCommand}" VerticalAlignment="Bottom" Margin="5,0,5,5" Grid.Row="1" Height="25" ToolTip="Load an image for the particles"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Label Content="Sorting Mode" VerticalAlignment="Top"/>
+                                <ComboBox Margin="5,26,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={StaticResource EnumToIntConverter}}">
+                                    <Label Content="Front to back"/>
+                                    <Label Content="Back to front"/>
+                                    <Label Content="Oldest first"/>
+                                    <Label Content="Youngest first"/>
+                                </ComboBox>
+                                <ComboBox Margin="5,78,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.BlendMode, Converter={StaticResource EnumToIntConverter}}">
+                                    <Label Content="Alpha blend"/>
+                                    <Label Content="Additive"/>
+                                </ComboBox>
+                                <Label Content="Blending type" Margin="0,52,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Background color: " Margin="0,104,0,0" VerticalAlignment="Top"/>
+                                <Rectangle Fill="{Binding BackgroundColor}" Stroke="Black" Margin="5,130,5,10">
+                                    <Rectangle.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenColorPickerCommand}"/>
+                                    </Rectangle.InputBindings>
+                                </Rectangle>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
@@ -215,7 +216,6 @@
                     <RowDefinition Height="2*" MinHeight="150" MaxHeight="300"/>
                 </Grid.RowDefinitions>
                 <GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="3" HorizontalAlignment="Stretch" Background="{DynamicResource AccentColorBrush}"/>
-                <!--Particle view-->
                 <Grid Grid.Row="0">
                     <local:ParticleVisualizerView/>
                 </Grid>

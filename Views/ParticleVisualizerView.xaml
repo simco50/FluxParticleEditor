@@ -3,14 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ParticleEditor.Views"
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
+             xmlns:imageControl="clr-namespace:ParticleEditor.Graphics.ImageControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.DataContext>
             <viewModels:ParticleVisualizerViewModel/>
         </Grid.DataContext>
-        <Grid Background="{Binding MainViewModel.BackgroundColor}"/>
+        <imageControl:DX10RenderCanvas Viewport="{Binding Viewport}" Stretch="Fill"/>
     </Grid>
 </UserControl>
+

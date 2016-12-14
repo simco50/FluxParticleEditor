@@ -8,7 +8,6 @@
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ParticleEditor.Views.ParameterTabs.BurstTabView"
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" x:Name="UserControl">
-
     <UserControl.Resources>
         <helpers:BurstConverter x:Key="BurstConverter"/>
     </UserControl.Resources>
@@ -34,7 +33,7 @@
                 <Label Content="> PARTICLES" Grid.Column="1" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
             </Grid>
             <Grid Grid.Row="1">
-            <ListBox ItemsSource="{Binding ElementName=UserControl, Path=ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListBox Name="ListBox" ItemsSource="{Binding ElementName=UserControl, Path=ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

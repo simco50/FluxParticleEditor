@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using GalaSoft.MvvmLight.CommandWpf;
-using ParticleEditor.Annotations;
 using ParticleEditor.Data.ParticleSystem;
 using ParticleEditor.Helpers;
-using ParticleEditor.Views;
 
 namespace ParticleEditor.ViewModels.ParameterTabs
 {
@@ -23,11 +13,11 @@ namespace ParticleEditor.ViewModels.ParameterTabs
 
     public class BurstTabViewModel
     {
+        public int SelectedBurst { get; set; } = 0;
+
         public ParticleSystem ParticleSystem { get; set; }
 
-        public RelayCommand<Burst> AddBurstCommand
-        { get { return new RelayCommand<Burst>(AddBurst);} }
-
+        public RelayCommand<Burst> AddBurstCommand => new RelayCommand<Burst>(AddBurst);
         private void AddBurst(Burst burst)
         {
             if (burst.Amount == -1 || burst.Time == -1.0f)
@@ -40,12 +30,10 @@ namespace ParticleEditor.ViewModels.ParameterTabs
                 DebugLog.Log($"The time must be smaller than the duration of the particle system.\nThe duration is {ParticleSystem.Duration:0.00}s while the given timestamp is {burst.Time:0.00}s.", "Add Burst", LogSeverity.Warning);
                 return;
             }
-            ParticleSystem.Bursts.AddUnique(burst.Time, burst.Amount);
+            ParticleSystem.Bursts[burst.Time] = burst.Amount;
         }
 
-        public RelayCommand<float> RemoveBurstCommand
-        { get { return new RelayCommand<float>(RemoveBurst); } }
-
+        public RelayCommand<float> RemoveBurstCommand => new RelayCommand<float>(RemoveBurst);
         private void RemoveBurst(float key)
         {
             Random rand = new Random();

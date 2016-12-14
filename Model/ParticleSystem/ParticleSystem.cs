@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DrWPF.Windows.Data;
 using Newtonsoft.Json;
 using ParticleEditor.Helpers;
+using SharpDX;
 
 
 namespace ParticleEditor.Data.ParticleSystem
@@ -74,9 +77,9 @@ namespace ParticleEditor.Data.ParticleSystem
         public int Emission { get; set; } = 10;
 
         [JsonProperty("Bursts")]
-        public ObservableDictionary<float, int> Bursts { get; set; } = new ObservableDictionary<float, int>();
+        public ObservableSortedDictionary<float, int> Bursts { get; set; } = new ObservableSortedDictionary<float, int>(new FloatKeyComparer());
 
-    //Shape
+        //Shape
         public enum ShapeType
         {
             CIRCLE = 0,
