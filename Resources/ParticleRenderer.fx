@@ -33,7 +33,7 @@ BlendState AlphaBlending
 
 RasterizerState BackCulling
 {
-	CullMode = BACK;
+	CullMode = NONE;
 };
 
 struct VS_DATA

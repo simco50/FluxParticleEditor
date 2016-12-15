@@ -16,7 +16,12 @@ namespace ParticleEditor.Graphics.ImageControl
         private DX10RenderCanvas _renderControl;
 
         public ParticleEmitter ParticleEmitter { get; set; }
-        public OrbitCamera Camera { get; set; } = new OrbitCamera();
+
+        public static OrbitCamera Camera { get; set; }
+
+        public bool RenderGrid { get; set; } = true;
+
+        private Grid _grid;
 
         public void Initialize(Device1 device, RenderTargetView renderTarget, DX10RenderCanvas canvasControl)
         {
@@ -29,6 +34,10 @@ namespace ParticleEditor.Graphics.ImageControl
             ParticleEmitter.Intialize();
 
             _renderControl.ClearColor = Color.BlanchedAlmond;
+            Camera = new OrbitCamera(canvasControl);
+
+            _grid = new Grid();
+            _grid.Initialize(_device);
         }
 
         public void Deinitialize()
@@ -41,10 +50,8 @@ namespace ParticleEditor.Graphics.ImageControl
             ParticleEmitter.Update(deltaT);
             Camera.Update(deltaT);
 
-            var viewMat = Matrix.LookAtLH(Camera.Position, Vector3.Zero, Vector3.UnitY);
-            var projMat = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, (float)_renderControl.ActualWidth / (float)_renderControl.ActualHeight, 0.1f, 1000f);
-            ParticleEmitter.ViewInvVar.SetMatrix(Matrix.Invert(viewMat));
-            ParticleEmitter.ViewProjVar.SetMatrix(viewMat * projMat);
+            ParticleEmitter.ViewInvVar.SetMatrix(Camera.ViewInverseMatrix);
+            ParticleEmitter.ViewProjVar.SetMatrix(Camera.ViewProjectionMatrix);
         }
 
         public void Render(float deltaT)
@@ -53,6 +60,9 @@ namespace ParticleEditor.Graphics.ImageControl
                 return;
 
             ParticleEmitter.Render();
+
+            if(RenderGrid)
+                _grid.Render();
         }
     }
 }

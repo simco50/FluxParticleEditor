@@ -8,7 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="700">
     <Grid>
         <Grid.DataContext>
             <viewModels:ParticleVisualizerViewModel/>
@@ -20,11 +20,21 @@
 
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <Button Width="25"/>
-                <Button Width="25"/>
-                <Slider Width="100" VerticalAlignment="Center"/>
+                <Button Width="25" Command="{Binding ResetCommand}">
+                    <Image Source="/ParticleEditor;component/Resources/Icons/Reset.png"/>
+                </Button>
+                <Button Width="25" Command="{Binding ZoomOutCommand}">
+                    <Image Source="/ParticleEditor;component/Resources/Icons/ZoomOut.png"/>
+                </Button>
+                <Button Width="25" Command="{Binding ZoomInCommand}">
+                    <Image Source="/ParticleEditor;component/Resources/Icons/ZoomIn.png"/>
+                </Button>
+                <Slider Width="100" Value="{Binding Viewport.Camera.Zoom}" VerticalAlignment="Center" Maximum="1"/>
+                <Label Content="Grid"/>
+                <CheckBox IsChecked="{Binding Viewport.RenderGrid}"/>
             </StackPanel>
         </Grid>
+
         <Grid Grid.Row="1">
             <imageControl:DX10RenderCanvas Viewport="{Binding Viewport}" Stretch="Fill">
                 <i:Interaction.Triggers>

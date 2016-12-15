@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
-            <Label Content="TIMELINE" FontFamily="Segoe UI Semilight"/>
+            <Label Content="TIMELINE" FontFamily="Segoe UI Semilight" Foreground="White"/>
         </Grid>
         <Grid Grid.Row="1">
             <Button HorizontalAlignment="Left" Width="25">
@@ -39,7 +39,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0"/>
             <Grid Grid.Column="1">
-                <Label Content="{Binding ParticleSystem.Lifetime, ElementName=UserControl}"/>
+
             </Grid>
         </Grid>
     </Grid>

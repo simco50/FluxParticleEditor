@@ -168,7 +168,7 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row ="0">
-                            <Label Content="SETTINGS" Background="{DynamicResource AccentColorBrush}"/>
+                            <Label Content="SETTINGS" Background="{DynamicResource AccentColorBrush}" Foreground="White"/>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>

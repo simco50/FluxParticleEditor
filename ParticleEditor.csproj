@@ -119,9 +119,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Graphics\Grid.cs" />
     <Compile Include="Graphics\ImageControl\Disposer.cs" />
     <Compile Include="Graphics\ImageControl\DX10ImageSource.cs" />
     <Compile Include="Graphics\ImageControl\DX10RenderCanvas.cs" />
+    <Compile Include="Graphics\ImageControl\ICamera.cs" />
     <Compile Include="Graphics\ImageControl\OrbitCamera.cs" />
     <Compile Include="Graphics\ImageControl\ParticleViewport.cs" />
     <Compile Include="Graphics\ImageControl\IDX10Viewport.cs" />
@@ -271,6 +273,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Log.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Reset.png" />
+    <Resource Include="Resources\Icons\ZoomIn.png" />
+    <Resource Include="Resources\Icons\ZoomOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DebugRenderer.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

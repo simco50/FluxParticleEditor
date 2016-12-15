@@ -1,51 +1,91 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using GalaSoft.MvvmLight.CommandWpf;
+using ParticleEditor.Annotations;
 using SharpDX;
 using Point = System.Drawing.Point;
 
 namespace ParticleEditor.Graphics.ImageControl
 {
-    public class OrbitCamera
+    public class OrbitCamera : INotifyPropertyChanged, ICamera
     {
-        public Vector2 DistanceMinMax { get; set; } = new Vector2(1, 10);
+        public float MinimumDistance { get; set; } = 2.0f;
+        public float MaximumDistance { get; set; } = 10.0f;
+
         private Vector3 eulerAngles = new Vector3();
-        private Vector3 _position = new Vector3();
-        public float Distance { get; set; } = 1;
-        public Vector3 Position
+
+        private float _zoom = 1;
+        public float Zoom
         {
-            get { return _position; }
-            set { _position = value; }
+            get { return _zoom; }
+            set
+            {
+                _zoom = value;
+                if (_zoom < 0)
+                    _zoom = 0;
+                else if (_zoom > 1)
+                    _zoom = 1;
+                OnPropertyChanged("Zoom");
+            }
         }
 
         public bool MouseDown { get; set; } = false;
-
+        public float MouseSensitivity = 0.01f;
         private Point _lastMousePos;
+
+        public Matrix ViewMatrix { get; set; }
+        public Matrix ProjectionMatrix { get; set; }
+        public Matrix ViewInverseMatrix { get; set; }
+        public Matrix ViewProjectionMatrix { get; set; }
+
+        public Vector3 Position { get { return ViewMatrix.TranslationVector; } }
+
+        private DX10RenderCanvas _canvasControl;
+            
+        public OrbitCamera(DX10RenderCanvas canvasControl)
+        {
+            _canvasControl = canvasControl;
+        }
 
         public void Update(float deltaTime)
         {
+            Point mousePos = Cursor.Position;
             if (MouseDown)
             {
-                Point mousePos = Cursor.Position;
                 Vector2 dMouse = new Vector2(mousePos.X - _lastMousePos.X, mousePos.Y - _lastMousePos.Y);
-                dMouse.Normalize();
-                dMouse /= 10.0f;
-                _lastMousePos = mousePos;
+                dMouse *= MouseSensitivity;
 
-                eulerAngles.X += dMouse.Y;
-                eulerAngles.Y += dMouse.X;
+                eulerAngles.Y -= dMouse.Y;
+                eulerAngles.X -= dMouse.X;
             }
+            _lastMousePos = mousePos;
 
-            float distance = DistanceMinMax.X + Distance * (DistanceMinMax.Y - DistanceMinMax.X);
+            float distance = MinimumDistance + (1.0f - Zoom) * (MaximumDistance - MinimumDistance);
 
-            _position.X = (float) Math.Cos(eulerAngles.Y);
-            _position.Z = (float) Math.Sin(eulerAngles.Y);
-            _position.Y = (float) Math.Cos(eulerAngles.X);
-            _position *= distance;
+            Matrix rotation = Matrix.RotationYawPitchRoll(eulerAngles.X, 0.0f, 0.0f);
+            Matrix rotation2 = Matrix.RotationYawPitchRoll(0, eulerAngles.Y, 0.0f);
+            Matrix translation = Matrix.Translation(0.0f, 0.0f, distance);
+
+            ViewMatrix = rotation * rotation2 * translation;
+
+            ViewInverseMatrix = Matrix.Invert(ViewMatrix);
+            ProjectionMatrix = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, (float)_canvasControl.ActualWidth / (float)_canvasControl.ActualHeight, 0.1f, 1000f);
+            ViewProjectionMatrix = ViewMatrix * ProjectionMatrix;
+        }
+
+        public void Reset()
+        {
+            eulerAngles = new Vector3();
+            Zoom = 1;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

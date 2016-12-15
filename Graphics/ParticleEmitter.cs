@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DrWPF.Windows.Data;
 using ParticleEditor.Data.ParticleSystem;
+using ParticleEditor.Graphics.ImageControl;
 using ParticleEditor.Helpers;
 using SharpDX;
 using SharpDX.D3DCompiler;
@@ -89,6 +90,47 @@ namespace ParticleEditor.Graphics
                 _playing = true;
         }
 
+        private void SortParticles()
+        {
+            switch (ParticleSystem.SortingMode)
+            {
+                case ParticleSortingMode.FrontToBack:
+                    _particles.Sort((Particle a, Particle b) =>
+                    {
+                        float d1 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, a.VertexInfo.Position);
+                        float d2 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, b.VertexInfo.Position);
+                        if (d1 == d2) return 0;
+                        return d1 > d2 ? 1 : -1;
+                    });
+                    break;
+                case ParticleSortingMode.BackToFront:
+                    _particles.Sort((Particle a, Particle b) =>
+                    {
+                        float d1 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, a.VertexInfo.Position);
+                        float d2 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, b.VertexInfo.Position);
+                        if (d1 == d2) return 0;
+                        return d1 < d2 ? 1 : -1;
+                    });
+                    break;
+                case ParticleSortingMode.OldestFirst:
+                    _particles.Sort((Particle a, Particle b) =>
+                    {
+                        if (a.Lifetime == b.Lifetime) return 0;
+                        return a.Lifetime > b.Lifetime ? 1 : -1;
+                    });
+                    break;
+                case ParticleSortingMode.YoungestFirst:
+                    _particles.Sort((Particle a, Particle b) =>
+                    {
+                        if (a.Lifetime == b.Lifetime) return 0;
+                        return a.Lifetime < b.Lifetime ? 1 : -1;
+                    });
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public void Update(float deltaTime)
         {
             if (_playing == false)
@@ -103,6 +145,8 @@ namespace ParticleEditor.Graphics
 
             float emissionTime = 1.0f / ParticleSystem.Emission;
             _particleSpawnTimer += deltaTime;
+
+            SortParticles();
 
             if (ParticleSystem.MaxParticles > _particles.Count)
             {

@@ -19,12 +19,13 @@ namespace ParticleEditor.Graphics
         private float _startRotation = 0.0f;
 
         private float _lifeTime = 0;
+        public float Lifetime { get { return _lifeTime;} }
         private float _startVelocity = 0;
         private float _startSize = 0;
 
         private ParticleSystem _particleSystem;
 
-        private Random _random = new Random();
+        private static Random _random = new Random();
 
         public Particle(ParticleSystem particleSystem)
         {

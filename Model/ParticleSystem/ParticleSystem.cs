@@ -74,7 +74,7 @@ namespace ParticleEditor.Data.ParticleSystem
 
         //Emission
         [JsonProperty("Emission")]
-        public int Emission { get; set; } = 10;
+        public int Emission { get; set; } = 20;
 
         [JsonProperty("Bursts")]
         public ObservableSortedDictionary<float, int> Bursts { get; set; } = new ObservableSortedDictionary<float, int>(new FloatKeyComparer());
@@ -90,7 +90,7 @@ namespace ParticleEditor.Data.ParticleSystem
         public class ShapeData
         {
             [JsonProperty("ShapeType")]
-            public ShapeType ShapeType { get; set; } = ShapeType.CONE;
+            public ShapeType ShapeType { get; set; } = ShapeType.CIRCLE;
             [JsonProperty("Radius")]
             public float Radius { get; set; } = 1.0f;
             [JsonProperty("EmitFromShell")]

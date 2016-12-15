@@ -9,19 +9,22 @@ namespace ParticleEditor.ViewModels
 {
     class ParticleVisualizerViewModel
     {
-        public ParticleViewport Viewport { get; set; } = new ParticleViewport();
-
-        public RelayCommand<MouseWheelEventArgs> OnScroll { get { return new RelayCommand<MouseWheelEventArgs>(OnMouseWheel);} }
-        private void OnMouseWheel(MouseWheelEventArgs args)
+        public ParticleVisualizerViewModel()
         {
-            Viewport.Camera.Distance -= (float)args.Delta / 500.0f;
-            if (Viewport.Camera.Distance < 0)
-                Viewport.Camera.Distance = 0;
-            else if (Viewport.Camera.Distance > 1)
-                Viewport.Camera.Distance = 1;
+            Viewport = new ParticleViewport();
         }
-        public RelayCommand OnMouseDown => new RelayCommand(()=>Viewport.Camera.MouseDown = true);
-        public RelayCommand OnMouseUp => new RelayCommand(()=>Viewport.Camera.MouseDown = false);
-        public RelayCommand OnMouseLeave => new RelayCommand(()=>Viewport.Camera.MouseDown = false);
+
+        public ParticleViewport Viewport { get; set; }
+
+        public RelayCommand<MouseWheelEventArgs> OnScroll
+            => new RelayCommand<MouseWheelEventArgs>((args) => ParticleViewport.Camera.Zoom += (float) args.Delta / 500.0f);
+
+        public RelayCommand OnMouseDown => new RelayCommand(()=> ParticleViewport.Camera.MouseDown = true);
+        public RelayCommand OnMouseUp => new RelayCommand(()=> ParticleViewport.Camera.MouseDown = false);
+        public RelayCommand OnMouseLeave => new RelayCommand(()=> ParticleViewport.Camera.MouseDown = false);
+
+        public RelayCommand ZoomInCommand => new RelayCommand(() => ParticleViewport.Camera.Zoom += 0.2f);
+        public RelayCommand ZoomOutCommand => new RelayCommand(() => ParticleViewport.Camera.Zoom -= 0.2f);
+        public RelayCommand ResetCommand => new RelayCommand(() => ParticleViewport.Camera.Reset());
     }
 }
