@@ -1,16 +1,15 @@
-﻿
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Media;
-    using SharpDX;
-    using SharpDX.Direct3D10;
-    using SharpDX.DXGI;
-    using Device = SharpDX.Direct3D10.Device1;
-    using Image = System.Windows.Controls.Image;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Media;
+using SharpDX;
+using SharpDX.Direct3D10;
+using SharpDX.DXGI;
+using Device = SharpDX.Direct3D10.Device1;
+using Image = System.Windows.Controls.Image;
 
-namespace ParticleEditor.Graphics.ImageControl
+namespace ParticleEditor.Model.ImageControl
 {
     public class DX10RenderCanvas : Image
     {

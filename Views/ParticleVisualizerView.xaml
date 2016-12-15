@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
-             xmlns:imageControl="clr-namespace:ParticleEditor.Graphics.ImageControl"
+             xmlns:imageControl="clr-namespace:ParticleEditor.Model.ImageControl"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
-    <Grid>
+    <Grid Name="Root">
         <Grid.DataContext>
             <viewModels:ParticleVisualizerViewModel/>
         </Grid.DataContext>
@@ -20,24 +20,24 @@
 
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <Button  Width="25" Command="{Binding ResetCommand}">
+                <Button Width="30" Command="{Binding ResetCommand}" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/Reset.png"/>
                 </Button>
-                <Button Width="25" Command="{Binding ZoomOutCommand}">
+                <Button Width="30" Command="{Binding ZoomOutCommand}" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/ZoomOut.png"/>
                 </Button>
-                <Button Width="25" Command="{Binding ZoomInCommand}">
+                <Button Width="30" Command="{Binding ZoomInCommand}" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/ZoomIn.png"/>
                 </Button>
                 <Slider Margin="5, 0" Width="150" Value="{Binding Viewport.GraphicsContext.(imageControl:OrbitCamera.Zoom)}" VerticalAlignment="Center" Maximum="1"/>
-                <ToggleButton IsChecked="{Binding Viewport.RenderGrid}" Width="28">
+                <ToggleButton IsChecked="{Binding Viewport.RenderGrid}" Width="30" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/Grid.png"/>
                 </ToggleButton>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">
-            <imageControl:DX10RenderCanvas Viewport="{Binding Viewport}" Stretch="Fill">
+            <imageControl:DX10RenderCanvas x:Name="Canvas" Viewport="{Binding Viewport}" Stretch="Fill">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseWheel">
                         <command:EventToCommand Command="{Binding OnScroll}" PassEventArgsToCommand="True"/>

@@ -1,25 +1,21 @@
-﻿using System.Windows;
-using DirectxWpf.Effects;
-using DirectxWpf.Models;
-using ParticleEditor.Data.ParticleSystem;
-using ParticleEditor.Graphics;
-using ParticleEditor.Helpers;
+﻿using ParticleEditor.Helpers;
+using ParticleEditor.Model.Data;
+using ParticleEditor.Model.ImageControl;
 using SharpDX;
 using SharpDX.Direct3D10;
-using Format = SharpDX.DXGI.Format;
 
-namespace ParticleEditor.Graphics.ImageControl
+namespace ParticleEditor.Model.Graphics.Particles
 {
     public class ParticleViewport : IDX10Viewport
     {
-        public GraphicsContext GraphicsContext { get; set; }
-        public ParticleEmitter ParticleEmitter { get; set; }
+        public GraphicsContext GraphicsContext { get; set; } = new GraphicsContext();
+        public ParticleEmitter ParticleEmitter { get; set; } = null;
+        public ParticleSystem ParticleSystem { get; set; } = null;
         public bool RenderGrid { get; set; } = true;
         private Grid _grid;
 
         public void Initialize(Device1 device, RenderTargetView renderTarget, DX10RenderCanvas canvasControl)
         {
-            GraphicsContext = new GraphicsContext();
             GraphicsContext.Device = device;
             GraphicsContext.RenderTargetView = renderTarget;
             GraphicsContext.RenderControl = canvasControl;
@@ -29,7 +25,7 @@ namespace ParticleEditor.Graphics.ImageControl
             GraphicsContext.Camera = camera;
 
             ParticleEmitter = new ParticleEmitter(GraphicsContext);
-            ParticleEmitter.ParticleSystem = new ParticleSystem();
+            ParticleEmitter.ParticleSystem = ParticleSystem;
             ParticleEmitter.Intialize();
 
             _grid = new Grid();

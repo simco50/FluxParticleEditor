@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using DrWPF.Windows.Data;
-using ParticleEditor.Data.ParticleSystem;
-using ParticleEditor.Graphics.ImageControl;
 using ParticleEditor.Helpers;
+using ParticleEditor.Model.Data;
+using ParticleEditor.Model.ImageControl;
 using SharpDX;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D10;
 using SharpDX.DXGI;
+using SharpDX.Mathematics.Interop;
 using Buffer = SharpDX.Direct3D10.Buffer;
-using Device1 = SharpDX.Direct3D10.Device1;
 
-namespace ParticleEditor.Graphics
+namespace ParticleEditor.Model.Graphics.Particles
 {
     public struct ParticleVertex
     {
@@ -51,10 +46,22 @@ namespace ParticleEditor.Graphics
         public EffectMatrixVariable ViewInvVar { get; set; }
         public EffectShaderResourceVariable TextureVar { get; set; }
 
+        private List<BlendState> BlendState = new List<BlendState>();
+
         private GraphicsContext _context;
         private ShaderResourceView _textureResourceView;
 
-        public ParticleSystem ParticleSystem { get; set; }
+        private ParticleSystem _particleSystem;
+
+        public ParticleSystem ParticleSystem
+        {
+            get { return _particleSystem; }
+            set
+            {
+                _particleSystem = value;
+                OnParticleSystemSet();
+            }
+        }
 
         private bool _hasNext;
 
@@ -73,28 +80,35 @@ namespace ParticleEditor.Graphics
 
         public void Intialize()
         {
+            LoadEffect();
+
+            DebugLog.Log("Initialized", "Particle Emitter");
+        }
+
+        void OnParticleSystemSet()
+        {
             _particles = new List<Particle>(ParticleSystem.MaxParticles);
             for (int i = 0; i < ParticleSystem.MaxParticles; i++)
                 _particles.Add(new Particle(ParticleSystem));
             _bufferSize = ParticleSystem.MaxParticles;
-
-            _textureResourceView = ShaderResourceView.FromFile(_context.Device, "./Resources/ErrorTexture.jpg");
-
-            LoadEffect();
-
+            ResetBurstEnumerator();
+            if (ParticleSystem.PlayOnAwake)
+                _playing = true;
+            _textureResourceView = ShaderResourceView.FromFile(_context.Device, ParticleSystem.ImagePath);
             CreateBuffer();
 
+            DebugLog.Log("Changed particle system", "Particle Emitter");
+        }
+
+        private void ResetBurstEnumerator()
+        {
             _burstEnumerator = ParticleSystem.Bursts.GetEnumerator() as IEnumerator<KeyValuePair<float, int>>;
             if (_burstEnumerator == null)
             {
                 DebugLog.Log("Converting to IEnumerator<KeyValuePair<float, int>> failed!", "Failed typecast", LogSeverity.Error);
                 return;
             }
-
             _hasNext = _burstEnumerator.MoveNext();
-
-            if (ParticleSystem.PlayOnAwake)
-                _playing = true;
         }
 
         private void SortParticles()
@@ -140,6 +154,8 @@ namespace ParticleEditor.Graphics
 
         public void Update(float deltaTime)
         {
+            if (ParticleSystem == null)
+                return;
             if (_playing == false)
                 return;
 
@@ -147,8 +163,7 @@ namespace ParticleEditor.Graphics
             if (_timer >= ParticleSystem.Duration && ParticleSystem.Loop)
             {
                 _timer = 0;
-                _burstEnumerator = ParticleSystem.Bursts.GetEnumerator() as IEnumerator<KeyValuePair<float, int>>;
-                _hasNext = _burstEnumerator.MoveNext();
+                ResetBurstEnumerator();
             }
 
             float emissionTime = 1.0f / ParticleSystem.Emission;
@@ -158,7 +173,8 @@ namespace ParticleEditor.Graphics
 
             if (ParticleSystem.MaxParticles > _particles.Count)
             {
-                for (int i = 0; i < ParticleSystem.MaxParticles - _particles.Count; i++)
+                int amount = ParticleSystem.MaxParticles - _particles.Count;
+                for (int i = 0; i < amount; i++)
                     _particles.Add(new Particle(ParticleSystem));
             }
 
@@ -199,6 +215,8 @@ namespace ParticleEditor.Graphics
 
         public void Render()
         {
+            if (ParticleSystem == null)
+                return;
             if (_playing == false)
                 return;
             if (ParticleSystem.MaxParticles > _bufferSize)
@@ -214,6 +232,7 @@ namespace ParticleEditor.Graphics
             _context.Device.InputAssembler.InputLayout = _inputLayout;
             _context.Device.InputAssembler.PrimitiveTopology = PrimitiveTopology.PointList;
             _context.Device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
+            _context.Device.OutputMerger.SetBlendState(BlendState[(int) ParticleSystem.BlendMode], new Color4(1.0f), -1);
 
             for (int i = 0; i < _technique.Description.PassCount; i++)
             {
@@ -225,7 +244,7 @@ namespace ParticleEditor.Graphics
         private void LoadEffect()
         {
             //Shader
-            CompilationResult result = ShaderBytecode.CompileFromFile("./Resources/ParticleRenderer.fx", "fx_4_0");
+            CompilationResult result = ShaderBytecode.CompileFromFile("./Resources/Shaders/ParticleRenderer.fx", "fx_4_0");
             if (result.HasErrors)
             {
                 DebugLog.Log(result.Message, "Error compiling shader", LogSeverity.Error);
@@ -236,8 +255,14 @@ namespace ParticleEditor.Graphics
 
             //Shader variables
             ViewProjVar = _effect.GetVariableBySemantic("VIEWPROJ").AsMatrix();
+            if(ViewProjVar == null)
+                DebugLog.Log("Variable with semantic 'VIEWPROJ' not found!", "Particle Emitter", LogSeverity.Error);
             ViewInvVar = _effect.GetVariableBySemantic("VIEWINV").AsMatrix();
+            if(ViewInvVar == null)
+                DebugLog.Log("Variable with semantic 'VIEWINV' not found!", "Particle Emitter", LogSeverity.Error);
             TextureVar = _effect.GetVariableByName("gParticleTexture").AsShaderResource();
+            if(TextureVar == null)
+                DebugLog.Log("Variable with name 'gParticleTexture' not found!", "Particle Emitter", LogSeverity.Error);
 
             //Inputlayout
             InputElement[] vertexLayout =
@@ -248,6 +273,27 @@ namespace ParticleEditor.Graphics
                 new InputElement("TEXCOORD", 1, Format.R32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0)
             };
             _inputLayout = new InputLayout(_context.Device, _technique.GetPassByIndex(0).Description.Signature, vertexLayout);
+
+            BlendStateDescription desc = new BlendStateDescription();
+
+            desc.IsBlendEnabled[0] = true;
+            desc.BlendOperation = BlendOperation.Add;
+            desc.SourceAlphaBlend = BlendOption.One;
+            desc.DestinationAlphaBlend = BlendOption.Zero;
+            desc.AlphaBlendOperation = BlendOperation.Add;
+            desc.RenderTargetWriteMask[0] = ColorWriteMaskFlags.All;
+
+            //AlphaBlending
+            desc.SourceBlend = BlendOption.SourceAlpha;
+            desc.DestinationBlend = BlendOption.InverseSourceAlpha;
+            BlendState.Add(new BlendState(_context.Device, desc));
+
+            //AdditiveBlending
+            desc.SourceBlend = BlendOption.SourceAlpha;
+            desc.DestinationBlend = BlendOption.One;
+            BlendState.Add(new BlendState(_context.Device, desc));
+
+            DebugLog.Log("Shader loaded and blend state created", "Particle Emitter");
         }
 
         private void CreateBuffer()

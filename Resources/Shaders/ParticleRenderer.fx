@@ -99,7 +99,6 @@ technique10 AlphaBlendingTechnique
 	{
 		SetVertexShader(CompileShader(vs_4_0, MainVS()));
 		SetGeometryShader(CompileShader(gs_4_0, MainGS()));
-		SetBlendState(AlphaBlending,float4(0.0f, 0.0f, 0.0f, 0.0f), 0xFFFFFFFF);
 		SetPixelShader(CompileShader(ps_4_0, MainPS()));
 		SetRasterizerState(BackCulling);       
 		SetDepthStencilState(DisableDepthWriting, 0);
@@ -112,7 +111,6 @@ technique10 AdditiveBlendingTechnique
 	{
 		SetVertexShader(CompileShader(vs_4_0, MainVS()));
 		SetGeometryShader(CompileShader(gs_4_0, MainGS()));
-		SetBlendState(AdditiveBlending,float4(0.0f, 0.0f, 0.0f, 0.0f), 0xFFFFFFFF);
 		SetPixelShader(CompileShader(ps_4_0, MainPS()));
 		SetRasterizerState(BackCulling);       
 		SetDepthStencilState(DisableDepthWriting, 0);

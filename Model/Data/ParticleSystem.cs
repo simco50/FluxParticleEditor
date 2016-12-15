@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using DrWPF.Windows.Data;
 using Newtonsoft.Json;
-using ParticleEditor.Helpers;
 using SharpDX;
 
 
-namespace ParticleEditor.Data.ParticleSystem
+namespace ParticleEditor.Model.Data
 {
     public enum ParticleSortingMode
     {
@@ -37,28 +32,30 @@ namespace ParticleEditor.Data.ParticleSystem
         {
         }
 
-        [JsonProperty("Version")] public int Version = 1;
+        [JsonProperty("Version")]
+        public int Version = 2;
         //General
+
         [JsonProperty("Duration")]
-        public float Duration { get; set; } = 5.0f;
+        public float Duration { get; set; } = 1.0f;
 
         [JsonProperty("Loop")]
         public bool Loop { get; set; } = true;
 
         [JsonProperty("Lifetime")]
-        public float Lifetime { get; set; } = 6.0f;
+        public float Lifetime { get; set; } = 1.0f;
 
         [JsonProperty("LifetimeVariance")]
         public float LifetimeVariance { get; set; } = 0.0f;
 
         [JsonProperty("StartVelocity")]
-        public float StartVelocity { get; set; } = 4.0f;
+        public float StartVelocity { get; set; } = 1.0f;
 
         [JsonProperty("StartVelocityVariance")]
         public float StartVelocityVariance { get; set; } = 0.0f;
 
         [JsonProperty("StartSize")]
-        public float StartSize { get; set; } = 0.1f;
+        public float StartSize { get; set; } = 1.0f;
 
         [JsonProperty("StartSizeVariance")]
         public float StartSizeVariance { get; set; } = 0.0f;
@@ -74,11 +71,11 @@ namespace ParticleEditor.Data.ParticleSystem
 
         //Emission
         [JsonProperty("Emission")]
-        public int Emission { get; set; } = 0;
+        public int Emission { get; set; } = 20;
 
         [JsonProperty("Bursts")]
         public ObservableSortedDictionary<float, int> Bursts { get; set; } =
-            new ObservableSortedDictionary<float, int>(new FloatKeyComparer()) {{1.0f, 500}, { 3.0f, 500 }};
+            new ObservableSortedDictionary<float, int>(new FloatKeyComparer());
 
         //Shape
         public enum ShapeType
@@ -91,15 +88,15 @@ namespace ParticleEditor.Data.ParticleSystem
         public class ShapeData
         {
             [JsonProperty("ShapeType")]
-            public ShapeType ShapeType { get; set; } = ShapeType.CIRCLE;
+            public ShapeType ShapeType { get; set; } = ShapeType.CONE;
             [JsonProperty("Radius")]
-            public float Radius { get; set; } = 1.0f;
+            public float Radius { get; set; } = 0.1f;
             [JsonProperty("EmitFromShell")]
             public bool EmitFromShell { get; set; } = false;
             [JsonProperty("EmitFromVolume")]
             public bool EmitFromVolume { get; set; } = false;
             [JsonProperty("Angle")]
-            public float Angle { get; set; } = 30.0f;
+            public float Angle { get; set; } = 70.0f;
         };
         [JsonProperty("Shape")]
         public ShapeData Shape { get; set; } = new ShapeData();
@@ -126,6 +123,6 @@ namespace ParticleEditor.Data.ParticleSystem
         public ParticleBlendMode BlendMode { get; set; } = ParticleBlendMode.AlphaBlend;
 
         [JsonProperty("ImagePath")]
-        public string ImagePath { get; set; } = "../../Resources/DefaultParticleImage.png";
+        public string ImagePath { get; set; } = "../../Resources/ErrorTexture.jpg";
     }
 }

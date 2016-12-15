@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ParticleEditor.Model.Data;
+using ParticleEditor.ViewModels;
 
 namespace ParticleEditor.Views
 {
@@ -20,9 +10,26 @@ namespace ParticleEditor.Views
     /// </summary>
     public partial class ParticleVisualizerView : UserControl
     {
+        private ParticleVisualizerViewModel _vm;
+
         public ParticleVisualizerView()
         {
             InitializeComponent();
+            _vm = Root.DataContext as ParticleVisualizerViewModel;
+        }
+
+        public static readonly DependencyProperty ParticleSystemProperty = DependencyProperty.Register(
+            "ParticleSystem", typeof(ParticleSystem), typeof(ParticleVisualizerView), new FrameworkPropertyMetadata(OnParticleSystemChanged));
+
+        private static void OnParticleSystemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+        {
+            (d as ParticleVisualizerView)._vm.Viewport.ParticleSystem = args.NewValue as ParticleSystem;
+        }
+
+        public ParticleSystem ParticleSystem
+        {
+            get { return (ParticleSystem)GetValue(ParticleSystemProperty); }
+            set { SetValue(ParticleSystemProperty, value); }
         }
     }
 }

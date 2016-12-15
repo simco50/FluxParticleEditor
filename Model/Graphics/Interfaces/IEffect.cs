@@ -1,7 +1,7 @@
 ﻿using SharpDX;
 using SharpDX.Direct3D10;
 
-namespace DirectxWpf.Effects
+namespace ParticleEditor.Model.Graphics.Interfaces
 {
     public interface IEffect
     {

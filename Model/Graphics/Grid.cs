@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using ParticleEditor.Graphics.ImageControl;
 using ParticleEditor.Helpers;
+using ParticleEditor.Model.ImageControl;
 using SharpDX;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D10;
 using SharpDX.DXGI;
 using Buffer = SharpDX.Direct3D10.Buffer;
-using Device1 = SharpDX.Direct3D10.Device1;
 
-namespace ParticleEditor.Graphics
+namespace ParticleEditor.Model.Graphics
 {
     public struct VertexPosCol
     {
@@ -99,7 +98,7 @@ namespace ParticleEditor.Graphics
         private void LoadShader()
         {
 
-            CompilationResult result = ShaderBytecode.CompileFromFile("./Resources/DebugRenderer.fx", "fx_4_0");
+            CompilationResult result = ShaderBytecode.CompileFromFile("./Resources/Shaders/DebugRenderer.fx", "fx_4_0");
             if (result.HasErrors)
             {
                 DebugLog.Log(result.Message, "Failed to compile shader", LogSeverity.Error);

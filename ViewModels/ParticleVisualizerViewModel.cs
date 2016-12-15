@@ -1,10 +1,8 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Input;
-using DirectxWpf;
+﻿using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
-using ParticleEditor.Graphics.ImageControl;
-using SharpDX;
+using ParticleEditor.Model.Data;
+using ParticleEditor.Model.Graphics.Particles;
+using ParticleEditor.Model.ImageControl;
 
 namespace ParticleEditor.ViewModels
 {
@@ -15,12 +13,13 @@ namespace ParticleEditor.ViewModels
             Viewport = new ParticleViewport();
         }
 
+        public ParticleSystem ParticleSystem { get; set; }
+
         public ParticleViewport Viewport { get; set; }
 
-        public RelayCommand<MouseWheelEventArgs> OnScroll
-            =>
-            new RelayCommand<MouseWheelEventArgs>((args) => ((OrbitCamera)Viewport.GraphicsContext.Camera).Zoom += (float)args.Delta / 500.0f)
-            ;
+        public RelayCommand<MouseWheelEventArgs> OnScroll =>
+            new RelayCommand<MouseWheelEventArgs>(
+                (args) => ((OrbitCamera) Viewport.GraphicsContext.Camera).Zoom += (float) args.Delta / 500.0f);
 
         public RelayCommand<MouseEventArgs> OnMouseDown => new RelayCommand<MouseEventArgs>((args) =>
         {

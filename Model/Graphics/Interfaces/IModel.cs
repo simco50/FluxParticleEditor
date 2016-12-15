@@ -2,7 +2,7 @@
 using SharpDX.Direct3D10;
 using Buffer = SharpDX.Direct3D10.Buffer;
 
-namespace DirectxWpf.Models
+namespace ParticleEditor.Model.Graphics.Interfaces
 {
     public interface IModel
     {

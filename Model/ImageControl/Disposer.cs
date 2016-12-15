@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ParticleEditor.Graphics.ImageControl
+namespace ParticleEditor.Model.ImageControl
 {
     public static class Disposer
     {

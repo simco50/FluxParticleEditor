@@ -2,7 +2,7 @@
 using SharpDX.Direct3D10;
 using Device = SharpDX.Direct3D10.Device1;
 
-namespace ParticleEditor.Graphics.ImageControl
+namespace ParticleEditor.Model.ImageControl
 {
     public interface IDX10Viewport
     {

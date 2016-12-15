@@ -1,13 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using ParticleEditor.Annotations;
 using ParticleEditor.Helpers;
+using ParticleEditor.Model.Graphics.Interfaces;
 using SharpDX;
 using Point = System.Drawing.Point;
 
-namespace ParticleEditor.Graphics.ImageControl
+namespace ParticleEditor.Model.ImageControl
 {
     public class OrbitCamera : INotifyPropertyChanged, ICamera
     {
@@ -18,23 +20,20 @@ namespace ParticleEditor.Graphics.ImageControl
         private Vector3 _eulerAngles;
 
         private float _zoom = 0.5f;
+
         public float Zoom
         {
             get { return _zoom; }
             set
             {
-                _zoom = value;
-                if (_zoom < 0)
-                    _zoom = 0;
-                else if (_zoom > 1)
-                    _zoom = 1;
+                _zoom = MathUtil.Clamp(value, 0, 1);
                 OnPropertyChanged("Zoom");
             }
         }
 
         public bool LeftMouseDown { get; set; } = false;
         public bool MiddleMouseDown { get; set; } = false;
-        public float MouseSensitivity = 0.01f;
+        public float MouseSensitivity = 0.015f;
         private Point _lastMousePos;
 
         public Matrix ViewMatrix { get; set; }
@@ -44,7 +43,6 @@ namespace ParticleEditor.Graphics.ImageControl
         private Matrix _rotationInverseMatrix;
 
         public Vector3 Position { get { return ViewMatrix.TranslationVector; } }
-
         private Vector3 _offset;
 
         private DX10RenderCanvas _canvasControl;

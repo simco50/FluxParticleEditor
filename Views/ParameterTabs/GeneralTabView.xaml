@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              x:Class="ParticleEditor.Views.ParameterTabs.GeneralTabView"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300" x:Name="UserControl">
+
     <Grid>
         <Grid.Resources>
             <helpers:EnumToInt x:Key="EnumConverter"/>
@@ -44,7 +46,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Lifetime variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.MaxParticles}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime variance of a particle"/>
+                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.LifetimeVariance}" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime variance of a particle"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>

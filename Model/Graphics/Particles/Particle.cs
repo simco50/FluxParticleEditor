@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ParticleEditor.Data.ParticleSystem;
+using ParticleEditor.Model.Data;
 using SharpDX;
 
-namespace ParticleEditor.Graphics
+namespace ParticleEditor.Model.Graphics.Particles
 {
     public class Particle
     {

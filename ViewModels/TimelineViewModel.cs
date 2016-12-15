@@ -1,4 +1,4 @@
-﻿using ParticleEditor.Data.ParticleSystem;
+﻿using ParticleEditor.Model.Data;
 
 namespace ParticleEditor.ViewModels
 {

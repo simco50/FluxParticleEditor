@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpDX;
+﻿using SharpDX;
 
-namespace ParticleEditor.Graphics.ImageControl
+namespace ParticleEditor.Model.Graphics.Interfaces
 {
     public interface ICamera
     {

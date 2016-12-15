@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using ParticleEditor.Data;
+using ParticleEditor.Model;
 using ParticleEditor.ViewModels.ParameterTabs;
 
 namespace ParticleEditor.Helpers

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using ParticleEditor.Data.ParticleSystem;
+using ParticleEditor.Model.Data;
 
 namespace ParticleEditor.Helpers.Data
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight.CommandWpf;
-using ParticleEditor.Data.ParticleSystem;
 using ParticleEditor.Helpers;
+using ParticleEditor.Model.Data;
 
 namespace ParticleEditor.ViewModels.ParameterTabs
 {

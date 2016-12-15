@@ -119,28 +119,29 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\Grid.cs" />
-    <Compile Include="Graphics\ImageControl\Disposer.cs" />
-    <Compile Include="Graphics\ImageControl\DX10ImageSource.cs" />
-    <Compile Include="Graphics\ImageControl\DX10RenderCanvas.cs" />
-    <Compile Include="Graphics\ImageControl\GraphicsContext.cs" />
-    <Compile Include="Graphics\ImageControl\ICamera.cs" />
-    <Compile Include="Graphics\ImageControl\OrbitCamera.cs" />
-    <Compile Include="Graphics\ImageControl\ParticleViewport.cs" />
-    <Compile Include="Graphics\ImageControl\IDX10Viewport.cs" />
-    <Compile Include="Graphics\Interfaces\IEffect.cs" />
-    <Compile Include="Graphics\Interfaces\IModel.cs" />
-    <Compile Include="Graphics\Particle.cs" />
-    <Compile Include="Graphics\ParticleEmitter.cs" />
+    <Compile Include="Helpers\test.cs" />
+    <Compile Include="Model\Graphics\Grid.cs" />
+    <Compile Include="Model\ImageControl\Disposer.cs" />
+    <Compile Include="Model\ImageControl\DX10ImageSource.cs" />
+    <Compile Include="Model\ImageControl\DX10RenderCanvas.cs" />
+    <Compile Include="Model\ImageControl\GraphicsContext.cs" />
+    <Compile Include="Model\Graphics\Interfaces\ICamera.cs" />
+    <Compile Include="Model\ImageControl\OrbitCamera.cs" />
+    <Compile Include="Model\Graphics\Particles\ParticleViewport.cs" />
+    <Compile Include="Model\ImageControl\IDX10Viewport.cs" />
+    <Compile Include="Model\Graphics\Interfaces\IEffect.cs" />
+    <Compile Include="Model\Graphics\Interfaces\IModel.cs" />
+    <Compile Include="Model\Graphics\Particles\Particle.cs" />
+    <Compile Include="Model\Graphics\Particles\ParticleEmitter.cs" />
     <Compile Include="Helpers\ApplicationHelper.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\Data\ImageLoader.cs" />
     <Compile Include="Helpers\Data\ParticleFormatter.cs" />
     <Compile Include="Helpers\ObservableDictionary\ObservableDictionary.cs" />
     <Compile Include="Helpers\ObservableDictionary\ObservableSortedDictionary.cs" />
-    <Compile Include="Model\ParticleSystem\KeyFramedValue.cs" />
-    <Compile Include="Model\ParticleSystem\ParticleSystem.cs" />
     <Compile Include="Helpers\DebugLog.cs" />
+    <Compile Include="Model\Data\KeyFramedValue.cs" />
+    <Compile Include="Model\Data\ParticleSystem.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -245,11 +246,6 @@
     <Resource Include="Resources\TransparentBackground.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ParticleRenderer.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Icons\Exit.png" />
     <Resource Include="Resources\Icons\Info.png" />
     <Resource Include="Resources\Icons\New.png" />
@@ -281,12 +277,15 @@
     <Resource Include="Resources\Icons\ZoomOut.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\DebugRenderer.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Resource Include="Resources\Icons\Grid.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icons\Grid.png" />
+    <None Include="Resources\Shaders\DebugRenderer.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Shaders\ParticleRenderer.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

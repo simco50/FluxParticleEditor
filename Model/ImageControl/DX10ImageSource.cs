@@ -1,4 +1,4 @@
-﻿namespace ParticleEditor.Graphics.ImageControl
+﻿namespace ParticleEditor.Model.ImageControl
 {
     using System;
     using System.Runtime.InteropServices;

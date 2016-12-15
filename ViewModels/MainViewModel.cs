@@ -1,19 +1,19 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using ParticleEditor.Annotations;
-using ParticleEditor.Data.ParticleSystem;
-using ParticleEditor.Graphics.ImageControl;
 using ParticleEditor.Helpers;
 using ParticleEditor.Helpers.Data;
+using ParticleEditor.Model.Data;
+using ParticleEditor.Model.Graphics.Particles;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
-using MessageBox = System.Windows.MessageBox;
 
 namespace ParticleEditor.ViewModels
 {
@@ -56,7 +56,6 @@ namespace ParticleEditor.ViewModels
         #endregion METHODS
 
         #region
-        public ParticleViewport ParticleViewport { get; set; } = new ParticleViewport();
 
         private ParticleSystem _particleSystem;
         public ParticleSystem ParticleSystem
