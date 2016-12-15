@@ -30,7 +30,8 @@ namespace ParticleEditor.Graphics.ImageControl
             }
         }
 
-        public bool MouseDown { get; set; } = false;
+        public bool LeftMouseDown { get; set; } = false;
+        public bool MiddleMouseDown { get; set; } = false;
         public float MouseSensitivity = 0.01f;
         private Point _lastMousePos;
 
@@ -38,8 +39,12 @@ namespace ParticleEditor.Graphics.ImageControl
         public Matrix ProjectionMatrix { get; set; }
         public Matrix ViewInverseMatrix { get; set; }
         public Matrix ViewProjectionMatrix { get; set; }
+        private Matrix _rotationInverseMatrix;
 
         public Vector3 Position { get { return ViewMatrix.TranslationVector; } }
+
+
+        private Vector3 _offset;
 
         private DX10RenderCanvas _canvasControl;
             
@@ -51,23 +56,30 @@ namespace ParticleEditor.Graphics.ImageControl
         public void Update(float deltaTime)
         {
             Point mousePos = Cursor.Position;
-            if (MouseDown)
+            Vector2 dMouse = new Vector2(mousePos.X - _lastMousePos.X, mousePos.Y - _lastMousePos.Y);
+            dMouse *= MouseSensitivity;
+            if (LeftMouseDown)
             {
-                Vector2 dMouse = new Vector2(mousePos.X - _lastMousePos.X, mousePos.Y - _lastMousePos.Y);
-                dMouse *= MouseSensitivity;
-
                 eulerAngles.Y -= dMouse.Y;
                 eulerAngles.X -= dMouse.X;
             }
+            if (MiddleMouseDown)
+            {
+                _offset += (Vector3)Vector3.Transform(new Vector3(dMouse.X, -dMouse.Y, 0), Matrix.Invert(_rotationInverseMatrix));
+            }
+
             _lastMousePos = mousePos;
 
             float distance = MinimumDistance + (1.0f - Zoom) * (MaximumDistance - MinimumDistance);
 
-            Matrix rotation = Matrix.RotationYawPitchRoll(eulerAngles.X, 0.0f, 0.0f);
-            Matrix rotation2 = Matrix.RotationYawPitchRoll(0, eulerAngles.Y, 0.0f);
-            Matrix translation = Matrix.Translation(0.0f, 0.0f, distance);
+            Matrix t2 = Matrix.Translation(_offset);
 
-            ViewMatrix = rotation * rotation2 * translation;
+            Matrix rotationYaw = Matrix.RotationYawPitchRoll(eulerAngles.X, 0.0f, 0.0f);
+            Matrix rotationPitch = Matrix.RotationYawPitchRoll(0, eulerAngles.Y, 0.0f);
+            _rotationInverseMatrix = Matrix.Invert(rotationYaw * rotationPitch);
+            Matrix translation = Matrix.Translation(new Vector3(0.0f, 0.0f, distance));
+
+            ViewMatrix = t2 * rotationYaw * rotationPitch * translation;
 
             ViewInverseMatrix = Matrix.Invert(ViewMatrix);
             ProjectionMatrix = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, (float)_canvasControl.ActualWidth / (float)_canvasControl.ActualHeight, 0.1f, 1000f);

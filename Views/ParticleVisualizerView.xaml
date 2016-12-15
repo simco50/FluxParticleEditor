@@ -20,7 +20,7 @@
 
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <Button Width="25" Command="{Binding ResetCommand}">
+                <Button  Width="25" Command="{Binding ResetCommand}">
                     <Image Source="/ParticleEditor;component/Resources/Icons/Reset.png"/>
                 </Button>
                 <Button Width="25" Command="{Binding ZoomOutCommand}">
@@ -29,9 +29,10 @@
                 <Button Width="25" Command="{Binding ZoomInCommand}">
                     <Image Source="/ParticleEditor;component/Resources/Icons/ZoomIn.png"/>
                 </Button>
-                <Slider Width="100" Value="{Binding Viewport.Camera.Zoom}" VerticalAlignment="Center" Maximum="1"/>
-                <Label Content="Grid"/>
-                <CheckBox IsChecked="{Binding Viewport.RenderGrid}"/>
+                <Slider Margin="5, 0" Width="150" Value="{Binding Viewport.GraphicsContext.(imageControl:OrbitCamera.Zoom)}" VerticalAlignment="Center" Maximum="1"/>
+                <ToggleButton IsChecked="{Binding Viewport.RenderGrid}" Width="28">
+                    <Image Source="/ParticleEditor;component/Resources/Icons/Grid.png"/>
+                </ToggleButton>
             </StackPanel>
         </Grid>
 
@@ -42,13 +43,10 @@
                         <command:EventToCommand Command="{Binding OnScroll}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="MouseDown">
-                        <command:EventToCommand Command="{Binding OnMouseDown}"/>
+                        <command:EventToCommand Command="{Binding OnMouseDown}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="MouseUp">
-                        <command:EventToCommand Command="{Binding OnMouseUp}"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeave">
-                        <command:EventToCommand Command="{Binding OnMouseLeave}"/>
+                        <command:EventToCommand Command="{Binding OnMouseUp}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </imageControl:DX10RenderCanvas>

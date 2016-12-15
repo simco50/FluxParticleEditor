@@ -3,6 +3,7 @@ using DirectxWpf.Effects;
 using DirectxWpf.Models;
 using ParticleEditor.Data.ParticleSystem;
 using ParticleEditor.Graphics;
+using ParticleEditor.Helpers;
 using SharpDX;
 using SharpDX.Direct3D10;
 using Format = SharpDX.DXGI.Format;
@@ -11,52 +12,43 @@ namespace ParticleEditor.Graphics.ImageControl
 {
     public class ParticleViewport : IDX10Viewport
     {
-        private Device1 _device;
-        private RenderTargetView _renderTargetView;
-        private DX10RenderCanvas _renderControl;
-
+        public GraphicsContext GraphicsContext { get; set; }
         public ParticleEmitter ParticleEmitter { get; set; }
-
-        public static OrbitCamera Camera { get; set; }
-
         public bool RenderGrid { get; set; } = true;
-
         private Grid _grid;
 
         public void Initialize(Device1 device, RenderTargetView renderTarget, DX10RenderCanvas canvasControl)
         {
-            _device = device;
-            _renderTargetView = renderTarget;
-            _renderControl = canvasControl;
+            GraphicsContext = new GraphicsContext();
+            GraphicsContext.Device = device;
+            GraphicsContext.Camera = new OrbitCamera(canvasControl);
+            GraphicsContext.RenderTargetView = renderTarget;
+            GraphicsContext.RenderControl = canvasControl;
 
-            ParticleEmitter = new ParticleEmitter(_device);
+            ParticleEmitter = new ParticleEmitter(GraphicsContext);
             ParticleEmitter.ParticleSystem = new ParticleSystem();
             ParticleEmitter.Intialize();
 
-            _renderControl.ClearColor = Color.BlanchedAlmond;
-            Camera = new OrbitCamera(canvasControl);
-
             _grid = new Grid();
-            _grid.Initialize(_device);
+            _grid.Initialize(GraphicsContext);
+
+            DebugLog.Log("Initialized", "Direct3D");
         }
 
         public void Deinitialize()
         {
-            
+            DebugLog.Log("Shutdown", "Direct3D");
         }
 
         public void Update(float deltaT)
         {
             ParticleEmitter.Update(deltaT);
-            Camera.Update(deltaT);
-
-            ParticleEmitter.ViewInvVar.SetMatrix(Camera.ViewInverseMatrix);
-            ParticleEmitter.ViewProjVar.SetMatrix(Camera.ViewProjectionMatrix);
+            GraphicsContext.Camera.Update(deltaT);
         }
 
         public void Render(float deltaT)
         {
-            if (_device == null)
+            if (GraphicsContext.Device == null)
                 return;
 
             ParticleEmitter.Render();

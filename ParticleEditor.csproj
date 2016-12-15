@@ -123,6 +123,7 @@
     <Compile Include="Graphics\ImageControl\Disposer.cs" />
     <Compile Include="Graphics\ImageControl\DX10ImageSource.cs" />
     <Compile Include="Graphics\ImageControl\DX10RenderCanvas.cs" />
+    <Compile Include="Graphics\ImageControl\GraphicsContext.cs" />
     <Compile Include="Graphics\ImageControl\ICamera.cs" />
     <Compile Include="Graphics\ImageControl\OrbitCamera.cs" />
     <Compile Include="Graphics\ImageControl\ParticleViewport.cs" />
@@ -283,6 +284,9 @@
     <None Include="Resources\DebugRenderer.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Grid.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

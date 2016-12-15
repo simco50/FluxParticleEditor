@@ -38,7 +38,6 @@ namespace ParticleEditor.Graphics
     public class ParticleEmitter
     {
         private int _vertexStride;
-        private int _indexCount;
         private Buffer _vertexBuffer;
         private int _bufferSize = 0;
 
@@ -52,10 +51,12 @@ namespace ParticleEditor.Graphics
         public EffectMatrixVariable ViewInvVar { get; set; }
         public EffectShaderResourceVariable TextureVar { get; set; }
 
-        private Device1 _device;
+        private GraphicsContext _context;
         private ShaderResourceView _textureResourceView;
 
         public ParticleSystem ParticleSystem { get; set; }
+
+        private bool _hasNext;
 
         //Particle system
         private bool _playing = false;
@@ -63,11 +64,11 @@ namespace ParticleEditor.Graphics
         private float _particleSpawnTimer = 0.0f;
         private int _particleCount = 0;
         private List<Particle> _particles;
-        private IEnumerator _burstEnumerator;
+        private IEnumerator<KeyValuePair<float, int>>  _burstEnumerator;
 
-        public ParticleEmitter(Device1 device)
+        public ParticleEmitter(GraphicsContext context)
         {
-            _device = device;
+            _context = context;
         }
 
         public void Intialize()
@@ -77,14 +78,20 @@ namespace ParticleEditor.Graphics
                 _particles.Add(new Particle(ParticleSystem));
             _bufferSize = ParticleSystem.MaxParticles;
 
-            _textureResourceView = ShaderResourceView.FromFile(_device, "./Resources/ErrorTexture.jpg");
+            _textureResourceView = ShaderResourceView.FromFile(_context.Device, "./Resources/ErrorTexture.jpg");
 
             LoadEffect();
 
             CreateBuffer();
 
-            _burstEnumerator = ParticleSystem.Bursts.GetEnumerator();
-            _burstEnumerator.MoveNext();
+            _burstEnumerator = ParticleSystem.Bursts.GetEnumerator() as IEnumerator<KeyValuePair<float, int>>;
+            if (_burstEnumerator == null)
+            {
+                DebugLog.Log("Converting to IEnumerator<KeyValuePair<float, int>> failed!", "Failed typecast", LogSeverity.Error);
+                return;
+            }
+
+            _hasNext = _burstEnumerator.MoveNext();
 
             if (ParticleSystem.PlayOnAwake)
                 _playing = true;
@@ -97,8 +104,8 @@ namespace ParticleEditor.Graphics
                 case ParticleSortingMode.FrontToBack:
                     _particles.Sort((Particle a, Particle b) =>
                     {
-                        float d1 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, a.VertexInfo.Position);
-                        float d2 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, b.VertexInfo.Position);
+                        float d1 = Vector3.DistanceSquared(_context.Camera.Position, a.VertexInfo.Position);
+                        float d2 = Vector3.DistanceSquared(_context.Camera.Position, b.VertexInfo.Position);
                         if (d1 == d2) return 0;
                         return d1 > d2 ? 1 : -1;
                     });
@@ -106,8 +113,8 @@ namespace ParticleEditor.Graphics
                 case ParticleSortingMode.BackToFront:
                     _particles.Sort((Particle a, Particle b) =>
                     {
-                        float d1 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, a.VertexInfo.Position);
-                        float d2 = Vector3.DistanceSquared(ParticleViewport.Camera.Position, b.VertexInfo.Position);
+                        float d1 = Vector3.DistanceSquared(_context.Camera.Position, a.VertexInfo.Position);
+                        float d2 = Vector3.DistanceSquared(_context.Camera.Position, b.VertexInfo.Position);
                         if (d1 == d2) return 0;
                         return d1 < d2 ? 1 : -1;
                     });
@@ -140,7 +147,8 @@ namespace ParticleEditor.Graphics
             if (_timer >= ParticleSystem.Duration && ParticleSystem.Loop)
             {
                 _timer = 0;
-                _burstEnumerator = ParticleSystem.Bursts.GetEnumerator();
+                _burstEnumerator = ParticleSystem.Bursts.GetEnumerator() as IEnumerator<KeyValuePair<float, int>>;
+                _hasNext = _burstEnumerator.MoveNext();
             }
 
             float emissionTime = 1.0f / ParticleSystem.Emission;
@@ -167,15 +175,13 @@ namespace ParticleEditor.Graphics
                     vertexBufferStream.Write(p.VertexInfo);
                     ++_particleCount;
                 }
-                /*else if (_burstEnumerator.MoveNext() &&
-                         _timer > (_burstEnumerator.Current as KeyValuePair<float, int>?).Value.Key &&
-                         burstParticles < (_burstEnumerator.Current as KeyValuePair<float, int>?).Value.Value)
+                else if (_hasNext && _timer > _burstEnumerator.Current.Key && burstParticles < _burstEnumerator.Current.Value)
                 {
                     p.Initialize();
                     vertexBufferStream.Write(p.VertexInfo);
                     ++_particleCount;
                     ++burstParticles;
-                }*/
+                }
                 else if (_particleSpawnTimer >= emissionTime && _timer < ParticleSystem.Duration)
                 {
                     p.Initialize();
@@ -184,8 +190,8 @@ namespace ParticleEditor.Graphics
                     _particleSpawnTimer -= emissionTime;
                 }
             }
-            if (burstParticles > 0)
-                _burstEnumerator.MoveNext();
+            if (_hasNext && _timer > _burstEnumerator.Current.Key)
+                _hasNext = _burstEnumerator.MoveNext();
 
             _vertexBuffer.Unmap();
             vertexBufferStream.Dispose();
@@ -202,15 +208,17 @@ namespace ParticleEditor.Graphics
             }
 
             TextureVar.SetResource(_textureResourceView);
+            ViewInvVar.SetMatrix(_context.Camera.ViewInverseMatrix);
+            ViewProjVar.SetMatrix(_context.Camera.ViewProjectionMatrix);
 
-            _device.InputAssembler.InputLayout = _inputLayout;
-            _device.InputAssembler.PrimitiveTopology = PrimitiveTopology.PointList;
-            _device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
+            _context.Device.InputAssembler.InputLayout = _inputLayout;
+            _context.Device.InputAssembler.PrimitiveTopology = PrimitiveTopology.PointList;
+            _context.Device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
 
             for (int i = 0; i < _technique.Description.PassCount; i++)
             {
                 _technique.GetPassByIndex(i).Apply();
-                _device.Draw(_particleCount, 0);
+                _context.Device.Draw(_particleCount, 0);
             }
         }
 
@@ -223,7 +231,7 @@ namespace ParticleEditor.Graphics
                 DebugLog.Log(result.Message, "Error compiling shader", LogSeverity.Error);
                 return;
             }
-            _effect = new Effect(_device, result.Bytecode);
+            _effect = new Effect(_context.Device, result.Bytecode);
             _technique = _effect.GetTechniqueByIndex(0);
 
             //Shader variables
@@ -239,7 +247,7 @@ namespace ParticleEditor.Graphics
                 new InputElement("TEXCOORD", 0, Format.R32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0),
                 new InputElement("TEXCOORD", 1, Format.R32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0)
             };
-            _inputLayout = new InputLayout(_device, _technique.GetPassByIndex(0).Description.Signature, vertexLayout);
+            _inputLayout = new InputLayout(_context.Device, _technique.GetPassByIndex(0).Description.Signature, vertexLayout);
         }
 
         private void CreateBuffer()
@@ -252,7 +260,7 @@ namespace ParticleEditor.Graphics
             vertexBufferDescription.OptionFlags = ResourceOptionFlags.None;
             vertexBufferDescription.Usage = ResourceUsage.Dynamic;
             vertexBufferDescription.SizeInBytes = _vertexStride * _bufferSize;
-            _vertexBuffer = new Buffer(_device, vertexBufferDescription);
+            _vertexBuffer = new Buffer(_context.Device, vertexBufferDescription);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace ParticleEditor.Graphics
         public ParticleVertex VertexInfo { get {return _vertexInfo;} set { _vertexInfo = value; } }
         public bool Active { get; set; } = false;
         private float _lifeTimer = 0.0f;
-        private float _initSize = 0.0f;
         private Vector3 _direction;
         private float _startRotation = 0.0f;
 

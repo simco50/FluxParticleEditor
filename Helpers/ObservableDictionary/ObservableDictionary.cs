@@ -34,7 +34,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
-
+#pragma warning disable CS0693 
 namespace DrWPF.Windows.Data
 {
     [Serializable]
@@ -827,3 +827,4 @@ namespace DrWPF.Windows.Data
         #endregion fields
     }
 }
+#pragma warning restore CS0693

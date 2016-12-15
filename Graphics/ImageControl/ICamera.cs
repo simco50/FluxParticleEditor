@@ -13,6 +13,7 @@ namespace ParticleEditor.Graphics.ImageControl
         Matrix ProjectionMatrix { get; set; }
         Matrix ViewInverseMatrix { get; set; }
         Matrix ViewProjectionMatrix { get; set; }
+        Vector3 Position { get; }
         void Update(float deltaTime);
     }
 }

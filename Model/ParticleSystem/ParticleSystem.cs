@@ -40,25 +40,25 @@ namespace ParticleEditor.Data.ParticleSystem
         [JsonProperty("Version")] public int Version = 1;
         //General
         [JsonProperty("Duration")]
-        public float Duration { get; set; } = 1.0f;
+        public float Duration { get; set; } = 5.0f;
 
         [JsonProperty("Loop")]
         public bool Loop { get; set; } = true;
 
         [JsonProperty("Lifetime")]
-        public float Lifetime { get; set; } = 1.0f;
+        public float Lifetime { get; set; } = 6.0f;
 
         [JsonProperty("LifetimeVariance")]
         public float LifetimeVariance { get; set; } = 0.0f;
 
         [JsonProperty("StartVelocity")]
-        public float StartVelocity { get; set; } = 1.0f;
+        public float StartVelocity { get; set; } = 4.0f;
 
         [JsonProperty("StartVelocityVariance")]
         public float StartVelocityVariance { get; set; } = 0.0f;
 
         [JsonProperty("StartSize")]
-        public float StartSize { get; set; } = 1.0f;
+        public float StartSize { get; set; } = 0.1f;
 
         [JsonProperty("StartSizeVariance")]
         public float StartSizeVariance { get; set; } = 0.0f;
@@ -74,10 +74,11 @@ namespace ParticleEditor.Data.ParticleSystem
 
         //Emission
         [JsonProperty("Emission")]
-        public int Emission { get; set; } = 20;
+        public int Emission { get; set; } = 0;
 
         [JsonProperty("Bursts")]
-        public ObservableSortedDictionary<float, int> Bursts { get; set; } = new ObservableSortedDictionary<float, int>(new FloatKeyComparer());
+        public ObservableSortedDictionary<float, int> Bursts { get; set; } =
+            new ObservableSortedDictionary<float, int>(new FloatKeyComparer()) {{1.0f, 500}, { 3.0f, 500 }};
 
         //Shape
         public enum ShapeType

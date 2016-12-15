@@ -26,61 +26,66 @@ namespace ParticleEditor.Graphics
 
     public class Grid
     {
+        //Rendering
         private Buffer _vertexBuffer;
         private InputLayout _inputLayout;
         private Effect _effect;
         private EffectTechnique _technique;
 
-        private List<VertexPosCol> _vertices = new List<VertexPosCol>();
+        private List<VertexPosCol> _vertices;
 
         private EffectMatrixVariable _wvpVar;
         private int _vertexStride;
 
-        private Device1 _device;
+        private GraphicsContext _context;
 
-        public void Initialize(Device1 device)
+        public int GridLines { get; set; } = 20;
+        public float GridLineSpacing { get; set; } = 0.5f;
+        public float AxisLength { get; set; } = 30.0f;
+        public Color GridColor { get; set; } = Color.LightGray;
+
+        public void Initialize(GraphicsContext context)
         {
-            _device = device;
-            CreateGrid();
+            _vertexBuffer?.Dispose();
+
+            _context = context;
             LoadShader();
-            CreateBuffer();
+            CreateGrid();
         }
 
         private void CreateGrid()
         {
-            int numGridLines = 20;
-            float gridSpacing = 1.0f;
+            _vertices = new List<VertexPosCol>();
 
-            float startOffset = -((int) numGridLines / 2) * gridSpacing;
-            float size = (numGridLines - 1) * gridSpacing;
-            Color gridColor = Color.LightGray;
-            for (int i = 0; i < numGridLines; ++i)
+            float startOffset = -((int) GridLines / 2) * GridLineSpacing;
+            float size = (GridLines - 1) * GridLineSpacing;
+
+            for (int i = 0; i < GridLines; ++i)
             {
                 //VERTICAL
-                float lineOffset = startOffset + gridSpacing * i;
+                float lineOffset = startOffset + GridLineSpacing * i;
                 Vector3 vertStart = new Vector3(startOffset, 0, lineOffset);
-                _vertices.Add(new VertexPosCol(vertStart, gridColor));
+                _vertices.Add(new VertexPosCol(vertStart, GridColor));
                 vertStart.X += size;
-                _vertices.Add(new VertexPosCol(vertStart, gridColor));
+                _vertices.Add(new VertexPosCol(vertStart, GridColor));
 
                 //HORIZONTAL
                 vertStart = new Vector3(lineOffset, 0, startOffset);
-                _vertices.Add(new VertexPosCol(vertStart, gridColor));
+                _vertices.Add(new VertexPosCol(vertStart, GridColor));
                 vertStart.Z += size;
-                _vertices.Add(new VertexPosCol(vertStart, gridColor));
+                _vertices.Add(new VertexPosCol(vertStart, GridColor));
             }
 
             //*AXIS
             _vertices.Add(new VertexPosCol(new Vector3(0, 0.01f, 0), Color.DarkRed));
-            _vertices.Add(new VertexPosCol(new Vector3(30, 0.01f, 0), Color.DarkRed));
+            _vertices.Add(new VertexPosCol(new Vector3(AxisLength, 0.01f, 0), Color.DarkRed));
             _vertices.Add(new VertexPosCol(new Vector3(0, 0.01f, 0), Color.DarkGreen));
-            _vertices.Add(new VertexPosCol(new Vector3(0, 30, 0), Color.DarkGreen));
+            _vertices.Add(new VertexPosCol(new Vector3(0, AxisLength, 0), Color.DarkGreen));
             _vertices.Add(new VertexPosCol(new Vector3(0, 0.01f, 0), Color.DarkBlue));
-            _vertices.Add(new VertexPosCol(new Vector3(0, 0.01f, 30), Color.DarkBlue));
-        }
+            _vertices.Add(new VertexPosCol(new Vector3(0, 0.01f, AxisLength), Color.DarkBlue));
 
-        void CreateBuffer()
-        {
+            _vertexBuffer?.Dispose();
+
             _vertexStride = Marshal.SizeOf<VertexPosCol>();
             BufferDescription desc = new BufferDescription();
             desc.BindFlags = BindFlags.VertexBuffer;
@@ -88,7 +93,7 @@ namespace ParticleEditor.Graphics
             desc.OptionFlags = ResourceOptionFlags.None;
             desc.SizeInBytes = _vertexStride * _vertices.Count;
             desc.Usage = ResourceUsage.Default;
-            _vertexBuffer = new Buffer(_device, DataStream.Create(_vertices.ToArray(), false, false), desc);
+            _vertexBuffer = new Buffer(_context.Device, DataStream.Create(_vertices.ToArray(), false, false), desc);
         }
 
         private void LoadShader()
@@ -100,7 +105,7 @@ namespace ParticleEditor.Graphics
                 DebugLog.Log(result.Message, "Failed to compile shader", LogSeverity.Error);
                 return;
             }
-            _effect = new Effect(_device, result.Bytecode);
+            _effect = new Effect(_context.Device, result.Bytecode);
             _technique = _effect.GetTechniqueByIndex(0);
 
             _wvpVar = _effect.GetVariableBySemantic("WORLDVIEWPROJECTION").AsMatrix();
@@ -111,22 +116,22 @@ namespace ParticleEditor.Graphics
                 new InputElement("COLOR", 0, Format.R32G32B32A32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0),
             };
             EffectPass passDesc = _technique.GetPassByIndex(0);
-            _inputLayout = new InputLayout(_device, passDesc.Description.Signature, vertexLayout);
+            _inputLayout = new InputLayout(_context.Device, passDesc.Description.Signature, vertexLayout);
 
         }
 
         public void Render()
         {
-            _device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
-            _device.InputAssembler.PrimitiveTopology = PrimitiveTopology.LineList;
-            _device.InputAssembler.InputLayout = _inputLayout;
+            _context.Device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
+            _context.Device.InputAssembler.PrimitiveTopology = PrimitiveTopology.LineList;
+            _context.Device.InputAssembler.InputLayout = _inputLayout;
 
-            _wvpVar.SetMatrix(ParticleViewport.Camera.ViewProjectionMatrix);
+            _wvpVar.SetMatrix(_context.Camera.ViewProjectionMatrix);
 
             for (int i = 0; i < _technique.Description.PassCount; i++)
             {
                 _technique.GetPassByIndex(i).Apply();
-                _device.Draw(_vertices.Count, 0);
+                _context.Device.Draw(_vertices.Count, 0);
             }
         }
     }
