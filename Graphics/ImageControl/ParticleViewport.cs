@@ -21,9 +21,12 @@ namespace ParticleEditor.Graphics.ImageControl
         {
             GraphicsContext = new GraphicsContext();
             GraphicsContext.Device = device;
-            GraphicsContext.Camera = new OrbitCamera(canvasControl);
             GraphicsContext.RenderTargetView = renderTarget;
             GraphicsContext.RenderControl = canvasControl;
+            OrbitCamera camera = new OrbitCamera(canvasControl);
+            camera.ResetAngles = new Vector3(-MathUtil.PiOverFour, -MathUtil.PiOverFour, 0);
+            camera.Reset();
+            GraphicsContext.Camera = camera;
 
             ParticleEmitter = new ParticleEmitter(GraphicsContext);
             ParticleEmitter.ParticleSystem = new ParticleSystem();

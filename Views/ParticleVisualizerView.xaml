@@ -48,6 +48,9 @@
                     <i:EventTrigger EventName="MouseUp">
                         <command:EventToCommand Command="{Binding OnMouseUp}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <command:EventToCommand Command="{Binding OnMouseLeave}"/>
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
             </imageControl:DX10RenderCanvas>
         </Grid>

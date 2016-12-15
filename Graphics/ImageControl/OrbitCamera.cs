@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using ParticleEditor.Annotations;
+using ParticleEditor.Helpers;
 using SharpDX;
 using Point = System.Drawing.Point;
 
@@ -13,9 +14,10 @@ namespace ParticleEditor.Graphics.ImageControl
         public float MinimumDistance { get; set; } = 2.0f;
         public float MaximumDistance { get; set; } = 10.0f;
 
-        private Vector3 eulerAngles = new Vector3();
+        public Vector3 ResetAngles { get; set; } = new Vector3();
+        private Vector3 _eulerAngles;
 
-        private float _zoom = 1;
+        private float _zoom = 0.5f;
         public float Zoom
         {
             get { return _zoom; }
@@ -43,7 +45,6 @@ namespace ParticleEditor.Graphics.ImageControl
 
         public Vector3 Position { get { return ViewMatrix.TranslationVector; } }
 
-
         private Vector3 _offset;
 
         private DX10RenderCanvas _canvasControl;
@@ -51,6 +52,7 @@ namespace ParticleEditor.Graphics.ImageControl
         public OrbitCamera(DX10RenderCanvas canvasControl)
         {
             _canvasControl = canvasControl;
+            Reset();
         }
 
         public void Update(float deltaTime)
@@ -60,12 +62,12 @@ namespace ParticleEditor.Graphics.ImageControl
             dMouse *= MouseSensitivity;
             if (LeftMouseDown)
             {
-                eulerAngles.Y -= dMouse.Y;
-                eulerAngles.X -= dMouse.X;
+                _eulerAngles.Y -= dMouse.Y;
+                _eulerAngles.X -= dMouse.X;
             }
             if (MiddleMouseDown)
             {
-                _offset += (Vector3)Vector3.Transform(new Vector3(dMouse.X, -dMouse.Y, 0), Matrix.Invert(_rotationInverseMatrix));
+                _offset += (Vector3)Vector3.Transform(new Vector3(dMouse.X, -dMouse.Y, 0), _rotationInverseMatrix);
             }
 
             _lastMousePos = mousePos;
@@ -74,8 +76,8 @@ namespace ParticleEditor.Graphics.ImageControl
 
             Matrix t2 = Matrix.Translation(_offset);
 
-            Matrix rotationYaw = Matrix.RotationYawPitchRoll(eulerAngles.X, 0.0f, 0.0f);
-            Matrix rotationPitch = Matrix.RotationYawPitchRoll(0, eulerAngles.Y, 0.0f);
+            Matrix rotationYaw = Matrix.RotationYawPitchRoll(_eulerAngles.X, 0.0f, 0.0f);
+            Matrix rotationPitch = Matrix.RotationYawPitchRoll(0, _eulerAngles.Y, 0.0f);
             _rotationInverseMatrix = Matrix.Invert(rotationYaw * rotationPitch);
             Matrix translation = Matrix.Translation(new Vector3(0.0f, 0.0f, distance));
 
@@ -88,8 +90,9 @@ namespace ParticleEditor.Graphics.ImageControl
 
         public void Reset()
         {
-            eulerAngles = new Vector3();
-            Zoom = 1;
+            _eulerAngles = ResetAngles;
+            _offset = new Vector3();
+            Zoom = 0.5f;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

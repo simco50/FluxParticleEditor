@@ -4,6 +4,7 @@ using System.Windows.Input;
 using DirectxWpf;
 using GalaSoft.MvvmLight.CommandWpf;
 using ParticleEditor.Graphics.ImageControl;
+using SharpDX;
 
 namespace ParticleEditor.ViewModels
 {
@@ -35,6 +36,12 @@ namespace ParticleEditor.ViewModels
                 ((OrbitCamera)Viewport.GraphicsContext.Camera).LeftMouseDown = false;
             if (args.MiddleButton == MouseButtonState.Released)
                 ((OrbitCamera)Viewport.GraphicsContext.Camera).MiddleMouseDown = false;
+        });
+
+        public RelayCommand OnMouseLeave => new RelayCommand(() =>
+        {
+            ((OrbitCamera)Viewport.GraphicsContext.Camera).LeftMouseDown = false;
+            ((OrbitCamera)Viewport.GraphicsContext.Camera).MiddleMouseDown = false;
         });
 
         public RelayCommand ZoomInCommand => new RelayCommand(() => ((OrbitCamera)Viewport.GraphicsContext.Camera).Zoom += 0.2f);
