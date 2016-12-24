@@ -3,32 +3,56 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ParticleEditor.Views"
-        xmlns:Helpers="clr-namespace:ParticleEditor.Helpers"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         Title="Log" Height="300" Width="300" WindowStyle="ToolWindow" BorderThickness="3" BorderBrush="{DynamicResource AccentColorBrush}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <ScrollViewer Margin="3">
-        <Grid>
-            <ItemsControl ItemsSource="{x:Static Helpers:DebugLog.Entries}" >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Grid Background="{DynamicResource AccentColorBrush}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="White" Margin="2" Grid.Column="0" Text="{Binding Timestamp, StringFormat={}[{0:HH:mm}]}"/>
-                                <TextBlock Foreground="White" Margin="2"  Grid.Column="1" Text="{Binding Source}"/>
-                            </Grid>
-                            <TextBlock Margin="2" Text="{Binding What}" TextWrapping="WrapWithOverflow"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
+    <Window.DataContext>
+        <viewModels:DebugLogViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Remove filter" Command="{Binding ResetFilterCommand}"/>
+            <ComboBox Grid.Column="1" Name="ComboBox_Filter" ItemsSource="{Binding LogCategories}" SelectedIndex="{Binding SelectedIndex}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <command:EventToCommand Command="{Binding FilterLogCommand}" CommandParameter="{Binding ElementName=ComboBox_Filter, Path=SelectedValue}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
         </Grid>
-    </ScrollViewer>
+        <Grid Grid.Row="1">
+            <ScrollViewer Margin="3">
+                <ItemsControl ItemsSource="{Binding FilteredLogEntries}" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Grid Background="{DynamicResource AccentColorBrush}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Foreground="White" Margin="2" Grid.Column="0" Text="{Binding Timestamp, StringFormat={}[{0:HH:mm}]}"/>
+                                    <TextBlock Foreground="White" Margin="2"  Grid.Column="1" Text="{Binding Source}"/>
+                                </Grid>
+                                <TextBlock Margin="2" Text="{Binding What}" TextWrapping="WrapWithOverflow"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+        </Grid>
 </controls:MetroWindow>
 
