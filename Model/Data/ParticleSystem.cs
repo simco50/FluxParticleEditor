@@ -1,7 +1,11 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using DrWPF.Windows.Data;
 using Newtonsoft.Json;
+using ParticleEditor.Annotations;
 using SharpDX;
+using SharpDX.Direct3D10;
 
 
 namespace ParticleEditor.Model.Data
@@ -34,6 +38,8 @@ namespace ParticleEditor.Model.Data
 
         [JsonProperty("Version")]
         public int Version = 2;
+
+
         //General
 
         [JsonProperty("Duration")]
@@ -123,6 +129,6 @@ namespace ParticleEditor.Model.Data
         public ParticleBlendMode BlendMode { get; set; } = ParticleBlendMode.AlphaBlend;
 
         [JsonProperty("ImagePath")]
-        public string ImagePath { get; set; } = "../../Resources/ErrorTexture.jpg";
+        public string ImagePath { get; set; } = "D:/Personal Work/D3D Engine/FluxEngine/Resources/Textures/Smoke.png";
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -18,7 +19,7 @@ namespace ParticleEditor.Model.ImageControl
 
         public IDX10Viewport Viewport
         {
-            get { return (IDX10Viewport) GetValue(ViewportProperty); }
+            get { return (IDX10Viewport)GetValue(ViewportProperty); }
 
             set
             {
@@ -32,14 +33,6 @@ namespace ParticleEditor.Model.ImageControl
             }
         }
 
-        public static readonly DependencyProperty ClearColorProperty = DependencyProperty.Register(
-            "ClearColor", typeof(Color4), typeof(DX10RenderCanvas), new PropertyMetadata(default(Color4)));
-
-        public Color4 ClearColor
-        {
-            get { return (Color4) GetValue(ClearColorProperty); }
-            set { SetValue(ClearColorProperty, value); }
-        }
 
         private Device _device;
         private Texture2D _renderTarget;
@@ -48,10 +41,11 @@ namespace ParticleEditor.Model.ImageControl
         private DepthStencilView _depthStencilView;
         private DX10ImageSource _d3DSurface;
         private Stopwatch _renderTimer;
-        
+
         private bool _sceneAttached;
         private float _lastUpdate;
-        private DateTime? _lastSizeChange;  
+        private DateTime? _lastSizeChange;
+        public Color4 ClearColor = SharpDX.Color.CornflowerBlue;
 
         public DX10RenderCanvas()
         {
@@ -190,7 +184,7 @@ namespace ParticleEditor.Model.ImageControl
         {
             _lastSizeChange = DateTime.Now.AddMilliseconds(200);
 
-            //CreateAndBindTargets();
+            CreateAndBindTargets();
             base.OnRenderSizeChanged(sizeInfo);
         }
 

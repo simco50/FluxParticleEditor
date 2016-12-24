@@ -8,15 +8,10 @@
         xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:parameterTabs="clr-namespace:ParticleEditor.Views.ParameterTabs"
-        xmlns:ImageControl="clr-namespace:ParticleEditor.Model.ImageControl"
         x:Class="ParticleEditor.Views.MainView"
         mc:Ignorable="d"
         Title="Particle Editor" Height="720" Width="1240" MinWidth="1000" MinHeight="00" Icon="/ParticleEditor;component/Resources/Logo.png" WindowStartupLocation="CenterScreen"
         BorderThickness="3" BorderBrush="{DynamicResource AccentColorBrush}">
-
-    <controls:MetroWindow.Resources>
-        <helpers:EnumToInt x:Key="EnumToIntConverter"/>
-    </controls:MetroWindow.Resources>
 
     <controls:MetroWindow.DataContext>
         <viewModels:MainViewModel/>
@@ -186,13 +181,13 @@
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Label Content="Sorting Mode" VerticalAlignment="Top"/>
-                                <ComboBox Margin="5,26,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={StaticResource EnumToIntConverter}}">
+                                <ComboBox Margin="5,26,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.SortingMode, Converter={helpers:EnumToInt}}">
                                     <Label Content="Front to back"/>
                                     <Label Content="Back to front"/>
                                     <Label Content="Oldest first"/>
                                     <Label Content="Youngest first"/>
                                 </ComboBox>
-                                <ComboBox Margin="5,78,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.BlendMode, Converter={StaticResource EnumToIntConverter}}">
+                                <ComboBox Margin="5,78,5,0" VerticalAlignment="Top" SelectedIndex="{Binding ParticleSystem.BlendMode, Converter={helpers:EnumToInt}}">
                                     <Label Content="Alpha blend"/>
                                     <Label Content="Additive"/>
                                 </ComboBox>

@@ -12,7 +12,7 @@ namespace ParticleEditor.Model.ImageControl
     {
         public DX10RenderCanvas RenderControl { get; set; }
         public Device1 Device { get; set; }
-        public ICamera Camera { get; set; }
+        public OrbitCamera Camera { get; set; }
         public RenderTargetView RenderTargetView { get; set; }
     }
 }

@@ -10,12 +10,21 @@ namespace ParticleEditor.Model.Graphics.Particles
     {
         public GraphicsContext GraphicsContext { get; set; } = new GraphicsContext();
         public ParticleEmitter ParticleEmitter { get; set; } = null;
-        public ParticleSystem ParticleSystem { get; set; } = null;
+
+        private ParticleSystem _particleSystem = null;
+        public ParticleSystem ParticleSystem
+        {
+            get { return _particleSystem; }
+            set
+            { _particleSystem = value; }
+        }
+
         public bool RenderGrid { get; set; } = true;
         private Grid _grid;
 
         public void Initialize(Device1 device, RenderTargetView renderTarget, DX10RenderCanvas canvasControl)
         {
+            //Create the graphics context
             GraphicsContext.Device = device;
             GraphicsContext.RenderTargetView = renderTarget;
             GraphicsContext.RenderControl = canvasControl;
@@ -24,12 +33,13 @@ namespace ParticleEditor.Model.Graphics.Particles
             camera.Reset();
             GraphicsContext.Camera = camera;
 
-            ParticleEmitter = new ParticleEmitter(GraphicsContext);
-            ParticleEmitter.ParticleSystem = ParticleSystem;
-            ParticleEmitter.Intialize();
-
+            //Grid
             _grid = new Grid();
             _grid.Initialize(GraphicsContext);
+
+            ParticleEmitter = new ParticleEmitter(GraphicsContext);
+            ParticleEmitter.Intialize();
+            ParticleEmitter.ParticleSystem = ParticleSystem;
 
             DebugLog.Log("Initialized", "Direct3D");
         }

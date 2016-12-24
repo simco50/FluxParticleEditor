@@ -6,7 +6,7 @@ float PI = 3.141592;
 
 SamplerState samPoint
 {
-    Filter = MIN_MAG_MIP_POINT;
+    Filter = MIN_MAG_MIP_LINEAR;
     AddressU = CLAMP;
     AddressV = CLAMP;
 };
@@ -14,14 +14,12 @@ SamplerState samPoint
 DepthStencilState DisableDepthWriting
 {
 	DepthEnable = TRUE;
-	DepthFunc = ALWAYS;
+	DepthWriteMask = ZERO;
 };
 
-BlendState AdditiveBlending
+RasterizerState BackCulling
 {
-	BlendEnable[0] = TRUE;
-	SrcBlend = SRC_ALPHA;
-    DestBlend = ONE;
+	CullMode = BACK;
 };
 
 BlendState AlphaBlending
@@ -29,11 +27,23 @@ BlendState AlphaBlending
 	BlendEnable[0] = TRUE;
 	SrcBlend = SRC_ALPHA;
     DestBlend = INV_SRC_ALPHA;
+	BlendOp = ADD;
+	SrcBlendAlpha = ONE;
+	DestBlendAlpha = ZERO;
+	BlendOpAlpha = ADD;
+	RenderTargetWriteMask[0] = 0x0f;
 };
 
-RasterizerState BackCulling
+BlendState AdditiveBlending
 {
-	CullMode = NONE;
+	BlendEnable[0] = TRUE;
+	SrcBlend = SRC_ALPHA;
+	DestBlend = ONE;
+	BlendOp = ADD;
+	SrcBlendAlpha = ONE;
+	DestBlendAlpha = ZERO;
+	BlendOpAlpha = ADD;
+	RenderTargetWriteMask[0] = 0x0f;
 };
 
 struct VS_DATA
@@ -89,30 +99,36 @@ void MainGS(point VS_DATA vertex[1], inout TriangleStream<GS_DATA> triStream)
 
 float4 MainPS(GS_DATA input) : SV_TARGET 
 {	
-	float4 result = gParticleTexture.Sample(samPoint,input.TexCoord);
-	return input.Color * result;
+	float4 result = gParticleTexture.Sample(samPoint, input.TexCoord);
+	clip(result.a < 0.05f ? -1 : 1);
+	return float4(1, 0, 0, 0.1f);
+	return result * input.Color;
 }
 
 technique10 AlphaBlendingTechnique 
 {
-	pass p0 
+	pass P0 
 	{
+		//SetDepthStencilState(DisableDepthWriting, 0);
+		SetRasterizerState(BackCulling);
+		SetBlendState(AlphaBlending, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xFFFFFFFF);
+
 		SetVertexShader(CompileShader(vs_4_0, MainVS()));
 		SetGeometryShader(CompileShader(gs_4_0, MainGS()));
-		SetPixelShader(CompileShader(ps_4_0, MainPS()));
-		SetRasterizerState(BackCulling);       
-		SetDepthStencilState(DisableDepthWriting, 0);
+		SetPixelShader(CompileShader(ps_4_0, MainPS()));    
 	}
 }
 
 technique10 AdditiveBlendingTechnique 
 {
-	pass p0 
+	pass P0 
 	{
+		//SetDepthStencilState(DisableDepthWriting, 0);
+		SetRasterizerState(BackCulling);
+		SetBlendState(AdditiveBlending, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xFFFFFFFF);
+
 		SetVertexShader(CompileShader(vs_4_0, MainVS()));
 		SetGeometryShader(CompileShader(gs_4_0, MainGS()));
-		SetPixelShader(CompileShader(ps_4_0, MainPS()));
-		SetRasterizerState(BackCulling);       
-		SetDepthStencilState(DisableDepthWriting, 0);
+		SetPixelShader(CompileShader(ps_4_0, MainPS()));      
 	}
 }

@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro;
@@ -11,7 +11,6 @@ using ParticleEditor.Annotations;
 using ParticleEditor.Helpers;
 using ParticleEditor.Helpers.Data;
 using ParticleEditor.Model.Data;
-using ParticleEditor.Model.Graphics.Particles;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
 
@@ -56,7 +55,6 @@ namespace ParticleEditor.ViewModels
         #endregion METHODS
 
         #region
-
         private ParticleSystem _particleSystem;
         public ParticleSystem ParticleSystem
         {
@@ -85,6 +83,7 @@ namespace ParticleEditor.ViewModels
             set { _hasUnsavedChanged = value; }
         }
 
+        public SharpDX.Color BackgroundColorDx { get; set; } = SharpDX.Color.Gray;
         private SolidColorBrush _backgroundColor = new SolidColorBrush(Color.FromRgb(50, 50, 50));
         public SolidColorBrush BackgroundColor
         {
@@ -92,6 +91,7 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _backgroundColor = value;
+                BackgroundColorDx = SharpDX.Color.FromBgra(Int32.Parse(_backgroundColor.ToString().Substring(1), System.Globalization.NumberStyles.HexNumber));
                 OnPropertyChanged("BackgroundColor");
             }
         }
@@ -188,8 +188,7 @@ namespace ParticleEditor.ViewModels
             AppTheme appTheme = ThemeManager.GetAppTheme(parameters[0]);
             ThemeManager.ChangeAppStyle(Application.Current, accent, appTheme);
         }
-
-#endregion COMMANDS
+        #endregion COMMANDS
 
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

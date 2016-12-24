@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using ParticleEditor.Model.Data;
 using ParticleEditor.ViewModels;
+using SharpDX;
 
 namespace ParticleEditor.Views
 {

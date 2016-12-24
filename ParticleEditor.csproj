@@ -73,6 +73,10 @@
       <HintPath>packages\SharpDX.D3DCompiler.3.1.1\lib\net45\SharpDX.D3DCompiler.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharpDX.Direct2D1, Version=3.1.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>packages\SharpDX.Direct2D1.3.1.1\lib\net45\SharpDX.Direct2D1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SharpDX.Direct3D10, Version=3.1.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>packages\SharpDX.Direct3D10.3.1.1\lib\net45\SharpDX.Direct3D10.dll</HintPath>
       <Private>True</Private>
@@ -119,13 +123,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\test.cs" />
+    <Compile Include="Helpers\InputBindingsManager.cs" />
     <Compile Include="Model\Graphics\Grid.cs" />
     <Compile Include="Model\ImageControl\Disposer.cs" />
     <Compile Include="Model\ImageControl\DX10ImageSource.cs" />
     <Compile Include="Model\ImageControl\DX10RenderCanvas.cs" />
     <Compile Include="Model\ImageControl\GraphicsContext.cs" />
-    <Compile Include="Model\Graphics\Interfaces\ICamera.cs" />
     <Compile Include="Model\ImageControl\OrbitCamera.cs" />
     <Compile Include="Model\Graphics\Particles\ParticleViewport.cs" />
     <Compile Include="Model\ImageControl\IDX10Viewport.cs" />
@@ -284,7 +287,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Shaders\ParticleRenderer.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

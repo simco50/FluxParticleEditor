@@ -78,7 +78,7 @@
         {
             if (DX10ImageSource.ActiveClients != 0)
                 return;
-            
+
             D3DContext = new Direct3DEx();
 
             PresentParameters presentparams = new PresentParameters();

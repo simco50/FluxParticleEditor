@@ -11,7 +11,7 @@ using Point = System.Drawing.Point;
 
 namespace ParticleEditor.Model.ImageControl
 {
-    public class OrbitCamera : INotifyPropertyChanged, ICamera
+    public class OrbitCamera : INotifyPropertyChanged
     {
         public float MinimumDistance { get; set; } = 2.0f;
         public float MaximumDistance { get; set; } = 10.0f;
