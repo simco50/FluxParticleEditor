@@ -11,6 +11,11 @@ RasterizerState NoCulling
 	CullMode = NONE;
 };
 
+BlendState NoBlend
+{
+	BlendEnable[0] = FALSE;
+};
+
 struct VS_INPUT{
 	float3 Pos : POSITION;
 	float4 Color : COLOR;
@@ -42,7 +47,7 @@ technique10 Default
 	{
 		SetRasterizerState(NoCulling);
 		SetDepthStencilState(EnableDepth, 0);
-
+		SetBlendState(NoBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xFFFFFFFF);
 		SetVertexShader( CompileShader ( vs_4_0, VS() ));
 		SetGeometryShader( NULL );
 		SetPixelShader( CompileShader ( ps_4_0, PS() ));

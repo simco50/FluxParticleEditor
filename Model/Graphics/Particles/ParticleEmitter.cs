@@ -9,6 +9,7 @@ using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D10;
 using SharpDX.DXGI;
+using SharpDX.Mathematics.Interop;
 using Buffer = SharpDX.Direct3D10.Buffer;
 
 namespace ParticleEditor.Model.Graphics.Particles
@@ -36,9 +37,11 @@ namespace ParticleEditor.Model.Graphics.Particles
         private int _bufferSize = 0;
 
         //Shader
-        private EffectTechnique _technique;
+        private List<EffectTechnique> _techniques = new List<EffectTechnique>();
         private Effect _effect;
         private InputLayout _inputLayout;
+
+        private List<BlendState> _blendStates = new List<BlendState>();
 
         //Shader variables
         private EffectMatrixVariable _viewProjVar;
@@ -235,9 +238,9 @@ namespace ParticleEditor.Model.Graphics.Particles
             _context.Device.InputAssembler.PrimitiveTopology = PrimitiveTopology.PointList;
             _context.Device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
 
-            for (int i = 0; i < _technique.Description.PassCount; ++i)
+            for (int i = 0; i < _techniques[(int)_particleSystem.BlendMode].Description.PassCount; ++i)
             {
-                _technique.GetPassByIndex(i).Apply();
+                _techniques[(int)_particleSystem.BlendMode].GetPassByIndex(i).Apply();
                 _context.Device.Draw(_particleCount, 0);
             }
         }
@@ -252,7 +255,8 @@ namespace ParticleEditor.Model.Graphics.Particles
                 return;
             }
             _effect = new Effect(_context.Device, result.Bytecode);
-            _technique = _effect.GetTechniqueByIndex(0);
+            _techniques.Add(_effect.GetTechniqueByIndex(0));
+            _techniques.Add(_effect.GetTechniqueByIndex(1));
 
             //Shader variables
             _viewProjVar = _effect.GetVariableBySemantic("VIEWPROJ").AsMatrix();
@@ -273,7 +277,7 @@ namespace ParticleEditor.Model.Graphics.Particles
                 new InputElement("TEXCOORD", 0, Format.R32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0),
                 new InputElement("TEXCOORD", 1, Format.R32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0)
             };
-            _inputLayout = new InputLayout(_context.Device, _technique.GetPassByIndex(0).Description.Signature, vertexLayout);
+            _inputLayout = new InputLayout(_context.Device, _techniques[0].GetPassByIndex(0).Description.Signature, vertexLayout);
 
             DebugLog.Log("Shader loaded and blend state created", "Particle Emitter");
         }
