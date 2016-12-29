@@ -212,7 +212,7 @@
                 </Grid.RowDefinitions>
                 <GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="3" HorizontalAlignment="Stretch" Background="{DynamicResource AccentColorBrush}"/>
                 <Grid Grid.Row="0">
-                    <local:ParticleVisualizerView ParticleSystem="{Binding ParticleSystem}"/>
+                    <local:ParticleVisualizerView/>
                 </Grid>
                 <!--Timeline-->
                 <Grid Grid.Row="2">

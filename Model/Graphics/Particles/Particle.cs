@@ -1,5 +1,6 @@
 ﻿using System;
 using ParticleEditor.Model.Data;
+using ParticleEditor.ViewModels;
 using SharpDX;
 
 namespace ParticleEditor.Model.Graphics.Particles
@@ -18,13 +19,11 @@ namespace ParticleEditor.Model.Graphics.Particles
         private float _startVelocity = 0;
         private float _startSize = 0;
 
-        private ParticleSystem _particleSystem;
-
         private static Random _random = new Random();
 
-        public Particle(ParticleSystem particleSystem)
+        public Particle()
         {
-            _particleSystem = particleSystem;
+
         }
 
         public void Initialize()
@@ -32,15 +31,15 @@ namespace ParticleEditor.Model.Graphics.Particles
             Active = true;
             _lifeTimer = 0.0f;
             GetPositionAndDirection(ref _vertexInfo.Position, ref _direction);
-            _lifeTime = RandF(_particleSystem.Lifetime - _particleSystem.LifetimeVariance,
-                _particleSystem.Lifetime + _particleSystem.LifetimeVariance);
+            _lifeTime = RandF(MainViewModel.MainParticleSystem.Lifetime - MainViewModel.MainParticleSystem.LifetimeVariance,
+                MainViewModel.MainParticleSystem.Lifetime + MainViewModel.MainParticleSystem.LifetimeVariance);
             if (_lifeTime < 0)
                 _lifeTime = 0;
-            _startRotation = _particleSystem.RandomStartRotation ? RandF(0.0f, 360.0f) : 0.0f;
-            _startVelocity = RandF(_particleSystem.StartVelocity - _particleSystem.StartVelocityVariance,
-                _particleSystem.StartVelocity + _particleSystem.StartVelocityVariance);
-            _startSize = RandF(_particleSystem.StartSize - _particleSystem.StartSizeVariance,
-                _particleSystem.StartSize + _particleSystem.StartSizeVariance);
+            _startRotation = MainViewModel.MainParticleSystem.RandomStartRotation ? RandF(0.0f, 360.0f) : 0.0f;
+            _startVelocity = RandF(MainViewModel.MainParticleSystem.StartVelocity - MainViewModel.MainParticleSystem.StartVelocityVariance,
+                MainViewModel.MainParticleSystem.StartVelocity + MainViewModel.MainParticleSystem.StartVelocityVariance);
+            _startSize = RandF(MainViewModel.MainParticleSystem.StartSize - MainViewModel.MainParticleSystem.StartSizeVariance,
+                MainViewModel.MainParticleSystem.StartSize + MainViewModel.MainParticleSystem.StartSizeVariance);
             if (_startSize < 0)
                 _startSize = 0;
             Update(0.016f);
@@ -59,9 +58,9 @@ namespace ParticleEditor.Model.Graphics.Particles
             //Constant velocity
             movement += _direction * _startVelocity;
             //World space velocity
-            movement += _particleSystem.Velocity[_lifeTimer];
+            movement += MainViewModel.MainParticleSystem.Velocity[_lifeTimer];
             //Local space velocity
-            Vector3 localVel = _particleSystem.LocalVelocity[_lifeTimer];
+            Vector3 localVel = MainViewModel.MainParticleSystem.LocalVelocity[_lifeTimer];
             if (localVel.LengthSquared() > 0)
             {
                 Vector3 up = new Vector3(0, 1, 0);
@@ -76,10 +75,10 @@ namespace ParticleEditor.Model.Graphics.Particles
             }
             _vertexInfo.Position += movement * deltaTime;
 
-            Vector3 color = _particleSystem.Color[_lifeTimer];
-            _vertexInfo.Color = new Vector4(color.X, color.Y, color.Z, _particleSystem.Transparancy[_lifeTimer]);
-            _vertexInfo.Size = _particleSystem.Size[_lifeTimer] * _startSize;
-            _vertexInfo.Rotation = _startRotation + _particleSystem.Rotation[_lifeTimer];
+            Vector3 color = MainViewModel.MainParticleSystem.Color[_lifeTimer];
+            _vertexInfo.Color = new Vector4(color.X, color.Y, color.Z, MainViewModel.MainParticleSystem.Transparancy[_lifeTimer]);
+            _vertexInfo.Size = MainViewModel.MainParticleSystem.Size[_lifeTimer] * _startSize;
+            _vertexInfo.Rotation = _startRotation + MainViewModel.MainParticleSystem.Rotation[_lifeTimer];
         }
 
         public void Reset()
@@ -96,43 +95,43 @@ namespace ParticleEditor.Model.Graphics.Particles
         private void GetPositionAndDirection(ref Vector3 position, ref Vector3 direction)
         {
             direction = new Vector3(RandF(0, 1), 0, 0);
-            if (_particleSystem.Shape.ShapeType == ParticleSystem.ShapeType.CIRCLE)
+            if (MainViewModel.MainParticleSystem.Shape.ShapeType == ParticleSystem.ShapeType.CIRCLE)
             {
                 Matrix3x3 randomMatrix = Matrix3x3.RotationYawPitchRoll(RandF(-MathUtil.Pi, MathUtil.Pi), RandF(-MathUtil.Pi, MathUtil.Pi), 0);
                 direction = Vector3.Transform(direction, randomMatrix);
 
-                if (_particleSystem.Shape.EmitFromShell)
+                if (MainViewModel.MainParticleSystem.Shape.EmitFromShell)
                     direction.Normalize();
-                position = _particleSystem.Shape.Radius * direction;
+                position = MainViewModel.MainParticleSystem.Shape.Radius * direction;
                 direction.Normalize();
                 return;
             }
-            if (_particleSystem.Shape.ShapeType == ParticleSystem.ShapeType.SPHERE)
+            if (MainViewModel.MainParticleSystem.Shape.ShapeType == ParticleSystem.ShapeType.SPHERE)
             {
                 Matrix3x3 randomMatrix = Matrix3x3.RotationYawPitchRoll(RandF(-MathUtil.Pi, MathUtil.Pi), RandF(-MathUtil.Pi, MathUtil.Pi), RandF(-MathUtil.Pi, MathUtil.Pi));
                 direction = Vector3.Transform(direction, randomMatrix);
 
-                if (_particleSystem.Shape.EmitFromShell)
+                if (MainViewModel.MainParticleSystem.Shape.EmitFromShell)
                     direction.Normalize();
-                position = _particleSystem.Shape.Radius * direction;
+                position = MainViewModel.MainParticleSystem.Shape.Radius * direction;
                 return;
             }
-            if (_particleSystem.Shape.ShapeType == ParticleSystem.ShapeType.CONE)
+            if (MainViewModel.MainParticleSystem.Shape.ShapeType == ParticleSystem.ShapeType.CONE)
             {
                 Matrix3x3 randomMatrix = Matrix3x3.RotationYawPitchRoll(RandF(-MathUtil.Pi, MathUtil.Pi), RandF(-MathUtil.Pi, MathUtil.Pi), 0);
                 position = Vector3.Transform(direction, randomMatrix);
 
-                if (_particleSystem.Shape.EmitFromShell)
+                if (MainViewModel.MainParticleSystem.Shape.EmitFromShell)
                     position.Normalize();
-                position *= _particleSystem.Shape.Radius;
+                position *= MainViewModel.MainParticleSystem.Shape.Radius;
 
                 direction = new Vector3();
-                direction.Y += RandF(0, _particleSystem.Lifetime);
-                float offset = direction.Y * (float)Math.Tan(_particleSystem.Shape.Angle * MathUtil.Pi / 180.0f);
+                direction.Y += RandF(0, MainViewModel.MainParticleSystem.Lifetime);
+                float offset = direction.Y * (float)Math.Tan(MainViewModel.MainParticleSystem.Shape.Angle * MathUtil.Pi / 180.0f);
                 direction.X += offset * position.X;
                 direction.Z += offset * position.Z;
 
-                if (_particleSystem.Shape.EmitFromVolume)
+                if (MainViewModel.MainParticleSystem.Shape.EmitFromVolume)
                 {
                     position += direction;
                 }
@@ -140,9 +139,9 @@ namespace ParticleEditor.Model.Graphics.Particles
                 direction.Normalize();
                 return;
             }
-            if (_particleSystem.Shape.ShapeType == ParticleSystem.ShapeType.EDGE)
+            if (MainViewModel.MainParticleSystem.Shape.ShapeType == ParticleSystem.ShapeType.EDGE)
             {
-                position = new Vector3(RandF(-_particleSystem.Shape.Radius, _particleSystem.Shape.Radius), 0, 0);
+                position = new Vector3(RandF(-MainViewModel.MainParticleSystem.Shape.Radius, MainViewModel.MainParticleSystem.Shape.Radius), 0, 0);
                 direction = new Vector3(0, 0, 1);
             }
         }

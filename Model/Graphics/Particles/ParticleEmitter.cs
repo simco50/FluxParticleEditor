@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
 using ParticleEditor.Model.ImageControl;
+using ParticleEditor.ViewModels;
 using SharpDX;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
@@ -51,16 +52,9 @@ namespace ParticleEditor.Model.Graphics.Particles
         private GraphicsContext _context;
         private ShaderResourceView _textureResourceView;
 
-        private ParticleSystem _particleSystem;
-
-        public ParticleSystem ParticleSystem
+        private ParticleSystem _particleSystem
         {
-            get { return _particleSystem; }
-            set
-            {
-                _particleSystem = value;
-                OnParticleSystemSet();
-            }
+            get { return MainViewModel.MainParticleSystem; }
         }
 
         private bool _hasNext;
@@ -81,23 +75,24 @@ namespace ParticleEditor.Model.Graphics.Particles
         public void Intialize()
         {
             LoadEffect();
+            OnParticleSystemSet();
             DebugLog.Log("Initialized", "Particle Emitter");
         }
 
         void OnParticleSystemSet()
         {
-            _particles = new List<Particle>(ParticleSystem.MaxParticles);
-            for (int i = 0; i < ParticleSystem.MaxParticles; i++)
-                _particles.Add(new Particle(ParticleSystem));
+            _particles = new List<Particle>(_particleSystem.MaxParticles);
+            for (int i = 0; i < _particleSystem.MaxParticles; i++)
+                _particles.Add(new Particle());
 
-            _bufferSize = ParticleSystem.MaxParticles;
+            _bufferSize = _particleSystem.MaxParticles;
 
             ResetBurstEnumerator();
 
-            if (ParticleSystem.PlayOnAwake)
+            if (_particleSystem.PlayOnAwake)
                 _playing = true;
 
-            _textureResourceView = ShaderResourceView.FromFile(_context.Device, ParticleSystem.ImagePath);
+            _textureResourceView = ShaderResourceView.FromFile(_context.Device, _particleSystem.ImagePath);
 
             CreateBuffer();
 
@@ -106,7 +101,7 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         private void ResetBurstEnumerator()
         {
-            _burstEnumerator = ParticleSystem.Bursts.GetEnumerator() as IEnumerator<KeyValuePair<float, int>>;
+            _burstEnumerator = _particleSystem.Bursts.GetEnumerator() as IEnumerator<KeyValuePair<float, int>>;
             if (_burstEnumerator == null)
             {
                 DebugLog.Log("Converting to IEnumerator<KeyValuePair<float, int>> failed!", "Failed typecast", LogSeverity.Error);
@@ -117,7 +112,7 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         private void SortParticles()
         {
-            switch (ParticleSystem.SortingMode)
+            switch (_particleSystem.SortingMode)
             {
                 case ParticleSortingMode.FrontToBack:
                     _particles.Sort((Particle a, Particle b) =>
@@ -158,35 +153,35 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         public void Update(float deltaTime)
         {
-            if (ParticleSystem == null)
+            if (_particleSystem == null)
                 return;
             if (_playing == false)
                 return;
 
             _timer += deltaTime;
-            if (_timer >= ParticleSystem.Duration && ParticleSystem.Loop)
+            if (_timer >= _particleSystem.Duration && _particleSystem.Loop)
             {
                 _timer = 0;
                 ResetBurstEnumerator();
             }
 
-            float emissionTime = 1.0f / ParticleSystem.Emission;
+            float emissionTime = 1.0f / _particleSystem.Emission;
             _particleSpawnTimer += deltaTime;
 
             SortParticles();
 
-            if (ParticleSystem.MaxParticles > _particles.Count)
+            if (_particleSystem.MaxParticles > _particles.Count)
             {
-                int amount = ParticleSystem.MaxParticles - _particles.Count;
+                int amount = _particleSystem.MaxParticles - _particles.Count;
                 for (int i = 0; i < amount; i++)
-                    _particles.Add(new Particle(ParticleSystem));
+                    _particles.Add(new Particle());
             }
 
             _particleCount = 0;
             DataStream vertexBufferStream = _vertexBuffer.Map(MapMode.WriteDiscard, SharpDX.Direct3D10.MapFlags.None);
 
             int burstParticles = 0;
-            for (int i = 0; i < ParticleSystem.MaxParticles; i++)
+            for (int i = 0; i < _particleSystem.MaxParticles; i++)
             {
                 Particle p = _particles[i];
                 if (p.Active)
@@ -202,7 +197,7 @@ namespace ParticleEditor.Model.Graphics.Particles
                     ++_particleCount;
                     ++burstParticles;
                 }
-                else if (_particleSpawnTimer >= emissionTime && _timer < ParticleSystem.Duration)
+                else if (_particleSpawnTimer >= emissionTime && _timer < _particleSystem.Duration)
                 {
                     p.Initialize();
                     vertexBufferStream.Write(p.VertexInfo);
@@ -219,13 +214,13 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         public void Render()
         {
-            if (ParticleSystem == null)
+            if (_particleSystem == null)
                 return;
             if (_playing == false)
                 return;
-            if (ParticleSystem.MaxParticles > _bufferSize)
+            if (_particleSystem.MaxParticles > _bufferSize)
             {
-                _bufferSize = ParticleSystem.MaxParticles + 500;
+                _bufferSize = _particleSystem.MaxParticles + 500;
                 DebugLog.Log("Increasing buffer size...", "ParticleEmitter::Render()");
                 CreateBuffer();
             }

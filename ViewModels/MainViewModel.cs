@@ -55,7 +55,13 @@ namespace ParticleEditor.ViewModels
         #endregion METHODS
 
         #region
-        private ParticleSystem _particleSystem;
+
+        public static ParticleSystem MainParticleSystem
+        {
+            get { return _particleSystem; }
+        }
+
+        private static ParticleSystem _particleSystem;
         public ParticleSystem ParticleSystem
         {
             get { return _particleSystem; }
@@ -83,7 +89,7 @@ namespace ParticleEditor.ViewModels
             set { _hasUnsavedChanged = value; }
         }
 
-        public SharpDX.Color BackgroundColorDx { get; set; } = SharpDX.Color.Gray;
+        public static SharpDX.Color BackgroundColorDx { get; set; } = SharpDX.Color.Gray;
         private SolidColorBrush _backgroundColor = new SolidColorBrush(Color.FromRgb(50, 50, 50));
         public SolidColorBrush BackgroundColor
         {

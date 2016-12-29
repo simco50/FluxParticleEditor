@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ParticleEditor.Model.Graphics.Interfaces;
+﻿using ParticleEditor.Model.ImageControl;
 using SharpDX.Direct3D10;
 
-namespace ParticleEditor.Model.ImageControl
+namespace ParticleEditor.Model.Graphics
 {
     public class GraphicsContext
     {

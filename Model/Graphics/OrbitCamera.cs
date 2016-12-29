@@ -1,15 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using ParticleEditor.Annotations;
-using ParticleEditor.Helpers;
-using ParticleEditor.Model.Graphics.Interfaces;
+using ParticleEditor.Model.ImageControl;
 using SharpDX;
 using Point = System.Drawing.Point;
 
-namespace ParticleEditor.Model.ImageControl
+namespace ParticleEditor.Model.Graphics
 {
     public class OrbitCamera : INotifyPropertyChanged
     {
@@ -20,6 +17,7 @@ namespace ParticleEditor.Model.ImageControl
         private Vector3 _eulerAngles;
 
         private float _zoom = 0.5f;
+        private float _maxOffset = 10.0f;
 
         public float Zoom
         {
@@ -64,9 +62,7 @@ namespace ParticleEditor.Model.ImageControl
                 _eulerAngles.X -= dMouse.X;
             }
             if (MiddleMouseDown)
-            {
                 _offset += (Vector3)Vector3.Transform(new Vector3(dMouse.X, -dMouse.Y, 0), _rotationInverseMatrix);
-            }
 
             _lastMousePos = mousePos;
 

@@ -1,6 +1,7 @@
 ﻿using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
 using ParticleEditor.Model.ImageControl;
+using ParticleEditor.ViewModels;
 using SharpDX;
 using SharpDX.Direct3D10;
 
@@ -10,14 +11,6 @@ namespace ParticleEditor.Model.Graphics.Particles
     {
         public GraphicsContext GraphicsContext { get; set; } = new GraphicsContext();
         public ParticleEmitter ParticleEmitter { get; set; } = null;
-
-        private ParticleSystem _particleSystem = null;
-        public ParticleSystem ParticleSystem
-        {
-            get { return _particleSystem; }
-            set
-            { _particleSystem = value; }
-        }
 
         public bool RenderGrid { get; set; } = true;
         private Grid _grid;
@@ -39,7 +32,6 @@ namespace ParticleEditor.Model.Graphics.Particles
 
             ParticleEmitter = new ParticleEmitter(GraphicsContext);
             ParticleEmitter.Intialize();
-            ParticleEmitter.ParticleSystem = ParticleSystem;
 
             DebugLog.Log("Initialized", "Direct3D");
         }
@@ -51,6 +43,7 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         public void Update(float deltaT)
         {
+            GraphicsContext.RenderControl.ClearColor = MainViewModel.BackgroundColorDx;
             ParticleEmitter.Update(deltaT);
             GraphicsContext.Camera.Update(deltaT);
         }
