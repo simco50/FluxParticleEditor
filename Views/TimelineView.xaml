@@ -15,24 +15,12 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
             <Label Content="TIMELINE" FontFamily="Segoe UI Semilight" Foreground="White"/>
         </Grid>
         <Grid Grid.Row="1">
-            <Button HorizontalAlignment="Left" Width="25">
-                <Image Source="/ParticleEditor;component/Resources/Icons/Play.png"/>
-            </Button>
-            <Button HorizontalAlignment="Left" Margin="25,0,0,0" Width="25">
-                <Image Source="/ParticleEditor;component/Resources/Icons/Pause.png"/>
-            </Button>
-            <Button HorizontalAlignment="Left" Margin="50,0,0,0" Width="25">
-                <Image Source="/ParticleEditor;component/Resources/Icons/Stop.png"/>
-            </Button>
-        </Grid>
-        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="4*"/>

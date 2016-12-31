@@ -60,7 +60,9 @@ namespace ParticleEditor.Model.Graphics.Particles
         private bool _hasNext;
 
         //Particle system
+        private bool _paused = false;
         private bool _playing = false;
+        public float PlayTimer { get { return _timer; } }
         private float _timer = 0.0f;
         private float _particleSpawnTimer = 0.0f;
         private int _particleCount = 0;
@@ -151,11 +153,34 @@ namespace ParticleEditor.Model.Graphics.Particles
             }
         }
 
+        public void Play()
+        {
+            _paused = false;
+            _playing = true;
+        }
+
+        public void Stop()
+        {
+            _playing = false;
+            _particleSpawnTimer = 0.0f;
+            _timer = 0.0f;
+            foreach (Particle p in _particles)
+                p.Reset();
+            ResetBurstEnumerator();
+        }
+
+        public void Pause()
+        {
+            _paused = !_paused;
+        }
+
         public void Update(float deltaTime)
         {
             if (_particleSystem == null)
                 return;
             if (_playing == false)
+                return;
+            if (_paused)
                 return;
 
             _timer += deltaTime;

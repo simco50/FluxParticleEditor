@@ -19,7 +19,11 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Button Width="30" Command="{Binding ResetCommand}" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/Reset.png"/>
                 </Button>
@@ -33,6 +37,18 @@
                 <ToggleButton IsChecked="{Binding Viewport.RenderGrid}" Width="30" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/Grid.png"/>
                 </ToggleButton>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Label Content="{Binding Timer}" Width="90" FontWeight="Bold" FontFamily="Segoe UI Semilight" FontSize="14" HorizontalContentAlignment="Right"/>
+                <Button Command="{Binding PlayCommand}" Height="30">
+                    <Image Source="/ParticleEditor;component/Resources/Icons/Play.png"/>
+                </Button>
+                <Button Command="{Binding PauseCommand}" Height="30">
+                    <Image Source="/ParticleEditor;component/Resources/Icons/Pause.png"/>
+                </Button>
+                <Button Command="{Binding StopCommand}" Height="30" Margin="0,0,5,0">
+                    <Image Source="/ParticleEditor;component/Resources/Icons/Stop.png"/>
+                </Button>
             </StackPanel>
         </Grid>
 
