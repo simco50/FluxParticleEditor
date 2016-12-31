@@ -1,7 +1,5 @@
 ﻿using ParticleEditor.Helpers;
-using ParticleEditor.Model.Data;
 using ParticleEditor.Model.ImageControl;
-using ParticleEditor.ViewModels;
 using SharpDX;
 using SharpDX.Direct3D10;
 
@@ -43,7 +41,6 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         public void Update(float deltaT)
         {
-            GraphicsContext.RenderControl.ClearColor = MainViewModel.BackgroundColorDx;
             ParticleEmitter.Update(deltaT);
             GraphicsContext.Camera.Update(deltaT);
         }
@@ -53,10 +50,10 @@ namespace ParticleEditor.Model.Graphics.Particles
             if (GraphicsContext.Device == null)
                 return;
 
-            ParticleEmitter.Render();
-
             if(RenderGrid)
                 _grid.Render();
+
+            ParticleEmitter.Render();
         }
     }
 }

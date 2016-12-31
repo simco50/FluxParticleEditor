@@ -17,7 +17,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Duration" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Duration}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The duration of one cycle"/>
+                        <TextBox Text="{Binding ParticleSystem.Duration}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The duration of one cycle"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Loop" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -33,7 +33,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Lifetime" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Lifetime}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime of a particle"/>
+                        <TextBox Text="{Binding ParticleSystem.Lifetime}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime of a particle"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -41,7 +41,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Lifetime variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.LifetimeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime variance of a particle"/>
+                        <TextBox Text="{Binding ParticleSystem.LifetimeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime variance of a particle"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -49,7 +49,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start velocity" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartVelocity}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="Velocity in the spawn direction"/>
+                        <TextBox Text="{Binding ParticleSystem.StartVelocity}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="Velocity in the spawn direction"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -57,7 +57,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start velocity variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartVelocityVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The velocity variance"/>
+                        <TextBox Text="{Binding ParticleSystem.StartVelocityVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The velocity variance"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -65,7 +65,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start size" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartSize}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size of the particles"/>
+                        <TextBox Text="{Binding ParticleSystem.StartSize}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size of the particles"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -73,7 +73,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Start size variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.StartSizeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size variance of the particles"/>
+                        <TextBox Text="{Binding ParticleSystem.StartSizeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size variance of the particles"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -81,7 +81,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Random start rotation" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.RandomStartRotation}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ParticleSystem.RandomStartRotation}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -89,7 +89,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Play on awake" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.PlayOnAwake}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ParticleSystem.PlayOnAwake}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -101,7 +101,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Max particles" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.MaxParticles}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The maximum amount of particles at the same time"/>
+                        <TextBox Text="{Binding ParticleSystem.MaxParticles}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The maximum amount of particles at the same time"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -109,7 +109,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Emission" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Emission}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The particle spawn rate per second"/>
+                        <TextBox Text="{Binding ParticleSystem.Emission}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The particle spawn rate per second"/>
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -121,7 +121,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Shape" Grid.Column="0"/>
-                        <ComboBox Grid.Column="1" SelectedIndex="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.ShapeType, Converter={helpers:EnumToInt}}" ToolTip="The emission shape of the system">
+                        <ComboBox Grid.Column="1" SelectedIndex="{Binding ParticleSystem.Shape.ShapeType, Converter={helpers:EnumToInt}}" ToolTip="The emission shape of the system">
                             <Label Content="Circle"/>
                             <Label Content="Sphere"/>
                             <Label Content="Cone"/>
@@ -134,7 +134,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Radius" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.Radius}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ParticleSystem.Shape.Radius}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -142,7 +142,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Emit from shell" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.EmitFromShell}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ParticleSystem.Shape.EmitFromShell}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -150,7 +150,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Emit from volume" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -158,7 +158,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Angle" Grid.Column="0"/>
-                        <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Shape.Angle}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right"/>
+                        <TextBox Text="{Binding ParticleSystem.Shape.Angle}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right"/>
                     </Grid>
                 </StackPanel>
             </Expander>

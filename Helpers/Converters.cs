@@ -6,8 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
+using System.Windows.Media;
 using ParticleEditor.Model;
+using ParticleEditor.Model.Data;
 using ParticleEditor.ViewModels.ParameterTabs;
+using SharpDX;
+using Color = System.Windows.Media.Color;
 
 namespace ParticleEditor.Helpers
 {
@@ -56,6 +60,27 @@ namespace ParticleEditor.Helpers
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new BurstConverter();
+            return _converter;
+        }
+    }
+
+    public class Vector3ToBrushConverter : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return new SolidColorBrush(Color.FromRgb((byte)((Vector3)value).X, (byte)((Vector3)value).Y, (byte)((Vector3)value).Z));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Color c = ((SolidColorBrush) value).Color;
+            return new Vector3(c.R, c.G, c.B);
+        }
+
+        private static Vector3ToBrushConverter _converter = null;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null) _converter = new Vector3ToBrushConverter();
             return _converter;
         }
     }

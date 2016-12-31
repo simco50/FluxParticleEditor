@@ -4,87 +4,115 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid x:Name="Root" >
         <Grid.DataContext>
             <parameterTabs:AnimationTabViewModel/>
         </Grid.DataContext>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="30"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <StackPanel>
-                <Label Content="Size"/>
-                <Label Content="Velocity"/>
-                <Label Content="Local velocity"/>
-                <Label Content="External force"/>
-                <Label Content="Color"/>
-                <Label Content="Transparancy"/>
-                <Label Content="Rotation"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Column="1">
-            <StackPanel>
-                <TextBox Text="1"/>
-                <Grid>
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Size" Grid.Column="0"/>
+                <TextBox Text="{Binding ParticleSystem.Size.Constant}" Grid.Column="1"/>
+                <Button Grid.Column="2"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Velocity" Grid.Column="0"/>
+                <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="0" Grid.Column="0"/>
-                    <TextBox Text="0" Grid.Column="1"/>
-                    <TextBox Text="0" Grid.Column="2"/>
+                    <TextBox Grid.Column="0"/>
+                    <TextBox Grid.Column="1"/>
+                    <TextBox Grid.Column="2"/>
                 </Grid>
-                <Grid>
+                <Button Grid.Column="2"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Local velocity" Grid.Column="0"/>
+                <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="0" Grid.Column="0"/>
-                    <TextBox Text="0" Grid.Column="1"/>
-                    <TextBox Text="0" Grid.Column="2"/>
+                    <TextBox Grid.Column="0"/>
+                    <TextBox Grid.Column="1"/>
+                    <TextBox Grid.Column="2"/>
                 </Grid>
-                <Grid>
+                <Button Grid.Column="2"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="External force" Grid.Column="0"/>
+                <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="0" Grid.Column="0"/>
-                    <TextBox Text="0" Grid.Column="1"/>
-                    <TextBox Text="0" Grid.Column="2"/>
+                    <TextBox Grid.Column="0"/>
+                    <TextBox Grid.Column="1"/>
+                    <TextBox Grid.Column="2"/>
                 </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox Text="0" Grid.Column="0"/>
-                    <TextBox Text="0" Grid.Column="1"/>
-                    <TextBox Text="0" Grid.Column="2"/>
-                </Grid>
-                <TextBox Text="1"/>
-                <TextBox Text="0"/>
-            </StackPanel>
-
-        </Grid>
-        <Grid Grid.Column="2">
-            <StackPanel>
-                <Button Content="+" Height="26"/>
-                <Button Content="+" Height="26"/>
-                <Button Content="+" Height="26"/>
-                <Button Content="+" Height="26"/>
-                <Button Content="+" Height="26"/>
-                <Button Content="+" Height="26"/>
-                <Button Content="+" Height="26"/>
-            </StackPanel>
-        </Grid>
+                <Button Grid.Column="2"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Color" Grid.Column="0"/>
+                <Rectangle Fill="{Binding ParticleSystem.Color.Constant, Converter={helpers:Vector3ToBrushConverter}}" Grid.Column="1" Stroke="Black" Margin="1">
+                    <Rectangle.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding SelectColorCommand}"/>
+                    </Rectangle.InputBindings>
+                </Rectangle>
+                <Button Grid.Column="2"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Transparancy" Grid.Column="0"/>
+                <TextBox Text="{Binding ParticleSystem.Transparancy.Constant}" Grid.Column="1"/>
+                <Button Grid.Column="2"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Rotation" Grid.Column="0"/>
+                <TextBox Text="{Binding ParticleSystem.Rotation.Constant}" Grid.Column="1"/>
+                <Button Grid.Column="2"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

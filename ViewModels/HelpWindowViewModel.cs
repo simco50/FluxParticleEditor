@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 
 namespace ParticleEditor.ViewModels
 {
-    public class HelpWindowViewModel
+    public class HelpWindowViewModel : ViewModelBase
     {
         public RelayCommand<Window> CloseWindowCommand
         {

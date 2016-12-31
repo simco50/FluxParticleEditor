@@ -1,21 +1,63 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Timers;
 using System.Windows.Input;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using ParticleEditor.Annotations;
+using ParticleEditor.Helpers;
+using ParticleEditor.Model.Data;
 using ParticleEditor.Model.Graphics.Particles;
 
 namespace ParticleEditor.ViewModels
 {
-    class ParticleVisualizerViewModel : INotifyPropertyChanged
+    class ParticleVisualizerViewModel : ViewModelBase
     {
         public ParticleVisualizerViewModel()
         {
+            Messenger.Default.Register<MessageID>(this, OnMessageReceived);
+            Messenger.Default.Register<SharpDX.Color>(this, c => Viewport.GraphicsContext.RenderControl.ClearColor = c);
+
             Viewport = new ParticleViewport();
-            _updateTimer = new Timer(0.016f);
-            _updateTimer.Elapsed += (sender, args) => OnPropertyChanged("Timer");
-            _updateTimer.Start();
+            Timer updateTimer = new Timer(0.016f);
+            updateTimer.Elapsed += (sender, args) => RaisePropertyChanged("Timer");
+            updateTimer.Elapsed += (sender, args) => RaisePropertyChanged("CameraZoom");
+            updateTimer.Start();
+        }
+
+        private void OnMessageReceived(MessageID id)
+        {
+            switch (id)
+            {
+                case MessageID.ParticleSystemChanged:
+                    Viewport.ParticleEmitter?.OnParticleSystemChanged();
+                    break;
+                case MessageID.ImageChanged:
+                    Viewport.ParticleEmitter?.OnImageChanged();
+                    break;
+                case MessageID.BurstChanged:
+                    Viewport.ParticleEmitter?.Reset();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(id), id, null);
+            }
+        }
+
+        public float CameraZoom
+        {
+            get
+            {
+                if(Viewport.GraphicsContext.Camera != null)
+                    return Viewport.GraphicsContext.Camera.Zoom;
+                return 0;
+            }
+            set
+            {
+                Viewport.GraphicsContext.Camera.Zoom = value;
+                RaisePropertyChanged("CameraZoom");
+            }
         }
 
         public ParticleViewport Viewport { get; set; }
@@ -46,7 +88,6 @@ namespace ParticleEditor.ViewModels
             Viewport.GraphicsContext.Camera.MiddleMouseDown = false;
         });
 
-        private Timer _updateTimer;
         public string Timer
         {
             get
@@ -63,12 +104,5 @@ namespace ParticleEditor.ViewModels
         public RelayCommand ZoomInCommand => new RelayCommand(() => Viewport.GraphicsContext.Camera.Zoom += 0.2f);
         public RelayCommand ZoomOutCommand => new RelayCommand(() => Viewport.GraphicsContext.Camera.Zoom -= 0.2f);
         public RelayCommand ResetCommand => new RelayCommand(() => Viewport.GraphicsContext.Camera.Reset());
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

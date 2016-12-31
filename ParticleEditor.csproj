@@ -124,6 +124,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\InputBindingsManager.cs" />
+    <Compile Include="Helpers\MessageID.cs" />
     <Compile Include="Model\Graphics\Grid.cs" />
     <Compile Include="Model\ImageControl\Disposer.cs" />
     <Compile Include="Model\ImageControl\DX10ImageSource.cs" />
@@ -176,6 +177,9 @@
     </Compile>
     <Compile Include="Views\TimelineView.xaml.cs">
       <DependentUpon>TimelineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vector3UserControl.xaml.cs">
+      <DependentUpon>Vector3UserControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +240,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TimelineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Vector3UserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

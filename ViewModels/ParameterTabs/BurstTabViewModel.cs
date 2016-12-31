@@ -1,5 +1,7 @@
 ﻿using System;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
 
@@ -9,20 +11,23 @@ namespace ParticleEditor.ViewModels.ParameterTabs
     {
         public float Time = -1;
         public int Amount = -1;
+
+        public bool IsValid()
+        {
+            return !(Amount < 0 || Time < 0);
+        }
     }
 
-    public class BurstTabViewModel
+    public class BurstTabViewModel : ViewModelBase
     {
-        public int SelectedBurst { get; set; } = 0;
-
         public ParticleSystem ParticleSystem { get; set; }
 
         public RelayCommand<Burst> AddBurstCommand => new RelayCommand<Burst>(AddBurst);
         private void AddBurst(Burst burst)
         {
-            if (burst.Amount == -1 || burst.Time == -1.0f)
+            if (burst.IsValid() == false)
             {
-                DebugLog.Log("Input format not valid!", "Add Burst", LogSeverity.Warning);
+                DebugLog.Log("Input format not valid! Make sure the values are not negative and only contain numbers.", "Add Burst", LogSeverity.Warning);
                 return;
             }
             if (burst.Time > ParticleSystem.Duration)
@@ -31,6 +36,8 @@ namespace ParticleEditor.ViewModels.ParameterTabs
                 return;
             }
             ParticleSystem.Bursts[burst.Time] = burst.Amount;
+
+            Messenger.Default.Send(MessageID.BurstChanged);
         }
 
         public RelayCommand<float> RemoveBurstCommand => new RelayCommand<float>(RemoveBurst);
@@ -39,6 +46,8 @@ namespace ParticleEditor.ViewModels.ParameterTabs
             Random rand = new Random();
             if (ParticleSystem.Bursts.Remove(key) == false)
                 DebugLog.Log($"Key with value {key} does not exists!", "Remove Burst", LogSeverity.Warning);
+
+            Messenger.Default.Send(MessageID.BurstChanged);
         }
     }
 }

@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
+using ParticleEditor.Annotations;
 using SharpDX;
 
 namespace ParticleEditor.Model.Data
@@ -12,7 +16,7 @@ namespace ParticleEditor.Model.Data
         void Remove(float key);
     }
 
-    public class KeyFramedValueFloat : IKeyFramedValue<float>
+    public class KeyFramedValueFloat : ObservableObject, IKeyFramedValue<float>
     {
         public KeyFramedValueFloat(float value)
         {
@@ -83,7 +87,6 @@ namespace ParticleEditor.Model.Data
         public float Constant { get; set; }
     }
 
-
     public class KeyFramedValueVector3 : IKeyFramedValue<Vector3>
     {
         public KeyFramedValueVector3(Vector3 value)
@@ -129,7 +132,7 @@ namespace ParticleEditor.Model.Data
                 bool valid = true;
                 var e = Keys.GetEnumerator();
                 var prev = e;
-                while(valid)
+                while (valid)
                 {
                     if (e.Current.Key == t)
                         return e.Current.Value;

@@ -150,7 +150,7 @@
                             <parameterTabs:BurstTabView ParticleSystem="{Binding ParticleSystem}"/>
                         </TabItem>
                         <TabItem Header="Animation" controls:ControlsHelper.HeaderFontSize="18">
-                            <parameterTabs:AnimationTabView/>
+                            <parameterTabs:AnimationTabView ParticleSystem="{Binding ParticleSystem}"/>
                         </TabItem>
                     </TabControl>
                 </Grid>

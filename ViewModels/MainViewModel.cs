@@ -3,7 +3,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Media;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -16,7 +18,7 @@ using Application = System.Windows.Application;
 
 namespace ParticleEditor.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
         public MainViewModel()
         {
@@ -28,7 +30,7 @@ namespace ParticleEditor.ViewModels
             ParticleSystem = ParticleFormatter.MakeNewSystem();
         }
 
-        #region
+        #region METHODS
         private void InitializeLog()
         {
             FileLogger fileLogger = new FileLogger("ParticleEditor.log");
@@ -52,9 +54,9 @@ namespace ParticleEditor.ViewModels
                     SaveFile();
             }
         }
-        #endregion METHODS
+        #endregion
 
-        #region
+        #region PROPERTIES
 
         public static ParticleSystem MainParticleSystem
         {
@@ -69,7 +71,8 @@ namespace ParticleEditor.ViewModels
             {
                 _particleSystem = value;
                 SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
-                OnPropertyChanged("ParticleSystem");
+                Messenger.Default.Send(MessageID.ParticleSystemChanged);
+                RaisePropertyChanged("ParticleSystem");
             }
         }
 
@@ -79,7 +82,7 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _spriteImage = value;
-                OnPropertyChanged("SpriteImage");
+                RaisePropertyChanged("SpriteImage");
             }
         }
 
@@ -89,7 +92,6 @@ namespace ParticleEditor.ViewModels
             set { _hasUnsavedChanged = value; }
         }
 
-        public static SharpDX.Color BackgroundColorDx { get; set; } = SharpDX.Color.Gray;
         private SolidColorBrush _backgroundColor = new SolidColorBrush(Color.FromRgb(50, 50, 50));
         public SolidColorBrush BackgroundColor
         {
@@ -97,13 +99,13 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _backgroundColor = value;
-                BackgroundColorDx = SharpDX.Color.FromBgra(Int32.Parse(_backgroundColor.ToString().Substring(1), System.Globalization.NumberStyles.HexNumber));
-                OnPropertyChanged("BackgroundColor");
+                Messenger.Default.Send(SharpDX.Color.FromBgra(Int32.Parse(_backgroundColor.ToString().Substring(1), System.Globalization.NumberStyles.HexNumber)));
+                RaisePropertyChanged("BackgroundColor");
             }
         }
-        #endregion PROPERTIES
+        #endregion
 
-        #region
+        #region COMMANDS
         public RelayCommand OpenFileCommand => new RelayCommand(OpenFile);
         private void OpenFile()
         {
@@ -136,6 +138,7 @@ namespace ParticleEditor.ViewModels
                 return;
             ParticleSystem.ImagePath = dialog.FileName;
             SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
+            Messenger.Default.Send(MessageID.ImageChanged);
         }
 
         public RelayCommand ShutdownCommand => new RelayCommand(Shutdown);
@@ -194,13 +197,6 @@ namespace ParticleEditor.ViewModels
             AppTheme appTheme = ThemeManager.GetAppTheme(parameters[0]);
             ThemeManager.ChangeAppStyle(Application.Current, accent, appTheme);
         }
-        #endregion COMMANDS
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #endregion
     }
 }

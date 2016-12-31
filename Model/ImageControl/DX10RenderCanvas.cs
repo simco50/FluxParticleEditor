@@ -45,7 +45,7 @@ namespace ParticleEditor.Model.ImageControl
         private bool _sceneAttached;
         private float _lastUpdate;
         private DateTime? _lastSizeChange;
-        public Color4 ClearColor = SharpDX.Color.CornflowerBlue;
+        public Color4 ClearColor = new SharpDX.Color(50, 50, 50, 255);
 
         public DX10RenderCanvas()
         {

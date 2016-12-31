@@ -33,7 +33,7 @@
                 <Button Width="30" Command="{Binding ZoomInCommand}" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/ZoomIn.png"/>
                 </Button>
-                <Slider Margin="5, 0" Width="150" Value="{Binding Viewport.GraphicsContext.Camera.Zoom}" VerticalAlignment="Center" Maximum="1"/>
+                <Slider Margin="5, 0" Width="150" Value="{Binding CameraZoom}" VerticalAlignment="Center" Maximum="1"/>
                 <ToggleButton IsChecked="{Binding Viewport.RenderGrid}" Width="30" Height="30">
                     <Image Source="/ParticleEditor;component/Resources/Icons/Grid.png"/>
                 </ToggleButton>

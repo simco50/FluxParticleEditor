@@ -8,7 +8,7 @@ using Point = System.Drawing.Point;
 
 namespace ParticleEditor.Model.Graphics
 {
-    public class OrbitCamera : INotifyPropertyChanged
+    public class OrbitCamera
     {
         public float MinimumDistance { get; set; } = 2.0f;
         public float MaximumDistance { get; set; } = 10.0f;
@@ -16,19 +16,7 @@ namespace ParticleEditor.Model.Graphics
         public Vector3 ResetAngles { get; set; } = new Vector3();
         private Vector3 _eulerAngles;
 
-        private float _zoom = 0.5f;
-        private float _maxOffset = 10.0f;
-
-        public float Zoom
-        {
-            get { return _zoom; }
-            set
-            {
-                _zoom = MathUtil.Clamp(value, 0, 1);
-                OnPropertyChanged("Zoom");
-            }
-        }
-
+        public float Zoom { get; set; } = 0.5f;
         public bool LeftMouseDown { get; set; } = false;
         public bool MiddleMouseDown { get; set; } = false;
         public float MouseSensitivity = 0.015f;
@@ -87,14 +75,6 @@ namespace ParticleEditor.Model.Graphics
             _eulerAngles = ResetAngles;
             _offset = new Vector3();
             Zoom = 0.5f;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

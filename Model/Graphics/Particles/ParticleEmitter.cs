@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
-using ParticleEditor.Model.ImageControl;
 using ParticleEditor.ViewModels;
 using SharpDX;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D10;
 using SharpDX.DXGI;
-using SharpDX.Mathematics.Interop;
 using Buffer = SharpDX.Direct3D10.Buffer;
 
 namespace ParticleEditor.Model.Graphics.Particles
@@ -77,11 +75,11 @@ namespace ParticleEditor.Model.Graphics.Particles
         public void Intialize()
         {
             LoadEffect();
-            OnParticleSystemSet();
+            OnParticleSystemChanged();
             DebugLog.Log("Initialized", "Particle Emitter");
         }
 
-        void OnParticleSystemSet()
+        public void OnParticleSystemChanged()
         {
             _particles = new List<Particle>(_particleSystem.MaxParticles);
             for (int i = 0; i < _particleSystem.MaxParticles; i++)
@@ -99,6 +97,11 @@ namespace ParticleEditor.Model.Graphics.Particles
             CreateBuffer();
 
             DebugLog.Log("Changed particle system", "Particle Emitter");
+        }
+
+        public void OnImageChanged()
+        {
+            _textureResourceView = ShaderResourceView.FromFile(_context.Device, _particleSystem.ImagePath);
         }
 
         private void ResetBurstEnumerator()
@@ -172,6 +175,15 @@ namespace ParticleEditor.Model.Graphics.Particles
         public void Pause()
         {
             _paused = !_paused;
+        }
+
+        public void Reset()
+        {
+            _particleSpawnTimer = 0.0f;
+            _timer = 0.0f;
+            foreach (Particle p in _particles)
+                p.Reset();
+            ResetBurstEnumerator();
         }
 
         public void Update(float deltaTime)

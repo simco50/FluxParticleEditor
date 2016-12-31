@@ -6,13 +6,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using ParticleEditor.Annotations;
 using ParticleEditor.Helpers;
 
 namespace ParticleEditor.ViewModels
 {
-    class DebugLogViewModel : INotifyPropertyChanged
+    class DebugLogViewModel : ViewModelBase
     {
         public ObservableCollection<LogEntry> FilteredLogEntries { get; set; }
         public ObservableCollection<string> LogCategories { get; set; } = new ObservableCollection<string>() {"All"};
@@ -49,7 +50,7 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _selectedIndex = value;
-                OnPropertyChanged("SelectedIndex");
+                RaisePropertyChanged("SelectedIndex");
             }
         }
 
@@ -61,14 +62,6 @@ namespace ParticleEditor.ViewModels
             FilteredLogEntries.Clear();
             foreach(var entry in DebugLog.Entries)
                 FilteredLogEntries.Add(entry);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

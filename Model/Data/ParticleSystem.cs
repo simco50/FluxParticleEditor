@@ -1,12 +1,8 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Media;
 using DrWPF.Windows.Data;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
-using ParticleEditor.Annotations;
 using SharpDX;
-using SharpDX.Direct3D10;
-
 
 namespace ParticleEditor.Model.Data
 {
@@ -30,7 +26,7 @@ namespace ParticleEditor.Model.Data
         AdditiveBlend = 1,
     }
 
-    public class ParticleSystem
+    public class ParticleSystem : ObservableObject
     {
         public ParticleSystem()
         {
@@ -39,9 +35,7 @@ namespace ParticleEditor.Model.Data
         [JsonProperty("Version")]
         public int Version = 2;
 
-
         //General
-
         [JsonProperty("Duration")]
         public float Duration { get; set; } = 1.0f;
 
