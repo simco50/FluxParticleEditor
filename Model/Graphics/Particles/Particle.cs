@@ -132,9 +132,7 @@ namespace ParticleEditor.Model.Graphics.Particles
                 direction.Z += offset * position.Z;
 
                 if (MainViewModel.MainParticleSystem.Shape.EmitFromVolume)
-                {
                     position += direction;
-                }
 
                 direction.Normalize();
                 return;

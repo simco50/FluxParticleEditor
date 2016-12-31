@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+             xmlns:views="clr-namespace:ParticleEditor.Views"
+             xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Name="UserControl">
     <Grid x:Name="Root" >
         <Grid.DataContext>
             <parameterTabs:AnimationTabViewModel/>
@@ -19,8 +21,8 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Size" Grid.Column="0"/>
-                <TextBox Text="{Binding ParticleSystem.Size.Constant}" Grid.Column="1"/>
-                <Button Grid.Column="2"/>
+                <TextBox Text="{Binding ElementName=UserControl, Path=ParticleSystem.Size.Constant}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1"/>
+                <CheckBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -35,11 +37,11 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0"/>
-                    <TextBox Grid.Column="1"/>
-                    <TextBox Grid.Column="2"/>
+                    <TextBox Grid.Column="0" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Column="1" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Column="2" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                 </Grid>
-                <Button Grid.Column="2"/>
+                <CheckBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -54,11 +56,11 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0"/>
-                    <TextBox Grid.Column="1"/>
-                    <TextBox Grid.Column="2"/>
+                    <TextBox Grid.Column="0" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Column="1" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Column="2" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                 </Grid>
-                <Button Grid.Column="2"/>
+                <CheckBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -73,11 +75,11 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0"/>
-                    <TextBox Grid.Column="1"/>
-                    <TextBox Grid.Column="2"/>
+                    <TextBox Grid.Column="0" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Column="1" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Column="2" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                 </Grid>
-                <Button Grid.Column="2"/>
+                <CheckBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -86,12 +88,12 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Color" Grid.Column="0"/>
-                <Rectangle Fill="{Binding ParticleSystem.Color.Constant, Converter={helpers:Vector3ToBrushConverter}}" Grid.Column="1" Stroke="Black" Margin="1">
+                <Rectangle Fill="{Binding ElementName=UserControl, Path=ParticleSystem.Color.Constant, Converter={helpers:Vector3ToBrushConverter}}" Grid.Column="1" Stroke="Black" Margin="1">
                     <Rectangle.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding SelectColorCommand}"/>
                     </Rectangle.InputBindings>
                 </Rectangle>
-                <Button Grid.Column="2"/>
+                <CheckBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -100,8 +102,8 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Transparancy" Grid.Column="0"/>
-                <TextBox Text="{Binding ParticleSystem.Transparancy.Constant}" Grid.Column="1"/>
-                <Button Grid.Column="2"/>
+                <TextBox IsEnabled="{Binding ElementName=CheckBox_Transparancy, Path=IsChecked, Converter={helpers:InvertBoolConverter}}" Text="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy.Constant}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1"/>
+                <CheckBox Name="CheckBox_Transparancy" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -110,8 +112,8 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Rotation" Grid.Column="0"/>
-                <TextBox Text="{Binding ParticleSystem.Rotation.Constant}" Grid.Column="1"/>
-                <Button Grid.Column="2"/>
+                <TextBox IsEnabled="{Binding ElementName=CheckBox_Rotation, Path=IsChecked, Converter={helpers:InvertBoolConverter}}" Text="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation.Constant}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1"/>
+                <CheckBox Name="CheckBox_Rotation" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </StackPanel>
     </Grid>

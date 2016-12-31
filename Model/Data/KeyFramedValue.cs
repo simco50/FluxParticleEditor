@@ -16,7 +16,7 @@ namespace ParticleEditor.Model.Data
         void Remove(float key);
     }
 
-    public class KeyFramedValueFloat : ObservableObject, IKeyFramedValue<float>
+    public class KeyFramedValueFloat : IKeyFramedValue<float>
     {
         public KeyFramedValueFloat(float value)
         {

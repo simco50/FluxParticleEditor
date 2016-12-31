@@ -68,19 +68,40 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return new SolidColorBrush(Color.FromRgb((byte)((Vector3)value).X, (byte)((Vector3)value).Y, (byte)((Vector3)value).Z));
+            Vector3 v = (Vector3) value;
+            return new SolidColorBrush(Color.FromRgb((byte)(v.X * 255), (byte)(v.Y * 255), (byte)(v.Z * 255)));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Color c = ((SolidColorBrush) value).Color;
-            return new Vector3(c.R, c.G, c.B);
+            return new Vector3(c.R / 255.0f, c.G / 255.0f, c.B / 255.0f);
         }
 
         private static Vector3ToBrushConverter _converter = null;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new Vector3ToBrushConverter();
+            return _converter;
+        }
+    }
+
+    public class InvertBoolConverter : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(bool) value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(bool) value;
+        }
+
+        private static InvertBoolConverter _converter = null;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null) _converter = new InvertBoolConverter();
             return _converter;
         }
     }

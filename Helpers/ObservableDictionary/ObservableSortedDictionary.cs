@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 
 namespace DrWPF.Windows.Data
 {
-    class FloatKeyComparer : IComparer<DictionaryEntry>
+    public class KeyComparer : IComparer<DictionaryEntry>
     {
         public int Compare(DictionaryEntry entry1, DictionaryEntry entry2)
         {

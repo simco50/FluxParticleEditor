@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using DrWPF.Windows.Data;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
@@ -36,8 +37,18 @@ namespace ParticleEditor.Model.Data
         public int Version = 2;
 
         //General
+        private float _duration = 1.0f;
+
         [JsonProperty("Duration")]
-        public float Duration { get; set; } = 1.0f;
+        public float Duration
+        {
+            get { return _duration; }
+            set
+            {
+                _duration = value;
+                _duration = MathUtil.Clamp(_duration, 0, 20);
+            }
+        }
 
         [JsonProperty("Loop")]
         public bool Loop { get; set; } = true;
@@ -54,8 +65,18 @@ namespace ParticleEditor.Model.Data
         [JsonProperty("StartVelocityVariance")]
         public float StartVelocityVariance { get; set; } = 0.0f;
 
+        private float _startSize = 1.0f;
+
         [JsonProperty("StartSize")]
-        public float StartSize { get; set; } = 1.0f;
+        public float StartSize
+        {
+            get { return _startSize; }
+            set
+            {
+                _startSize = value;
+                _startSize = MathUtil.Clamp(_startSize, 0, 20);
+            }
+        }
 
         [JsonProperty("StartSizeVariance")]
         public float StartSizeVariance { get; set; } = 0.0f;
@@ -66,16 +87,35 @@ namespace ParticleEditor.Model.Data
         [JsonProperty("PlayOnAwake")]
         public bool PlayOnAwake { get; set; } = true;
 
+        private int _maxParticles = 200;
+
         [JsonProperty("MaxParticles")]
-        public int MaxParticles { get; set; } = 100;
+        public int MaxParticles
+        {
+            get { return _maxParticles; }
+            set
+            {
+                _maxParticles = value;
+                _maxParticles = MathUtil.Clamp(_maxParticles, 0, 10000);
+            }
+        }
 
         //Emission
+        private int _emission = 20;
+
         [JsonProperty("Emission")]
-        public int Emission { get; set; } = 20;
+        public int Emission
+        {
+            get { return _emission; }
+            set {
+                _emission = value;
+                _emission = MathUtil.Clamp(_emission, 0, 1000);
+            }
+        }
 
         [JsonProperty("Bursts")]
         public ObservableSortedDictionary<float, int> Bursts { get; set; } =
-            new ObservableSortedDictionary<float, int>(new FloatKeyComparer());
+            new ObservableSortedDictionary<float, int>(new KeyComparer());
 
         //Shape
         public enum ShapeType

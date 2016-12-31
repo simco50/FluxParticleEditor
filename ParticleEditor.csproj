@@ -175,11 +175,11 @@
     <Compile Include="Views\ParticleVisualizerView.xaml.cs">
       <DependentUpon>ParticleVisualizerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SingleControl.xaml.cs">
+      <DependentUpon>SingleControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TimelineView.xaml.cs">
       <DependentUpon>TimelineView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Vector3UserControl.xaml.cs">
-      <DependentUpon>Vector3UserControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -239,11 +239,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TimelineView.xaml">
+    <Page Include="Views\SingleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Vector3UserControl.xaml">
+    <Page Include="Views\TimelineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+             xmlns:views="clr-namespace:ParticleEditor.Views"
              x:Class="ParticleEditor.Views.ParameterTabs.GeneralTabView"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300" x:Name="UserControl">
@@ -11,14 +12,7 @@
         <StackPanel>
             <Expander IsExpanded="True" Header="System" BorderBrush="{x:Null}">
                 <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Duration" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.Duration}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The duration of one cycle"/>
-                    </Grid>
+                    <views:SingleControl ValueName="Duration" Value="{Binding ParticleSystem.Duration, Mode=TwoWay}" MaxValue="20"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -27,54 +21,12 @@
                         <Label Content="Loop" Grid.Column="0"/>
                         <CheckBox IsChecked="{Binding ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Lifetime" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.Lifetime}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime of a particle"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Lifetime variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.LifetimeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The lifetime variance of a particle"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Start velocity" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.StartVelocity}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="Velocity in the spawn direction"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Start velocity variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.StartVelocityVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The velocity variance"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Start size" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.StartSize}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size of the particles"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Start size variance" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.StartSizeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The size variance of the particles"/>
-                    </Grid>
+                    <views:SingleControl ValueName="Lifetime" Value="{Binding ParticleSystem.Lifetime, Mode=TwoWay}" MaxValue="20"/>
+                    <views:SingleControl ValueName="Lifetime variance" Value="{Binding ParticleSystem.LifetimeVariance, Mode=TwoWay}" MaxValue="20"/>
+                    <views:SingleControl ValueName="Start velocity" Value="{Binding ParticleSystem.StartVelocity, Mode=TwoWay}" MinValue="-100" MaxValue="100"/>
+                    <views:SingleControl ValueName="Start velocity variance" Value="{Binding ParticleSystem.StartVelocityVariance, Mode=TwoWay}" MinValue="0" MaxValue="200"/>
+                    <views:SingleControl ValueName="Start size" Value="{Binding ParticleSystem.StartSize, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
+                    <views:SingleControl ValueName="Start size variance" Value="{Binding ParticleSystem.StartSizeVariance, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -95,22 +47,8 @@
             </Expander>
             <Expander IsExpanded="True" Header="Emission" BorderBrush="{x:Null}">
                 <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Max particles" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.MaxParticles}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The maximum amount of particles at the same time"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Emission" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.Emission}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right" ToolTip="The particle spawn rate per second"/>
-                    </Grid>
+                    <views:SingleControl ValueName="Max particles" Value="{Binding ParticleSystem.MaxParticles, Mode=TwoWay}" MinValue="0" MaxValue="10000" Sensitivity="1"/>
+                    <views:SingleControl ValueName="Emission" Value="{Binding ParticleSystem.Emission, Mode=TwoWay}" MinValue="0" MaxValue="1000" Sensitivity="1"/>
                 </StackPanel>
             </Expander>
             <Expander IsExpanded="True" Header="Shape" BorderBrush="{x:Null}">
@@ -128,14 +66,7 @@
                             <Label Content="Edge"/>
                         </ComboBox>
                     </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Radius" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.Shape.Radius}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right"/>
-                    </Grid>
+                    <views:SingleControl ValueName="Radius" Value="{Binding ParticleSystem.Shape.Radius, Mode=TwoWay}" MinValue="0" MaxValue="50" Sensitivity="0.2"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -152,14 +83,7 @@
                         <Label Content="Emit from volume" Grid.Column="0"/>
                         <CheckBox IsChecked="{Binding ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Angle" Grid.Column="0"/>
-                        <TextBox Text="{Binding ParticleSystem.Shape.Angle}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1" HorizontalContentAlignment="Right"/>
-                    </Grid>
+                    <views:SingleControl ValueName="Radius" Value="{Binding ParticleSystem.Shape.Angle, Mode=TwoWay}" MinValue="0" MaxValue="90" Sensitivity="1"/>
                 </StackPanel>
             </Expander>
         </StackPanel>

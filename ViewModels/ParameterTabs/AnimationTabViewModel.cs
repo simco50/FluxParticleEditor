@@ -21,7 +21,10 @@ namespace ParticleEditor.ViewModels.ParameterTabs
             DialogResult result = dialog.ShowDialog();
             if (result != DialogResult.OK)
                 return;
-            ParticleSystem.Color.Constant = new Vector3(dialog.Color.R / 255.0f, dialog.Color.G / 255.0f, dialog.Color.B / 255.0f);
+            ParticleSystem.Color.SetConstant(new Vector3(dialog.Color.R / 255.0f, dialog.Color.G / 255.0f,
+                dialog.Color.B / 255.0f));
+
+            ParticleSystem.RaisePropertyChanged("Color");
         }
     }
 }

@@ -213,6 +213,10 @@ namespace ParticleEditor.Model.Graphics.Particles
                 for (int i = 0; i < amount; i++)
                     _particles.Add(new Particle());
             }
+            else if (_particles.Count > _particleSystem.MaxParticles)
+            {
+                _particles.RemoveRange(_particleSystem.MaxParticles - 1, _particles.Count - _particleSystem.MaxParticles);
+            }
 
             _particleCount = 0;
             DataStream vertexBufferStream = _vertexBuffer.Map(MapMode.WriteDiscard, SharpDX.Direct3D10.MapFlags.None);

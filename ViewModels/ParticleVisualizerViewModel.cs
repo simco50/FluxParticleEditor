@@ -1,14 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Timers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
-using ParticleEditor.Annotations;
 using ParticleEditor.Helpers;
-using ParticleEditor.Model.Data;
 using ParticleEditor.Model.Graphics.Particles;
 
 namespace ParticleEditor.ViewModels
