@@ -167,7 +167,6 @@
     <Compile Include="Model\Data\KeyFramedValue.cs" />
     <Compile Include="Model\Data\ParticleSystem.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModels\Controls\SingleControlViewModel.cs" />
     <Compile Include="ViewModels\DebugLogViewModel.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -196,9 +195,6 @@
     </Compile>
     <Compile Include="Views\ParticleVisualizerView.xaml.cs">
       <DependentUpon>ParticleVisualizerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\SingleControl.xaml.cs">
-      <DependentUpon>SingleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TimelineView.xaml.cs">
       <DependentUpon>TimelineView.xaml</DependentUpon>
@@ -263,10 +259,6 @@
     <Page Include="Views\ParticleVisualizerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Controls\SingleControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TimelineView.xaml">
       <SubType>Designer</SubType>

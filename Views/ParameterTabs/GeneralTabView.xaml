@@ -7,6 +7,7 @@
              xmlns:views="clr-namespace:ParticleEditor.Views"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              x:Class="ParticleEditor.Views.ParameterTabs.GeneralTabView"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300" x:Name="Root">
@@ -24,7 +25,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Duration"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Duration}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown StringFormat="0.00" Grid.Column="1" Interval="0.2"  Minimum="0" Maximum="10" Value="{Binding ElementName=Root, Path=ParticleSystem.Duration}" HasDecimals="True" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -40,7 +41,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Lifetime"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Lifetime}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown Name="LifetimeValue" StringFormat="0.00" Grid.Column="1" Interval="0.2"  Minimum="0" Maximum="10" Value="{Binding ElementName=Root, Path=ParticleSystem.Lifetime}" HasDecimals="True" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -48,7 +49,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Lifetime variance"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.LifetimeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown StringFormat="0.00" Grid.Column="1" Interval="0.2"  Minimum="0" Maximum="{Binding ElementName=LifetimeValue, Path=Value}" Value="{Binding ElementName=Root, Path=ParticleSystem.LifetimeVariance}" HasDecimals="True" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -56,7 +57,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Start velcoty"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartVelocity}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown Name="StartVelocityValue" StringFormat="0.00" Grid.Column="1" Interval="0.2"  Minimum="0" Maximum="50" Value="{Binding ElementName=Root, Path=ParticleSystem.StartVelocity}" HasDecimals="True" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -64,7 +65,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Start velocity"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartVelocityVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown StringFormat="0.00" Grid.Column="1" Interval="0.2"  Minimum="0" Maximum="{Binding ElementName=StartVelocityValue, Path=Value}" Value="{Binding ElementName=Root, Path=ParticleSystem.StartVelocityVariance}" HasDecimals="True" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -72,7 +73,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Start size"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartSize}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown Name="StartSizeValue" StringFormat="0.00" Grid.Column="1" Interval="0.2"  Minimum="0" Maximum="20" Value="{Binding ElementName=Root, Path=ParticleSystem.StartSize}" HasDecimals="True" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -80,7 +81,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Start size variance"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartSizeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown StringFormat="0.00" Grid.Column="1" Interval="0.2"  Minimum="0" Maximum="{Binding ElementName=StartSizeValue, Path=Value}" Value="{Binding ElementName=Root, Path=ParticleSystem.StartSizeVariance}" HasDecimals="True" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -108,7 +109,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Max particles"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.MaxParticles}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown Grid.Column="1" Interval="2"  Minimum="0" Maximum="5000" Value="{Binding ElementName=Root, Path=ParticleSystem.MaxParticles}" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -116,7 +117,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Emission"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Emission}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown Grid.Column="1" Interval="2"  Minimum="0" Maximum="500" Value="{Binding ElementName=Root, Path=ParticleSystem.Emission}" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -146,7 +147,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Radius"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Shape.Radius}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown HasDecimals="True" StringFormat="0.00" Grid.Column="1" Interval="0.1"  Minimum="0" Maximum="30" Value="{Binding ElementName=Root, Path=ParticleSystem.Shape.Radius}" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -170,7 +171,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Angle"/>
-                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Shape.Angle}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <controls:NumericUpDown IsEnabled="{Binding AngleEnabled}" Grid.Column="1" Interval="5"  Minimum="0" Maximum="90" Value="{Binding ElementName=Root, Path=ParticleSystem.Shape.Angle}" TrackMouseWheelWhenMouseOver="True" InterceptManualEnter="True"/>
                     </Grid>
                 </StackPanel>
             </Expander>
