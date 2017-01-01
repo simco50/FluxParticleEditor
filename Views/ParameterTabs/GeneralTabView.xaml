@@ -5,35 +5,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              xmlns:views="clr-namespace:ParticleEditor.Views"
+             xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              x:Class="ParticleEditor.Views.ParameterTabs.GeneralTabView"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="300" x:Name="UserControl">
+             d:DesignHeight="600" d:DesignWidth="300" x:Name="Root">
     <Grid>
+        <Grid.DataContext>
+            <parameterTabs:GeneralTabViewModel/>
+        </Grid.DataContext>
+        
         <StackPanel>
             <Expander IsExpanded="True" Header="System" BorderBrush="{x:Null}">
                 <StackPanel>
-                    <views:SingleControl ValueName="Duration" Value="{Binding ParticleSystem.Duration, Mode=TwoWay}" MaxValue="20"/>
+                    <views:SingleControl ValueName="Duration" Value="{Binding ElementName=Root, Path=ParticleSystem.Duration, Mode=TwoWay}" MaxValue="20"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Loop" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=Root, Path=ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
                     </Grid>
-                    <views:SingleControl ValueName="Lifetime" Value="{Binding ParticleSystem.Lifetime, Mode=TwoWay}" MaxValue="20"/>
-                    <views:SingleControl ValueName="Lifetime variance" Value="{Binding ParticleSystem.LifetimeVariance, Mode=TwoWay}" MaxValue="20"/>
-                    <views:SingleControl ValueName="Start velocity" Value="{Binding ParticleSystem.StartVelocity, Mode=TwoWay}" MinValue="-100" MaxValue="100"/>
-                    <views:SingleControl ValueName="Start velocity variance" Value="{Binding ParticleSystem.StartVelocityVariance, Mode=TwoWay}" MinValue="0" MaxValue="200"/>
-                    <views:SingleControl ValueName="Start size" Value="{Binding ParticleSystem.StartSize, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
-                    <views:SingleControl ValueName="Start size variance" Value="{Binding ParticleSystem.StartSizeVariance, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
+                    <views:SingleControl ValueName="Lifetime" Value="{Binding ElementName=Root, Path=ParticleSystem.Lifetime, Mode=TwoWay}" MaxValue="20"/>
+                    <views:SingleControl ValueName="Lifetime variance" Value="{Binding ElementName=Root, Path=ParticleSystem.LifetimeVariance, Mode=TwoWay}" MaxValue="20"/>
+                    <views:SingleControl ValueName="Start velocity" Value="{Binding ElementName=Root, Path=ParticleSystem.StartVelocity, Mode=TwoWay}" MinValue="-100" MaxValue="100"/>
+                    <views:SingleControl ValueName="Start velocity variance" Value="{Binding ElementName=Root, Path=ParticleSystem.StartVelocityVariance, Mode=TwoWay}" MinValue="0" MaxValue="200"/>
+                    <views:SingleControl ValueName="Start size" Value="{Binding ElementName=Root, Path=ParticleSystem.StartSize, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
+                    <views:SingleControl ValueName="Start size variance" Value="{Binding ElementName=Root, Path=ParticleSystem.StartSizeVariance, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Random start rotation" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ParticleSystem.RandomStartRotation}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=Root, Path=ParticleSystem.RandomStartRotation}" Grid.Column="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -41,14 +47,14 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Play on awake" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ParticleSystem.PlayOnAwake}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <CheckBox IsChecked="{Binding ElementName=Root, Path=ParticleSystem.PlayOnAwake}" Grid.Column="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </Expander>
             <Expander IsExpanded="True" Header="Emission" BorderBrush="{x:Null}">
                 <StackPanel>
-                    <views:SingleControl ValueName="Max particles" Value="{Binding ParticleSystem.MaxParticles, Mode=TwoWay}" MinValue="0" MaxValue="10000" Sensitivity="1"/>
-                    <views:SingleControl ValueName="Emission" Value="{Binding ParticleSystem.Emission, Mode=TwoWay}" MinValue="0" MaxValue="1000" Sensitivity="1"/>
+                    <views:SingleControl ValueName="Max particles" Value="{Binding ElementName=Root, Path=ParticleSystem.MaxParticles, Mode=TwoWay}" MinValue="0" MaxValue="10000" Sensitivity="1"/>
+                    <views:SingleControl ValueName="Emission" Value="{Binding ElementName=Root, Path=ParticleSystem.Emission, Mode=TwoWay}" MinValue="0" MaxValue="1000" Sensitivity="1"/>
                 </StackPanel>
             </Expander>
             <Expander IsExpanded="True" Header="Shape" BorderBrush="{x:Null}">
@@ -59,31 +65,36 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Shape" Grid.Column="0"/>
-                        <ComboBox Grid.Column="1" SelectedIndex="{Binding ParticleSystem.Shape.ShapeType, Converter={helpers:EnumToInt}}" ToolTip="The emission shape of the system">
+                        <ComboBox Grid.Column="1" SelectedIndex="{Binding ElementName=Root, Path=ParticleSystem.Shape.ShapeType, Converter={helpers:EnumToInt}}" ToolTip="The emission shape of the system">
                             <Label Content="Circle"/>
                             <Label Content="Sphere"/>
                             <Label Content="Cone"/>
                             <Label Content="Edge"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding OnShapeChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </ComboBox>
                     </Grid>
-                    <views:SingleControl ValueName="Radius" Value="{Binding ParticleSystem.Shape.Radius, Mode=TwoWay}" MinValue="0" MaxValue="50" Sensitivity="0.2"/>
+                    <views:SingleControl ValueName="Radius" Value="{Binding ElementName=Root, Path=ParticleSystem.Shape.Radius, Mode=TwoWay}" MinValue="0" MaxValue="50" Sensitivity="0.2"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Emit from shell" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ParticleSystem.Shape.EmitFromShell}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <Label IsEnabled="{Binding EmitFromShellEnabled}" Content="Emit from shell" Grid.Column="0"/>
+                        <CheckBox IsEnabled="{Binding EmitFromShellEnabled}" IsChecked="{Binding ElementName=Root, Path=ParticleSystem.Shape.EmitFromShell}" Grid.Column="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Emit from volume" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <Label IsEnabled="{Binding EmitFromVolumeEnabled}" Content="Emit from volume" Grid.Column="0"/>
+                        <CheckBox IsEnabled="{Binding EmitFromVolumeEnabled}" IsChecked="{Binding ElementName=Root, Path=ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
                     </Grid>
-                    <views:SingleControl ValueName="Radius" Value="{Binding ParticleSystem.Shape.Angle, Mode=TwoWay}" MinValue="0" MaxValue="90" Sensitivity="1"/>
+                    <views:SingleControl IsEnabled="{Binding AngleEnabled}" ValueName="Angle" Value="{Binding ElementName=Root, Path=ParticleSystem.Shape.Angle, Mode=TwoWay}" MinValue="0" MaxValue="90" Sensitivity="1"/>
                 </StackPanel>
             </Expander>
         </StackPanel>

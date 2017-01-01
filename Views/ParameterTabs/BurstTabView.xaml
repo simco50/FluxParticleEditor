@@ -13,10 +13,11 @@
         </Grid.DataContext>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
                 <Grid.ColumnDefinitions>
@@ -24,8 +25,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="> TIME" Grid.Column="0" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
-                <Label Content="> PARTICLES" Grid.Column="1" FontWeight="Bold" FontFamily="Segoe UI Semilight"/>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Image Source="/ParticleEditor;component/Resources/Icons/Time.png" Margin="5"/>
+                <Label Foreground="White" Content="TIME" FontWeight="Bold" FontFamily="Segoe UI Semilight" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Image Source="/ParticleEditor;component/Resources/Icons/Particles.png" Margin="5"/>
+                <Label Foreground="White" Content="PARTICLES" FontWeight="Bold" FontFamily="Segoe UI Semilight" VerticalContentAlignment="Center"/>
+            </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
             <ListBox Name="ListBox" ItemsSource="{Binding ElementName=UserControl, Path=ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
@@ -49,14 +56,17 @@
             <Separator/>
         </Grid>
         <Grid Grid.Row="3">
+            <Label Content="Add burst" HorizontalContentAlignment="Right"/>
+        </Grid>
+        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="Text_Key" Text="0" Grid.Column="0"/>
-            <TextBox x:Name="Text_Value" Text="0" Grid.Column="1"/>
-            <Button Content="+" Command="{Binding AddBurstCommand}" Grid.Column="2" ToolTip="Add burst">
+            <TextBox x:Name="Text_Key" Text="0" Grid.Column="0" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="Text_Value" Text="0" Grid.Column="1" VerticalContentAlignment="Center"/>
+            <Button FontSize="16" Content="+" Command="{Binding AddBurstCommand}" Grid.Column="2" ToolTip="Add burst">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{helpers:BurstConverter}">
                         <Binding ElementName="Text_Key" Path="Text"/>

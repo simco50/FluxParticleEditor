@@ -152,6 +152,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\AnimationTabViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\BurstTabViewModel.cs" />
+    <Compile Include="ViewModels\ParameterTabs\GeneralTabViewModel.cs" />
     <Compile Include="ViewModels\ParticleVisualizerViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
     <Compile Include="Views\DebugLogView.xaml.cs">
@@ -298,6 +299,10 @@
     <None Include="Resources\Shaders\ParticleRenderer.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Particles.png" />
+    <Resource Include="Resources\Icons\Time.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
