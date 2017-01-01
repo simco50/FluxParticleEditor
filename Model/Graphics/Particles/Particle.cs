@@ -128,8 +128,8 @@ namespace ParticleEditor.Model.Graphics.Particles
                 direction = new Vector3();
                 direction.Y += RandF(0, MainViewModel.MainParticleSystem.Lifetime);
                 float offset = direction.Y * (float)Math.Tan(MainViewModel.MainParticleSystem.Shape.Angle * MathUtil.Pi / 180.0f);
-                direction.X += offset * position.X;
-                direction.Z += offset * position.Z;
+                direction.X += offset * position.X / position.Length();
+                direction.Z += offset * position.Z / position.Length();
 
                 if (MainViewModel.MainParticleSystem.Shape.EmitFromVolume)
                     position += direction;

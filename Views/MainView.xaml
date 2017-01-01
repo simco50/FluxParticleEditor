@@ -195,7 +195,7 @@
                                 </ComboBox>
                                 <Label Content="Blending type" Margin="0,52,0,0" VerticalAlignment="Top"/>
                                 <Label Content="Background color: " Margin="0,104,0,0" VerticalAlignment="Top"/>
-                                <Rectangle Fill="{Binding BackgroundColor}" Stroke="Black" Margin="5,130,5,10">
+                                <Rectangle Fill="{Binding BackgroundColor}" Stroke="Black" Margin="5,130,5,10" Cursor="Pen">
                                     <Rectangle.InputBindings>
                                         <MouseBinding Gesture="LeftClick" Command="{Binding OpenColorPickerCommand}"/>
                                     </Rectangle.InputBindings>

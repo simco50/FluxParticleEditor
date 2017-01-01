@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
-using ParticleEditor.Annotations;
+﻿using System.Windows.Forms;
+using ParticleEditor.Helpers;
 using ParticleEditor.Model.ImageControl;
 using SharpDX;
 using Point = System.Drawing.Point;
@@ -11,12 +9,18 @@ namespace ParticleEditor.Model.Graphics
     public class OrbitCamera
     {
         public float MinimumDistance { get; set; } = 2.0f;
-        public float MaximumDistance { get; set; } = 10.0f;
+        public float MaximumDistance { get; set; } = 15.0f;
 
         public Vector3 ResetAngles { get; set; } = new Vector3();
         private Vector3 _eulerAngles;
 
-        public float Zoom { get; set; } = 0.5f;
+        private float _zoom = 0.5f;
+        public float Zoom
+        {
+            get { return _zoom; }
+            set { _zoom = MathUtil.Clamp(value, 0, 1); }
+        }
+
         public bool LeftMouseDown { get; set; } = false;
         public bool MiddleMouseDown { get; set; } = false;
         public float MouseSensitivity = 0.015f;
@@ -37,6 +41,7 @@ namespace ParticleEditor.Model.Graphics
         {
             _canvasControl = canvasControl;
             Reset();
+            DebugLog.Log("Camera initialized", "Camera");
         }
 
         public void Update(float deltaTime)

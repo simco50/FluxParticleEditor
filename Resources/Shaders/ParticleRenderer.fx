@@ -22,20 +22,6 @@ RasterizerState BackCulling
 	CullMode = BACK;
 };
 
-BlendState AlphaBlending
-{
-	BlendEnable[0] = TRUE;
-	SrcBlend = SRC_ALPHA;
-	DestBlend = INV_SRC_ALPHA;
-};
-
-BlendState AdditiveBlending
-{
-	BlendEnable[0] = TRUE;
-	SrcBlend = SRC_ALPHA;
-	DestBlend = ONE;
-};
-
 struct VS_DATA
 {
 	float3 Position : POSITION;
@@ -93,28 +79,14 @@ float4 MainPS(GS_DATA input) : SV_TARGET
 	return result * input.Color;
 }
 
-technique10 AlphaBlendingTechnique 
+technique10 Default 
 {
 	pass P0 
 	{
 		SetVertexShader(CompileShader(vs_4_0, MainVS()));
 		SetGeometryShader(CompileShader(gs_4_0, MainGS()));
-		SetBlendState(AlphaBlending,float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
 		SetPixelShader(CompileShader(ps_4_0, MainPS()));
 		SetRasterizerState(BackCulling);       
 		SetDepthStencilState(DisableDepthWriting, 0);   
-	}
-}
-
-technique10 AdditiveBlendingTechnique 
-{
-	pass P0 
-	{
-		SetVertexShader(CompileShader(vs_4_0, MainVS()));
-		SetGeometryShader(CompileShader(gs_4_0, MainGS()));
-		SetBlendState(AdditiveBlending, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
-		SetPixelShader(CompileShader(ps_4_0, MainPS()));
-		SetRasterizerState(BackCulling);
-		SetDepthStencilState(DisableDepthWriting, 0);
 	}
 }

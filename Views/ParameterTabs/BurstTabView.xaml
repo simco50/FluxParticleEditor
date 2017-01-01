@@ -33,8 +33,8 @@
                 <Image Source="/ParticleEditor;component/Resources/Icons/Particles.png" Margin="5"/>
                 <Label Foreground="White" Content="PARTICLES" FontWeight="Bold" FontFamily="Segoe UI Semilight" VerticalContentAlignment="Center"/>
             </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1">
+        </Grid>
+        <Grid Grid.Row="1">
             <ListBox Name="ListBox" ItemsSource="{Binding ElementName=UserControl, Path=ParticleSystem.Bursts}" AlternationCount="200" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

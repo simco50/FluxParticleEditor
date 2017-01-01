@@ -1,12 +1,13 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using SharpDX;
 using SharpDX.Direct3D10;
 using SharpDX.DXGI;
+using Application = System.Windows.Application;
 using Device = SharpDX.Direct3D10.Device1;
 using Image = System.Windows.Controls.Image;
 
@@ -51,7 +52,7 @@ namespace ParticleEditor.Model.ImageControl
         {
             _renderTimer = new Stopwatch();
             Loaded += Window_Loaded;
-            Unloaded += Window_Closing;
+            Application.Current.Exit += Window_Closing;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -63,7 +64,7 @@ namespace ParticleEditor.Model.ImageControl
             StartRendering();
         }
 
-        private void Window_Closing(object sender, RoutedEventArgs e)
+        private void Window_Closing(object sender, ExitEventArgs e)
         {
             if (DX10RenderCanvas.IsInDesignMode)
                 return;

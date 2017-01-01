@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ParticleEditor.Helpers;
-using ParticleEditor.Model.ImageControl;
 using SharpDX;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
@@ -40,8 +39,8 @@ namespace ParticleEditor.Model.Graphics
 
         public int GridLines { get; set; } = 20;
         public float GridLineSpacing { get; set; } = 0.5f;
-        public float AxisLength { get; set; } = 30.0f;
-        public Color GridColor { get; set; } = Color.LightGray;
+        public float AxisLength { get; set; } = 5.0f;
+        public Color GridColor { get; set; } = new Color(25, 25, 25);
 
         public void Initialize(GraphicsContext context)
         {

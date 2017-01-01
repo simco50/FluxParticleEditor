@@ -36,6 +36,7 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         public void Deinitialize()
         {
+            ParticleEmitter?.Deinitialize();
             DebugLog.Log("Shutdown", "Direct3D");
         }
 

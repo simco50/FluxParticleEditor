@@ -60,7 +60,12 @@ namespace ParticleEditor.Helpers
         {
             _filePath = (ApplicationHelper.IsDesignMode ? ApplicationHelper.DataPath : "") + filePath;
             FileStream logFile = File.Create(_filePath);
-            logFile.Close();
+            using (StreamWriter writer = new StreamWriter(logFile))
+            {
+                writer.WriteLine("Particle Editor - Simon Coenen");
+                writer.WriteLine("Application log");
+                writer.WriteLine($"Log created on {DateTime.Now}\n");
+            }
         }
         public void LogInfo(string what, string source, LogSeverity severity)
         {

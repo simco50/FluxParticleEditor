@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ParticleEditor.Views.Vector3Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ParticleEditor.Views"
+             xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="300" Name="UserControl">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding ElementName=UserControl, Path=X, Mode=TwoWay}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="0"/>
+        <TextBox Text="{Binding ElementName=UserControl, Path=Y, Mode=TwoWay}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1"/>
+        <TextBox Text="{Binding ElementName=UserControl, Path=Z, Mode=TwoWay}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="2"/>
+    </Grid>
+</UserControl>

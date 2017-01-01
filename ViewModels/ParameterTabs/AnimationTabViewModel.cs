@@ -10,9 +10,12 @@ namespace ParticleEditor.ViewModels.ParameterTabs
     {
         public ParticleSystem ParticleSystem { get; set; }
 
-        public RelayCommand SelectColorCommand => new RelayCommand(SelectColor);
-        private void SelectColor()
+        public RelayCommand<bool> SelectColorCommand => new RelayCommand<bool>(SelectColor);
+        private void SelectColor(bool active)
         {
+            if (active)
+                return;
+
             ColorDialog dialog = new ColorDialog();
             dialog.SolidColorOnly = true;
             dialog.AnyColor = true;

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using GalaSoft.MvvmLight;
@@ -15,6 +14,7 @@ using ParticleEditor.Helpers.Data;
 using ParticleEditor.Model.Data;
 using ParticleEditor.Views;
 using Application = System.Windows.Application;
+using Color = System.Windows.Media.Color;
 
 namespace ParticleEditor.ViewModels
 {
@@ -54,6 +54,7 @@ namespace ParticleEditor.ViewModels
                     SaveFile();
             }
         }
+
         #endregion
 
         #region PROPERTIES

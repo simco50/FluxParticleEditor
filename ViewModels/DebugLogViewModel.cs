@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using ParticleEditor.Annotations;
 using ParticleEditor.Helpers;
 
 namespace ParticleEditor.ViewModels
@@ -17,6 +12,7 @@ namespace ParticleEditor.ViewModels
     {
         public ObservableCollection<LogEntry> FilteredLogEntries { get; set; }
         public ObservableCollection<string> LogCategories { get; set; } = new ObservableCollection<string>() {"All"};
+        private string _category = "All";
 
         public DebugLogViewModel()
         {
@@ -26,10 +22,11 @@ namespace ParticleEditor.ViewModels
                 LogCategories.Add(category);
         }
 
-        public RelayCommand<string> FilterLogCommand { get { return new RelayCommand<string>(FilterLog);} }
+        public RelayCommand<string> FilterLogCommand => new RelayCommand<string>(FilterLog);
 
         private void FilterLog(string category)
         {
+            _category = category;
             if (category == "All")
             {
                 ResetFilter();
@@ -54,7 +51,7 @@ namespace ParticleEditor.ViewModels
             }
         }
 
-        public RelayCommand ResetFilterCommand { get { return new RelayCommand(ResetFilter);} }
+        public RelayCommand ResetFilterCommand => new RelayCommand(ResetFilter);
 
         private void ResetFilter()
         {
@@ -62,6 +59,36 @@ namespace ParticleEditor.ViewModels
             FilteredLogEntries.Clear();
             foreach(var entry in DebugLog.Entries)
                 FilteredLogEntries.Add(entry);
+        }
+
+        public RelayCommand SaveDebugLogCommand => new RelayCommand(SaveDebugLog);
+
+        private void SaveDebugLog()
+        {
+            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.DefaultExt = ".log";
+            dialog.Filter = "Log (.log) | *.log";
+            bool? success = dialog.ShowDialog();
+            if (success == false)
+                return;
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(File.Create(dialog.FileName)))
+                {
+                    writer.WriteLine("Particle Editor - Simon Coenen");
+                    writer.WriteLine($"Application log. Category: {_category}");
+                    writer.WriteLine($"Log created on {DateTime.Now}\n");
+                    foreach (LogEntry entry in FilteredLogEntries)
+                    {
+                        writer.WriteLine($"[{entry.Timestamp.ToShortTimeString()}] {entry.Source} > {entry.What}");
+                    }
+                }
+                DebugLog.Log($"Saved log to '{dialog.FileName}'...", "Log save");
+            }
+            catch (Exception exception)
+            {
+                DebugLog.Log(exception.Message, "Log save", LogSeverity.Warning);
+            }
         }
     }
 }

@@ -96,7 +96,7 @@ namespace ParticleEditor.Model.Data
             set
             {
                 _maxParticles = value;
-                _maxParticles = MathUtil.Clamp(_maxParticles, 0, 10000);
+                _maxParticles = MathUtil.Clamp(_maxParticles, 0, 5000);
             }
         }
 
@@ -109,7 +109,7 @@ namespace ParticleEditor.Model.Data
             get { return _emission; }
             set {
                 _emission = value;
-                _emission = MathUtil.Clamp(_emission, 0, 1000);
+                _emission = MathUtil.Clamp(_emission, 0, 500);
             }
         }
 
@@ -163,6 +163,6 @@ namespace ParticleEditor.Model.Data
         public ParticleBlendMode BlendMode { get; set; } = ParticleBlendMode.AlphaBlend;
 
         [JsonProperty("ImagePath")]
-        public string ImagePath { get; set; } = "D:/Personal Work/D3D Engine/FluxEngine/Resources/Textures/Smoke.png";
+        public string ImagePath { get; set; } = "./Resources/DefaultParticleImage.png";
     }
 }

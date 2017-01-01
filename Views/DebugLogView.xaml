@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -38,7 +39,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <Grid Background="{DynamicResource AccentColorBrush}">
+                                <Grid Background="{DynamicResource AccentColorBrush2}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
@@ -53,6 +54,7 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-        </Grid>
+        <Button Command="{Binding SaveDebugLogCommand}" Grid.Row="2" Content="Save view"/>
+    </Grid>
 </controls:MetroWindow>
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
+using ParticleEditor.Model.ImageControl;
 using ParticleEditor.ViewModels;
 using SharpDX;
 using SharpDX.D3DCompiler;
@@ -36,7 +37,7 @@ namespace ParticleEditor.Model.Graphics.Particles
         private int _bufferSize = 0;
 
         //Shader
-        private List<EffectTechnique> _techniques = new List<EffectTechnique>();
+        private EffectTechnique _technique;
         private Effect _effect;
         private InputLayout _inputLayout;
 
@@ -75,8 +76,15 @@ namespace ParticleEditor.Model.Graphics.Particles
         public void Intialize()
         {
             LoadEffect();
+            CreateBlendStates();
             OnParticleSystemChanged();
             DebugLog.Log("Initialized", "Particle Emitter");
+        }
+
+        public void Deinitialize()
+        {
+            Disposer.RemoveAndDispose(ref _effect);
+            Disposer.RemoveAndDispose(ref _inputLayout);
         }
 
         public void OnParticleSystemChanged()
@@ -92,8 +100,10 @@ namespace ParticleEditor.Model.Graphics.Particles
             if (_particleSystem.PlayOnAwake)
                 _playing = true;
 
+            //Load texture
             _textureResourceView = ShaderResourceView.FromFile(_context.Device, _particleSystem.ImagePath);
 
+            //Recreate buffer
             CreateBuffer();
 
             DebugLog.Log("Changed particle system", "Particle Emitter");
@@ -215,7 +225,7 @@ namespace ParticleEditor.Model.Graphics.Particles
             }
             else if (_particles.Count > _particleSystem.MaxParticles)
             {
-                _particles.RemoveRange(_particleSystem.MaxParticles - 1, _particles.Count - _particleSystem.MaxParticles);
+                _particles.RemoveRange(_particleSystem.MaxParticles, _particles.Count - _particleSystem.MaxParticles);
             }
 
             _particleCount = 0;
@@ -262,7 +272,7 @@ namespace ParticleEditor.Model.Graphics.Particles
             if (_particleSystem.MaxParticles > _bufferSize)
             {
                 _bufferSize = _particleSystem.MaxParticles + 500;
-                DebugLog.Log("Increasing buffer size...", "ParticleEmitter::Render()");
+                DebugLog.Log("Buffer too small. Increasing size...", "Particle Emitter");
                 CreateBuffer();
             }
 
@@ -274,9 +284,10 @@ namespace ParticleEditor.Model.Graphics.Particles
             _context.Device.InputAssembler.PrimitiveTopology = PrimitiveTopology.PointList;
             _context.Device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
 
-            for (int i = 0; i < _techniques[(int)_particleSystem.BlendMode].Description.PassCount; ++i)
+            for (int i = 0; i < _technique.Description.PassCount; ++i)
             {
-                _techniques[(int)_particleSystem.BlendMode].GetPassByIndex(i).Apply();
+                _technique.GetPassByIndex(i).Apply();
+                _context.Device.OutputMerger.BlendState = _blendStates[(int)_particleSystem.BlendMode];
                 _context.Device.Draw(_particleCount, 0);
             }
         }
@@ -291,8 +302,7 @@ namespace ParticleEditor.Model.Graphics.Particles
                 return;
             }
             _effect = new Effect(_context.Device, result.Bytecode);
-            _techniques.Add(_effect.GetTechniqueByIndex(0));
-            _techniques.Add(_effect.GetTechniqueByIndex(1));
+            _technique = _effect.GetTechniqueByIndex(0);
 
             //Shader variables
             _viewProjVar = _effect.GetVariableBySemantic("VIEWPROJ").AsMatrix();
@@ -304,6 +314,7 @@ namespace ParticleEditor.Model.Graphics.Particles
             _textureVar = _effect.GetVariableByName("gParticleTexture").AsShaderResource();
             if(_textureVar == null)
                 DebugLog.Log("Variable with name 'gParticleTexture' not found!", "Particle Emitter", LogSeverity.Error);
+            DebugLog.Log("Shader loaded", "Particle Emitter");
 
             //Inputlayout
             InputElement[] vertexLayout =
@@ -313,9 +324,36 @@ namespace ParticleEditor.Model.Graphics.Particles
                 new InputElement("TEXCOORD", 0, Format.R32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0),
                 new InputElement("TEXCOORD", 1, Format.R32_Float, InputElement.AppendAligned, 0, InputClassification.PerVertexData, 0)
             };
-            _inputLayout = new InputLayout(_context.Device, _techniques[0].GetPassByIndex(0).Description.Signature, vertexLayout);
+            _inputLayout = new InputLayout(_context.Device, _technique.GetPassByIndex(0).Description.Signature, vertexLayout);
+            DebugLog.Log("Input layout created", "Particle Emitter");
+        }
 
-            DebugLog.Log("Shader loaded and blend state created", "Particle Emitter");
+        private void CreateBlendStates()
+        {
+            BlendStateDescription blendStateDescription = new BlendStateDescription();
+
+            //Alpha blending
+            blendStateDescription.AlphaBlendOperation = BlendOperation.Add;
+            blendStateDescription.BlendOperation = BlendOperation.Add;
+            blendStateDescription.IsAlphaToCoverageEnabled = false;
+            for (int i = 0; i < 8; i++)
+            {
+                blendStateDescription.IsBlendEnabled[i] = true;
+                blendStateDescription.RenderTargetWriteMask[i] = ColorWriteMaskFlags.All;
+            }
+            blendStateDescription.DestinationAlphaBlend = BlendOption.DestinationAlpha;
+            blendStateDescription.SourceAlphaBlend = BlendOption.SourceAlpha;
+
+            blendStateDescription.DestinationBlend = BlendOption.InverseSourceAlpha;
+            blendStateDescription.SourceBlend = BlendOption.SourceAlpha;
+
+            _blendStates.Add(new BlendState(_context.Device, ref blendStateDescription));
+
+            //Additive blending
+            blendStateDescription.DestinationBlend = BlendOption.One;
+
+            _blendStates.Add(new BlendState(_context.Device, ref blendStateDescription));
+            DebugLog.Log("Blend states created", "Particle Emitter");
         }
 
         private void CreateBuffer()
@@ -329,6 +367,7 @@ namespace ParticleEditor.Model.Graphics.Particles
             vertexBufferDescription.Usage = ResourceUsage.Dynamic;
             vertexBufferDescription.SizeInBytes = _vertexStride * _bufferSize;
             _vertexBuffer = new Buffer(_context.Device, vertexBufferDescription);
+            DebugLog.Log("Vertex buffer created", "Particle Emitter");
         }
     }
 }

@@ -89,6 +89,7 @@ namespace ParticleEditor.Model.Data
 
     public class KeyFramedValueVector3 : IKeyFramedValue<Vector3>
     {
+
         public KeyFramedValueVector3(Vector3 value)
         {
             Constant = value;
@@ -156,7 +157,17 @@ namespace ParticleEditor.Model.Data
         [JsonProperty("Keys")]
         public SortedDictionary<float, Vector3> Keys { get; set; } = new SortedDictionary<float, Vector3>();
 
+        private Vector3 _constant;
         [JsonProperty("Constant")]
-        public Vector3 Constant { get; set; }
+        public Vector3 Constant
+        {
+
+            get { return _constant; }
+            set { _constant = value; }
+        }
+
+        public float ConstantX { get { return Constant.X; } set { _constant.X = value; } }
+        public float ConstantY { get { return Constant.Y; } set { _constant.Y = value; } }
+        public float ConstantZ { get { return Constant.Z; } set { _constant.Z = value; } }
     }
 }

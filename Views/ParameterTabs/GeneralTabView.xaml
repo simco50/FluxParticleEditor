@@ -16,7 +16,7 @@
         </Grid.DataContext>
         
         <StackPanel>
-            <Expander IsExpanded="True" Header="System" BorderBrush="{x:Null}">
+            <Expander IsExpanded="True" Header="System"  BorderBrush="{x:Null}" Foreground="White">
                 <StackPanel>
                     <views:SingleControl ValueName="Duration" Value="{Binding ElementName=Root, Path=ParticleSystem.Duration, Mode=TwoWay}" MaxValue="20"/>
                     <Grid>
@@ -51,13 +51,13 @@
                     </Grid>
                 </StackPanel>
             </Expander>
-            <Expander IsExpanded="True" Header="Emission" BorderBrush="{x:Null}">
+            <Expander IsExpanded="True" Header="Emission" BorderBrush="{x:Null}" Foreground="White">
                 <StackPanel>
-                    <views:SingleControl ValueName="Max particles" Value="{Binding ElementName=Root, Path=ParticleSystem.MaxParticles, Mode=TwoWay}" MinValue="0" MaxValue="10000" Sensitivity="1"/>
-                    <views:SingleControl ValueName="Emission" Value="{Binding ElementName=Root, Path=ParticleSystem.Emission, Mode=TwoWay}" MinValue="0" MaxValue="1000" Sensitivity="1"/>
+                    <views:SingleControl ValueName="Max particles" Value="{Binding ElementName=Root, Path=ParticleSystem.MaxParticles, Mode=TwoWay}" MinValue="0" MaxValue="5000" Sensitivity="1"/>
+                    <views:SingleControl ValueName="Emission" Value="{Binding ElementName=Root, Path=ParticleSystem.Emission, Mode=TwoWay}" MinValue="0" MaxValue="500" Sensitivity="1"/>
                 </StackPanel>
             </Expander>
-            <Expander IsExpanded="True" Header="Shape" BorderBrush="{x:Null}">
+            <Expander IsExpanded="True" Header="Shape" BorderBrush="{x:Null}" Foreground="White">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
