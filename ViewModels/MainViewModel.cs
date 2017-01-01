@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using GalaSoft.MvvmLight;
@@ -8,7 +7,6 @@ using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using ParticleEditor.Annotations;
 using ParticleEditor.Helpers;
 using ParticleEditor.Helpers.Data;
 using ParticleEditor.Model.Data;
@@ -72,7 +70,7 @@ namespace ParticleEditor.ViewModels
             {
                 _particleSystem = value;
                 SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
-                Messenger.Default.Send(MessageID.ParticleSystemChanged);
+                Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.ParticleSystemChanged));
                 RaisePropertyChanged("ParticleSystem");
             }
         }
@@ -100,7 +98,7 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _backgroundColor = value;
-                Messenger.Default.Send(SharpDX.Color.FromBgra(Int32.Parse(_backgroundColor.ToString().Substring(1), System.Globalization.NumberStyles.HexNumber)));
+                Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.ColorChanged, SharpDX.Color.FromBgra(Int32.Parse(_backgroundColor.ToString().Substring(1), System.Globalization.NumberStyles.HexNumber))));
                 RaisePropertyChanged("BackgroundColor");
             }
         }
@@ -139,7 +137,7 @@ namespace ParticleEditor.ViewModels
                 return;
             ParticleSystem.ImagePath = dialog.FileName;
             SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
-            Messenger.Default.Send(MessageID.ImageChanged);
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.ImageChanged));
         }
 
         public RelayCommand ShutdownCommand => new RelayCommand(Shutdown);

@@ -8,7 +8,7 @@
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300" Name="UserControl">
-    <Grid>
+    <Grid Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
@@ -16,13 +16,16 @@
         <Label Cursor="SizeWE"  Grid.Column="0" Content="{Binding ElementName=UserControl, Path=ValueName}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDown">
-                    <command:EventToCommand Command="{Binding ElementName=UserControl, Path=OnMouseDownCommand}" PassEventArgsToCommand="True"/>
+                    <command:EventToCommand Command="{Binding OnMouseDownCommand}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseMove">
-                    <command:EventToCommand Command="{Binding ElementName=UserControl, Path=OnMouseMoveCommand}" PassEventArgsToCommand="True"/>
+                    <command:EventToCommand Command="{Binding OnMouseMoveCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseUp">
+                    <command:EventToCommand Command="{Binding ElementName=UserControl, Path=OnMouseUpCommand}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Label>
-        <TextBox Grid.Column="1" Text="{Binding ElementName=UserControl, Path=Value}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"  VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+        <TextBox Grid.Column="1" Name="Content" Text="{Binding ShownValue}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
     </Grid>
 </UserControl>

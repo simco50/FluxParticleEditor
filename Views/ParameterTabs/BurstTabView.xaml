@@ -17,7 +17,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
                 <Grid.ColumnDefinitions>
@@ -55,10 +54,7 @@
         <Grid Grid.Row="2">
             <Separator/>
         </Grid>
-        <Grid Grid.Row="3">
-            <Label Content="Add burst" HorizontalContentAlignment="Right"/>
-        </Grid>
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="3" Background="{DynamicResource AccentColorBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

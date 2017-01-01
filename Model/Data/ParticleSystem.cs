@@ -3,6 +3,7 @@ using System.ComponentModel;
 using DrWPF.Windows.Data;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
+using ParticleEditor.Helpers.UndoRedo;
 using SharpDX;
 
 namespace ParticleEditor.Model.Data
@@ -38,6 +39,19 @@ namespace ParticleEditor.Model.Data
 
         //General
         private float _duration = 1.0f;
+        private float _startSize = 1.0f;
+        private int _maxParticles = 200;
+        private int _emission = 20;
+        private bool _loop = true;
+        private float _lifetime = 1.0f;
+        private float _lifetimeVariance = 0.0f;
+        private float _startVelocity = 1.0f;
+        private float _startVelocityVariance = 0.0f;
+        private float _startSizeVariance = 0.0f;
+        private bool _randomStartRotation = false;
+        private bool _playOnAwake = true;
+        private ParticleSortingMode _sortingMode = ParticleSortingMode.FrontToBack;
+        private ParticleBlendMode _blendMode = ParticleBlendMode.AlphaBlend;
 
         [JsonProperty("Duration")]
         public float Duration
@@ -45,27 +59,73 @@ namespace ParticleEditor.Model.Data
             get { return _duration; }
             set
             {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("Duration", this, _duration, value, "Duration"));
                 _duration = value;
                 _duration = MathUtil.Clamp(_duration, 0, 20);
+                RaisePropertyChanged("Duration");
             }
         }
 
         [JsonProperty("Loop")]
-        public bool Loop { get; set; } = true;
+        public bool Loop
+        {
+            get { return _loop; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("Loop", this, _loop, value, "Loop"));
+                _loop = value; 
+                RaisePropertyChanged("Loop");
+            }
+        }
 
         [JsonProperty("Lifetime")]
-        public float Lifetime { get; set; } = 1.0f;
+        public float Lifetime
+        {
+            get { return _lifetime; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("Lifetime", this, _lifetime, value, "Lifetime"));
+                _lifetime = value;
+                RaisePropertyChanged("Lifetime");
+            }
+        }
 
         [JsonProperty("LifetimeVariance")]
-        public float LifetimeVariance { get; set; } = 0.0f;
+        public float LifetimeVariance
+        {
+            get { return _lifetimeVariance; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("LifetimeVariance", this, _lifetimeVariance, value, "LifetimeVariance"));
+                _lifetimeVariance = value;
+                RaisePropertyChanged("LifetimeVariance");
+            }
+        }
 
         [JsonProperty("StartVelocity")]
-        public float StartVelocity { get; set; } = 1.0f;
+        public float StartVelocity
+        {
+            get { return _startVelocity; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartVelocity", this, _startVelocity, value, "StartVelocity"));
+                _startVelocity = value;
+                RaisePropertyChanged("StartVelocity");
+            }
+        }
 
         [JsonProperty("StartVelocityVariance")]
-        public float StartVelocityVariance { get; set; } = 0.0f;
+        public float StartVelocityVariance
+        {
+            get { return _startVelocityVariance; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartVelocityVariance", this, _startVelocityVariance, value, "StartVelocityVariance"));
+                _startVelocityVariance = value;
+                RaisePropertyChanged("StartVelocityVariance");
+            }
+        }
 
-        private float _startSize = 1.0f;
 
         [JsonProperty("StartSize")]
         public float StartSize
@@ -73,21 +133,49 @@ namespace ParticleEditor.Model.Data
             get { return _startSize; }
             set
             {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartSize", this, _startSize, value, "StartSize"));
                 _startSize = value;
                 _startSize = MathUtil.Clamp(_startSize, 0, 20);
+                RaisePropertyChanged("StartSize");
             }
         }
 
         [JsonProperty("StartSizeVariance")]
-        public float StartSizeVariance { get; set; } = 0.0f;
+        public float StartSizeVariance
+        {
+            get { return _startSizeVariance; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartSizeVariance", this, _startSizeVariance, value, "StartSizeVariance"));
+                _startSizeVariance = value;
+                RaisePropertyChanged("StartSizeVariance");
+            }
+        }
 
         [JsonProperty("RandomStartRotation")]
-        public bool RandomStartRotation { get; set; } = false;
+        public bool RandomStartRotation
+        {
+            get { return _randomStartRotation; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("RandomStartRotation", this, _randomStartRotation, value, "RandomStartRotation"));
+                _randomStartRotation = value;
+                RaisePropertyChanged("RandomStartRotation");
+            }
+        }
 
         [JsonProperty("PlayOnAwake")]
-        public bool PlayOnAwake { get; set; } = true;
+        public bool PlayOnAwake
+        {
+            get { return _playOnAwake; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("PlayOnAwake", this, _playOnAwake, value, "PlayOnAwake"));
+                _playOnAwake = value;
+                RaisePropertyChanged("PlayOnAwake");
+            }
+        }
 
-        private int _maxParticles = 200;
 
         [JsonProperty("MaxParticles")]
         public int MaxParticles
@@ -95,14 +183,14 @@ namespace ParticleEditor.Model.Data
             get { return _maxParticles; }
             set
             {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("MaxParticles", this, _maxParticles, value, "MaxParticles"));
                 _maxParticles = value;
                 _maxParticles = MathUtil.Clamp(_maxParticles, 0, 5000);
+                RaisePropertyChanged("MaxParticles");
             }
         }
 
         //Emission
-        private int _emission = 20;
-
         [JsonProperty("Emission")]
         public int Emission
         {
@@ -125,18 +213,73 @@ namespace ParticleEditor.Model.Data
             CONE = 2,
             EDGE = 3,
         };
-        public class ShapeData
+        public class ShapeData : ObservableObject
         {
+            private ShapeType _shapeType = ShapeType.CONE;
+            private float _radius = 0.1f;
+            private bool _emitFromShell = false;
+            private bool _emitFromVolume = false;
+            private float _angle = 70.0f;
+
             [JsonProperty("ShapeType")]
-            public ShapeType ShapeType { get; set; } = ShapeType.CONE;
+            public ShapeType ShapeType
+            {
+                get { return _shapeType; }
+                set
+                {
+                    UndoManager.Add(new UndoableProperty<ShapeData>("ShapeType", this, _shapeType, value, "ShapeType"));
+                    _shapeType = value;
+                    RaisePropertyChanged("ShapeType");
+                }
+            }
+
             [JsonProperty("Radius")]
-            public float Radius { get; set; } = 0.1f;
+            public float Radius
+            {
+                get { return _radius; }
+                set
+                {
+                    UndoManager.Add(new UndoableProperty<ShapeData>("Radius", this, _radius, value, "Radius"));
+                    _radius = value;
+                    RaisePropertyChanged("Radius");
+                }
+            }
+
             [JsonProperty("EmitFromShell")]
-            public bool EmitFromShell { get; set; } = false;
+            public bool EmitFromShell
+            {
+                get { return _emitFromShell; }
+                set
+                {
+                    UndoManager.Add(new UndoableProperty<ShapeData>("EmitFromShell", this, _emitFromShell, value, "EmitFromShell"));
+                    _emitFromShell = value;
+                    RaisePropertyChanged("EmitFromShell");
+                }
+            }
+
             [JsonProperty("EmitFromVolume")]
-            public bool EmitFromVolume { get; set; } = false;
+            public bool EmitFromVolume
+            {
+                get { return _emitFromVolume; }
+                set
+                {
+                    UndoManager.Add(new UndoableProperty<ShapeData>("EmitFromVolume", this, _emitFromVolume, value, "EmitFromVolume"));
+                    _emitFromVolume = value;
+                    RaisePropertyChanged("EmitFromVolume");
+                }
+            }
+
             [JsonProperty("Angle")]
-            public float Angle { get; set; } = 70.0f;
+            public float Angle
+            {
+                get { return _angle; }
+                set
+                {
+                    UndoManager.Add(new UndoableProperty<ShapeData>("Angle", this, _angle, value, "Angle"));
+                    _angle = value;
+                    RaisePropertyChanged("Angle");
+                }
+            }
         };
         [JsonProperty("Shape")]
         public ShapeData Shape { get; set; } = new ShapeData();
@@ -157,10 +300,28 @@ namespace ParticleEditor.Model.Data
 
         //Rendering
         [JsonProperty("SortingMode")]
-        public ParticleSortingMode SortingMode { get; set; } = ParticleSortingMode.FrontToBack;
+        public ParticleSortingMode SortingMode
+        {
+            get { return _sortingMode; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("SortingMode", this, _sortingMode, value, "SortingMode"));
+                _sortingMode = value;
+                RaisePropertyChanged("SortingMode");
+            }
+        }
 
         [JsonProperty("BlendMode")]
-        public ParticleBlendMode BlendMode { get; set; } = ParticleBlendMode.AlphaBlend;
+        public ParticleBlendMode BlendMode
+        {
+            get { return _blendMode; }
+            set
+            {
+                UndoManager.Add(new UndoableProperty<ParticleSystem>("BlendMode", this, _blendMode, value, "BlendMode"));
+                _blendMode = value;
+                RaisePropertyChanged("BlendMode");
+            }
+        }
 
         [JsonProperty("ImagePath")]
         public string ImagePath { get; set; } = "./Resources/DefaultParticleImage.png";

@@ -27,17 +27,17 @@ namespace ParticleEditor.ViewModels.ParameterTabs
         {
             if (burst.IsValid() == false)
             {
-                DebugLog.Log("Input format not valid! Make sure the values are not negative and only contain numbers.", "Add Burst", LogSeverity.Warning);
+                DebugLog.Log("Input format not valid! Make sure the values are not negative and only contain numbers.", "Particle System", LogSeverity.Warning);
                 return;
             }
             if (burst.Time > ParticleSystem.Duration)
             {
-                DebugLog.Log($"The time must be smaller than the duration of the particle system.\nThe duration is {ParticleSystem.Duration:0.00}s while the given timestamp is {burst.Time:0.00}s.", "Add Burst", LogSeverity.Warning);
+                DebugLog.Log($"The time must be smaller than the duration of the particle system.\nThe duration is {ParticleSystem.Duration:0.00}s while the given timestamp is {burst.Time:0.00}s.", "Particle System", LogSeverity.Warning);
                 return;
             }
             ParticleSystem.Bursts[burst.Time] = burst.Amount;
 
-            Messenger.Default.Send(MessageID.BurstChanged);
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
         }
 
         public RelayCommand<float> RemoveBurstCommand => new RelayCommand<float>(RemoveBurst);
@@ -45,9 +45,9 @@ namespace ParticleEditor.ViewModels.ParameterTabs
         {
             Random rand = new Random();
             if (ParticleSystem.Bursts.Remove(key) == false)
-                DebugLog.Log($"Key with value {key} does not exists!", "Remove Burst", LogSeverity.Warning);
+                DebugLog.Log($"Key with value {key} does not exists!", "Particle System", LogSeverity.Warning);
 
-            Messenger.Default.Send(MessageID.BurstChanged);
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
         }
     }
 }

@@ -142,6 +142,9 @@
     </Compile>
     <Compile Include="Helpers\InputBindingsManager.cs" />
     <Compile Include="Helpers\MessageID.cs" />
+    <Compile Include="Helpers\UndoRedo\IUndoRedo.cs" />
+    <Compile Include="Helpers\UndoRedo\UndoableProperty.cs" />
+    <Compile Include="Helpers\UndoRedo\UndoManager.cs" />
     <Compile Include="Model\Graphics\Grid.cs" />
     <Compile Include="Model\ImageControl\Disposer.cs" />
     <Compile Include="Model\ImageControl\DX10ImageSource.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Model\Data\KeyFramedValue.cs" />
     <Compile Include="Model\Data\ParticleSystem.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\Controls\SingleControlViewModel.cs" />
     <Compile Include="ViewModels\DebugLogViewModel.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -199,7 +203,7 @@
     <Compile Include="Views\TimelineView.xaml.cs">
       <DependentUpon>TimelineView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\Vector3Control.xaml.cs">
+    <Compile Include="Views\Vector3Control.xaml.cs">
       <DependentUpon>Vector3Control.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -268,7 +272,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\Vector3Control.xaml">
+    <Page Include="Views\Vector3Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

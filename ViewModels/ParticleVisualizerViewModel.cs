@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Graphics.Particles;
+using SharpDX;
 
 namespace ParticleEditor.ViewModels
 {
@@ -13,8 +14,7 @@ namespace ParticleEditor.ViewModels
     {
         public ParticleVisualizerViewModel()
         {
-            Messenger.Default.Register<MessageID>(this, OnMessageReceived);
-            Messenger.Default.Register<SharpDX.Color>(this, c => Viewport.GraphicsContext.RenderControl.ClearColor = c);
+            Messenger.Default.Register<MessageData>(this, OnMessageReceived);
 
             Viewport = new ParticleViewport();
             Timer updateTimer = new Timer(0.016f);
@@ -23,9 +23,9 @@ namespace ParticleEditor.ViewModels
             updateTimer.Start();
         }
 
-        private void OnMessageReceived(MessageID id)
+        private void OnMessageReceived(MessageData message)
         {
-            switch (id)
+            switch (message.Id)
             {
                 case MessageID.ParticleSystemChanged:
                     Viewport.ParticleEmitter?.OnParticleSystemChanged();
@@ -36,8 +36,11 @@ namespace ParticleEditor.ViewModels
                 case MessageID.BurstChanged:
                     Viewport.ParticleEmitter?.Reset();
                     break;
+                case MessageID.ColorChanged:
+                    Viewport.GraphicsContext.RenderControl.ClearColor = (Color)message.Data;
+                    break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(id), id, null);
+                    throw new ArgumentOutOfRangeException(nameof(message.Id), message.Id, null);
             }
         }
 

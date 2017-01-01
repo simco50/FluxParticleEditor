@@ -18,7 +18,14 @@
         <StackPanel>
             <Expander IsExpanded="True" Header="System"  BorderBrush="{x:Null}" Foreground="White">
                 <StackPanel>
-                    <views:SingleControl ValueName="Duration" Value="{Binding ElementName=Root, Path=ParticleSystem.Duration, Mode=TwoWay}" MaxValue="20"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Duration"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Duration}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -27,12 +34,54 @@
                         <Label Content="Loop" Grid.Column="0"/>
                         <CheckBox IsChecked="{Binding ElementName=Root, Path=ParticleSystem.Loop}" Grid.Column="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
                     </Grid>
-                    <views:SingleControl ValueName="Lifetime" Value="{Binding ElementName=Root, Path=ParticleSystem.Lifetime, Mode=TwoWay}" MaxValue="20"/>
-                    <views:SingleControl ValueName="Lifetime variance" Value="{Binding ElementName=Root, Path=ParticleSystem.LifetimeVariance, Mode=TwoWay}" MaxValue="20"/>
-                    <views:SingleControl ValueName="Start velocity" Value="{Binding ElementName=Root, Path=ParticleSystem.StartVelocity, Mode=TwoWay}" MinValue="-100" MaxValue="100"/>
-                    <views:SingleControl ValueName="Start velocity variance" Value="{Binding ElementName=Root, Path=ParticleSystem.StartVelocityVariance, Mode=TwoWay}" MinValue="0" MaxValue="200"/>
-                    <views:SingleControl ValueName="Start size" Value="{Binding ElementName=Root, Path=ParticleSystem.StartSize, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
-                    <views:SingleControl ValueName="Start size variance" Value="{Binding ElementName=Root, Path=ParticleSystem.StartSizeVariance, Mode=TwoWay}" MinValue="0" MaxValue="10"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Lifetime"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Lifetime}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Lifetime variance"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.LifetimeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Start velcoty"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartVelocity}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Start velocity"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartVelocityVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Start size"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartSize}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Start size variance"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.StartSizeVariance}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -53,8 +102,22 @@
             </Expander>
             <Expander IsExpanded="True" Header="Emission" BorderBrush="{x:Null}" Foreground="White">
                 <StackPanel>
-                    <views:SingleControl ValueName="Max particles" Value="{Binding ElementName=Root, Path=ParticleSystem.MaxParticles, Mode=TwoWay}" MinValue="0" MaxValue="5000" Sensitivity="1"/>
-                    <views:SingleControl ValueName="Emission" Value="{Binding ElementName=Root, Path=ParticleSystem.Emission, Mode=TwoWay}" MinValue="0" MaxValue="500" Sensitivity="1"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Max particles"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.MaxParticles}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Emission"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Emission}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
                 </StackPanel>
             </Expander>
             <Expander IsExpanded="True" Header="Shape" BorderBrush="{x:Null}" Foreground="White">
@@ -77,7 +140,14 @@
                             </i:Interaction.Triggers>
                         </ComboBox>
                     </Grid>
-                    <views:SingleControl ValueName="Radius" Value="{Binding ElementName=Root, Path=ParticleSystem.Shape.Radius, Mode=TwoWay}" MinValue="0" MaxValue="50" Sensitivity="0.2"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Radius"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Shape.Radius}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -94,7 +164,14 @@
                         <Label IsEnabled="{Binding EmitFromVolumeEnabled}" Content="Emit from volume" Grid.Column="0"/>
                         <CheckBox IsEnabled="{Binding EmitFromVolumeEnabled}" IsChecked="{Binding ElementName=Root, Path=ParticleSystem.Shape.EmitFromVolume}" Grid.Column="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
                     </Grid>
-                    <views:SingleControl IsEnabled="{Binding AngleEnabled}" ValueName="Angle" Value="{Binding ElementName=Root, Path=ParticleSystem.Shape.Angle, Mode=TwoWay}" MinValue="0" MaxValue="90" Sensitivity="1"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Angle"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=Root, Path=ParticleSystem.Shape.Angle}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    </Grid>
                 </StackPanel>
             </Expander>
         </StackPanel>
