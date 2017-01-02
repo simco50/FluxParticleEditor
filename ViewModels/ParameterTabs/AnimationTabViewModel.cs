@@ -1,6 +1,10 @@
-﻿using System.Windows.Forms;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
+using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
 using SharpDX;
 
@@ -28,6 +32,12 @@ namespace ParticleEditor.ViewModels.ParameterTabs
                 dialog.Color.B / 255.0f));
 
             ParticleSystem.RaisePropertyChanged("Color");
+        }
+
+        public RelayCommand<FrameworkElement> OnSelectionChangedCommand => new RelayCommand<FrameworkElement>(OnSelectionChanged);
+        private void OnSelectionChanged(FrameworkElement selectedItem)
+        {
+            Messenger.Default.Send<MessageData, TimelineViewModel>(new MessageData(MessageID.KeyframeSelected, selectedItem.Tag));
         }
     }
 }

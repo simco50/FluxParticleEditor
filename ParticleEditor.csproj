@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Helpers\InputBindingsManager.cs" />
     <Compile Include="Helpers\MessageID.cs" />
+    <Compile Include="Helpers\UndoRedo\BurstCommands.cs" />
     <Compile Include="Helpers\UndoRedo\IUndoRedo.cs" />
     <Compile Include="Helpers\UndoRedo\UndoableProperty.cs" />
     <Compile Include="Helpers\UndoRedo\UndoManager.cs" />

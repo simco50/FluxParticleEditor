@@ -18,5 +18,6 @@
         ImageChanged,
         BurstChanged,
         ColorChanged,
+        KeyframeSelected,
     }
 }

@@ -25,8 +25,8 @@
         <KeyBinding Key="F1" Command="{Binding ShowHelpWindowCommand}"/>
         <KeyBinding Key="F2" Command="{Binding OpenDebugLogView}"/>
 
-        <KeyBinding Key="Z" Modifiers="Control" Command="{x:Static undoRedo:UndoManager.UndoCommand}"/>
-        <KeyBinding Key="Y" Modifiers="Control" Command="{x:Static undoRedo:UndoManager.RedoCommand}"/>
+        <KeyBinding Key="Z" Modifiers="Control" Command="{Binding Source={x:Static undoRedo:UndoManager.Instance}, Path=UndoCommand}"/>
+        <KeyBinding Key="Y" Modifiers="Control" Command="{Binding Source={x:Static undoRedo:UndoManager.Instance}, Path=RedoCommand}"/>
     </controls:MetroWindow.InputBindings>
 
     <Grid>
@@ -75,12 +75,12 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Edit">
-                        <MenuItem Header="Undo" Command="{x:Static undoRedo:UndoManager.UndoCommand}" InputGestureText="Ctrl+Z">
+                        <MenuItem Header="{Binding Source={x:Static undoRedo:UndoManager.Instance}, Path=UndoDescription}" Command="{Binding Source={x:Static undoRedo:UndoManager.Instance}, Path=UndoCommand}" InputGestureText="Ctrl+Z">
                             <MenuItem.Icon>
                                 <Image Source="/ParticleEditor;component/Resources/Icons/Undo.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Redo" Command="{x:Static undoRedo:UndoManager.RedoCommand}" InputGestureText="Ctrl+Y">
+                        <MenuItem Header="{Binding Source={x:Static undoRedo:UndoManager.Instance}, Path=RedoDescription}" Command="{Binding Source={x:Static undoRedo:UndoManager.Instance}, Path=RedoCommand}" InputGestureText="Ctrl+Y">
                             <MenuItem.Icon>
                                 <Image Source="/ParticleEditor;component/Resources/Icons/Redo.png"/>
                             </MenuItem.Icon>

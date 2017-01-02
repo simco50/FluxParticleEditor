@@ -1,28 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 
 namespace ParticleEditor.Helpers.UndoRedo
 {
-    public static class UndoManager
+    public class UndoManager : ObservableObject
     {
-        private static int _limit = 50;
+        private int _limit = 50;
 
-        public static LinkedList<IUndoRedo> UndoList { get; set; } = new LinkedList<IUndoRedo>();
-        public static LinkedList<IUndoRedo> RedoList { get; set; } = new LinkedList<IUndoRedo>();
+        private static readonly UndoManager _instance = new UndoManager();
+        public static UndoManager Instance
+        {
+            get { return _instance; }
+        }
 
-        public static void Add<T>(T instance) where T : IUndoRedo
+        public LinkedList<IUndoRedo> UndoList { get; set; } = new LinkedList<IUndoRedo>();
+        public LinkedList<IUndoRedo> RedoList { get; set; } = new LinkedList<IUndoRedo>();
+
+        public void Add<T>(T instance) where T : IUndoRedo
         {
             UndoList.AddFirst(instance);
             RedoList.Clear();
 
             while (UndoList.Count > _limit)
                 UndoList.RemoveLast();
+
+            RaisePropertyChanged("UndoDescription");
         }
 
-        public static RelayCommand UndoCommand => new RelayCommand(Undo, ()=>UndoList.Count > 0);
-        public static void Undo()
+        public RelayCommand UndoCommand => new RelayCommand(Undo, ()=>UndoList.Count > 0);
+        public void Undo()
         {
             if (UndoList.Count > 0)
             {
@@ -36,11 +45,13 @@ namespace ParticleEditor.Helpers.UndoRedo
 
                 RedoList = new LinkedList<IUndoRedo>(cpyRedo);
                 UndoList = new LinkedList<IUndoRedo>(cpyUndo);
+                RaisePropertyChanged("RedoDescription");
+                RaisePropertyChanged("UndoDescription");
             }
         }
 
-        public static RelayCommand RedoCommand => new RelayCommand(Redo, ()=> RedoList.Count > 0);
-        public static void Redo()
+        public RelayCommand RedoCommand => new RelayCommand(Redo, ()=> RedoList.Count > 0);
+        public void Redo()
         {
             if (RedoList.Count > 0)
             {
@@ -51,6 +62,26 @@ namespace ParticleEditor.Helpers.UndoRedo
                 item.Redo();
 
                 RedoList = new LinkedList<IUndoRedo>(cpyRedo);
+                RaisePropertyChanged("RedoDescription");
+                RaisePropertyChanged("UndoDescription");
+            }
+        }
+
+        public string UndoDescription
+        {
+            get
+            {
+                if (UndoList.Count == 0) return "Undo";
+                return $"Undo {UndoList.First.Value.Description}";
+            }
+        }
+
+        public string RedoDescription
+        {
+            get
+            {
+                if (RedoList.Count == 0) return "Redo";
+                return $"Redo {RedoList.First.Value.Description}";
             }
         }
     }

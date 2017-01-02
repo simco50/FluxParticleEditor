@@ -59,9 +59,8 @@ namespace ParticleEditor.Model.Data
             get { return _duration; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("Duration", this, _duration, value, "Duration"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("Duration", this, _duration, value, "Duration change"));
                 _duration = value;
-                _duration = MathUtil.Clamp(_duration, 0, 20);
                 RaisePropertyChanged("Duration");
             }
         }
@@ -72,7 +71,7 @@ namespace ParticleEditor.Model.Data
             get { return _loop; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("Loop", this, _loop, value, "Loop"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("Loop", this, _loop, value, "Loop change"));
                 _loop = value; 
                 RaisePropertyChanged("Loop");
             }
@@ -84,7 +83,7 @@ namespace ParticleEditor.Model.Data
             get { return _lifetime; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("Lifetime", this, _lifetime, value, "Lifetime"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("Lifetime", this, _lifetime, value, "Lifetime change"));
                 _lifetime = value;
                 RaisePropertyChanged("Lifetime");
             }
@@ -96,7 +95,7 @@ namespace ParticleEditor.Model.Data
             get { return _lifetimeVariance; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("LifetimeVariance", this, _lifetimeVariance, value, "LifetimeVariance"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("LifetimeVariance", this, _lifetimeVariance, value, "Lifetime variance change"));
                 _lifetimeVariance = value;
                 RaisePropertyChanged("LifetimeVariance");
             }
@@ -108,7 +107,7 @@ namespace ParticleEditor.Model.Data
             get { return _startVelocity; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartVelocity", this, _startVelocity, value, "StartVelocity"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("StartVelocity", this, _startVelocity, value, "Start velocity change"));
                 _startVelocity = value;
                 RaisePropertyChanged("StartVelocity");
             }
@@ -120,7 +119,7 @@ namespace ParticleEditor.Model.Data
             get { return _startVelocityVariance; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartVelocityVariance", this, _startVelocityVariance, value, "StartVelocityVariance"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("StartVelocityVariance", this, _startVelocityVariance, value, "StartVelocityVariance change"));
                 _startVelocityVariance = value;
                 RaisePropertyChanged("StartVelocityVariance");
             }
@@ -133,9 +132,8 @@ namespace ParticleEditor.Model.Data
             get { return _startSize; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartSize", this, _startSize, value, "StartSize"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("StartSize", this, _startSize, value, "Start size change"));
                 _startSize = value;
-                _startSize = MathUtil.Clamp(_startSize, 0, 20);
                 RaisePropertyChanged("StartSize");
             }
         }
@@ -146,7 +144,7 @@ namespace ParticleEditor.Model.Data
             get { return _startSizeVariance; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("StartSizeVariance", this, _startSizeVariance, value, "StartSizeVariance"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("StartSizeVariance", this, _startSizeVariance, value, "Start size variance change"));
                 _startSizeVariance = value;
                 RaisePropertyChanged("StartSizeVariance");
             }
@@ -158,7 +156,7 @@ namespace ParticleEditor.Model.Data
             get { return _randomStartRotation; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("RandomStartRotation", this, _randomStartRotation, value, "RandomStartRotation"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("RandomStartRotation", this, _randomStartRotation, value, "Random start rotation change"));
                 _randomStartRotation = value;
                 RaisePropertyChanged("RandomStartRotation");
             }
@@ -170,7 +168,7 @@ namespace ParticleEditor.Model.Data
             get { return _playOnAwake; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("PlayOnAwake", this, _playOnAwake, value, "PlayOnAwake"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("PlayOnAwake", this, _playOnAwake, value, "Play on awake change"));
                 _playOnAwake = value;
                 RaisePropertyChanged("PlayOnAwake");
             }
@@ -183,9 +181,8 @@ namespace ParticleEditor.Model.Data
             get { return _maxParticles; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("MaxParticles", this, _maxParticles, value, "MaxParticles"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("MaxParticles", this, _maxParticles, value, "Max particles change"));
                 _maxParticles = value;
-                _maxParticles = MathUtil.Clamp(_maxParticles, 0, 5000);
                 RaisePropertyChanged("MaxParticles");
             }
         }
@@ -195,9 +192,11 @@ namespace ParticleEditor.Model.Data
         public int Emission
         {
             get { return _emission; }
-            set {
+            set
+            {
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("Emission", this, _emission, value, "Emission change"));
                 _emission = value;
-                _emission = MathUtil.Clamp(_emission, 0, 500);
+                RaisePropertyChanged("Emission");
             }
         }
 
@@ -227,7 +226,7 @@ namespace ParticleEditor.Model.Data
                 get { return _shapeType; }
                 set
                 {
-                    UndoManager.Add(new UndoableProperty<ShapeData>("ShapeType", this, _shapeType, value, "ShapeType"));
+                    UndoManager.Instance.Add(new UndoableProperty<ShapeData>("ShapeType", this, _shapeType, value, "Shape type change"));
                     _shapeType = value;
                     RaisePropertyChanged("ShapeType");
                 }
@@ -239,7 +238,7 @@ namespace ParticleEditor.Model.Data
                 get { return _radius; }
                 set
                 {
-                    UndoManager.Add(new UndoableProperty<ShapeData>("Radius", this, _radius, value, "Radius"));
+                    UndoManager.Instance.Add(new UndoableProperty<ShapeData>("Radius", this, _radius, value, "Radius change"));
                     _radius = value;
                     RaisePropertyChanged("Radius");
                 }
@@ -251,7 +250,7 @@ namespace ParticleEditor.Model.Data
                 get { return _emitFromShell; }
                 set
                 {
-                    UndoManager.Add(new UndoableProperty<ShapeData>("EmitFromShell", this, _emitFromShell, value, "EmitFromShell"));
+                    UndoManager.Instance.Add(new UndoableProperty<ShapeData>("EmitFromShell", this, _emitFromShell, value, "Emit from shell change"));
                     _emitFromShell = value;
                     RaisePropertyChanged("EmitFromShell");
                 }
@@ -263,7 +262,7 @@ namespace ParticleEditor.Model.Data
                 get { return _emitFromVolume; }
                 set
                 {
-                    UndoManager.Add(new UndoableProperty<ShapeData>("EmitFromVolume", this, _emitFromVolume, value, "EmitFromVolume"));
+                    UndoManager.Instance.Add(new UndoableProperty<ShapeData>("EmitFromVolume", this, _emitFromVolume, value, "Emit from volume change"));
                     _emitFromVolume = value;
                     RaisePropertyChanged("EmitFromVolume");
                 }
@@ -275,7 +274,7 @@ namespace ParticleEditor.Model.Data
                 get { return _angle; }
                 set
                 {
-                    UndoManager.Add(new UndoableProperty<ShapeData>("Angle", this, _angle, value, "Angle"));
+                    UndoManager.Instance.Add(new UndoableProperty<ShapeData>("Angle", this, _angle, value, "Angle change"));
                     _angle = value;
                     RaisePropertyChanged("Angle");
                 }
@@ -305,7 +304,7 @@ namespace ParticleEditor.Model.Data
             get { return _sortingMode; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("SortingMode", this, _sortingMode, value, "SortingMode"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("SortingMode", this, _sortingMode, value, "Sorting mode change"));
                 _sortingMode = value;
                 RaisePropertyChanged("SortingMode");
             }
@@ -317,7 +316,7 @@ namespace ParticleEditor.Model.Data
             get { return _blendMode; }
             set
             {
-                UndoManager.Add(new UndoableProperty<ParticleSystem>("BlendMode", this, _blendMode, value, "BlendMode"));
+                UndoManager.Instance.Add(new UndoableProperty<ParticleSystem>("BlendMode", this, _blendMode, value, "Blend mode change"));
                 _blendMode = value;
                 RaisePropertyChanged("BlendMode");
             }

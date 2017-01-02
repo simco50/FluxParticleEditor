@@ -7,6 +7,8 @@
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              xmlns:views="clr-namespace:ParticleEditor.Views"
              xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:command="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Name="UserControl">
     <Grid x:Name="Root" >
@@ -29,8 +31,13 @@
             <Image Grid.Column="2" Source="/ParticleEditor;component/Resources/Icons/Time.png" Margin="5"/>
         </Grid>
 
-        <ListBox Grid.Row="1">
-            <Grid>
+        <ListBox Name="ListBox" Grid.Row="1">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <command:EventToCommand Command="{Binding OnSelectionChangedCommand}" CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Grid Tag="{Binding ElementName=UserControl, Path=ParticleSystem.Size}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
@@ -40,7 +47,7 @@
                 <TextBox IsEnabled="{Binding ElementName=CheckBox_Size, Path=IsChecked, Converter={helpers:InvertBoolConverter}}" Text="{Binding ElementName=UserControl, Path=ParticleSystem.Size.Constant}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1"/>
                 <CheckBox Name="CheckBox_Size" Grid.Column="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right"/>
             </Grid>
-            <Grid>
+            <Grid Tag="{Binding ElementName=UserControl, Path=ParticleSystem.Velocity}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
@@ -50,7 +57,7 @@
                 <views:Vector3Control Grid.Column="1" IsEnabled="{Binding ElementName=CheckBox_Velocity, Path=IsChecked, Converter={helpers:InvertBoolConverter}}" Value="{Binding ElementName=UserControl, Path=ParticleSystem.Velocity.Constant, Mode=TwoWay}"/>
                 <CheckBox Name="CheckBox_Velocity" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
-            <Grid>
+            <Grid Tag="{Binding ElementName=UserControl, Path=ParticleSystem.LocalVelocity}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
@@ -60,7 +67,7 @@
                 <views:Vector3Control Grid.Column="1" IsEnabled="{Binding ElementName=CheckBox_LocalVelocity, Path=IsChecked, Converter={helpers:InvertBoolConverter}}" Value="{Binding ElementName=UserControl, Path=ParticleSystem.LocalVelocity.Constant, Mode=TwoWay}"/>
                 <CheckBox Name="CheckBox_LocalVelocity" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
-            <Grid>
+            <Grid Tag="{Binding ElementName=UserControl, Path=ParticleSystem.Color}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
@@ -74,7 +81,7 @@
                 </Rectangle>
                 <CheckBox Name="Checkbox_Color"  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
-            <Grid>
+            <Grid  Tag="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
@@ -84,7 +91,7 @@
                 <TextBox IsEnabled="{Binding ElementName=CheckBox_Transparancy, Path=IsChecked, Converter={helpers:InvertBoolConverter}}" Text="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy.Constant}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1"/>
                 <CheckBox Name="CheckBox_Transparancy" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
-            <Grid>
+            <Grid  Tag="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>

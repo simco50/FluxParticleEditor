@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using ParticleEditor.ViewModels;
 
 namespace ParticleEditor.Views
 {
@@ -9,7 +10,8 @@ namespace ParticleEditor.Views
     {
         public TimelineView()
         {
-            InitializeComponent();    
+            InitializeComponent();
+            Root.DataContext = new TimelineViewModel(TimelineGrid);
         }
     }
 }
