@@ -32,10 +32,6 @@ namespace ParticleEditor.Model.Data
     {
         public ParticleSystem()
         {
-            Size[0] = 5;
-            Size[0.5f] = 1;
-            Size[0.8f] = 4;
-            Size[1.0f] = 2;
         }
 
         [JsonProperty("Version")]

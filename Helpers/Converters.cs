@@ -136,8 +136,10 @@ namespace ParticleEditor.Helpers
             try
             {
                 float k = float.Parse(values[0].ToString());
-                Vector3 v = (Vector3) values[1];
-                return new KeyValuePair<float, Vector3>(k, v);
+                float v1 = float.Parse(values[1].ToString());
+                float v2 = float.Parse(values[2].ToString());
+                float v3 = float.Parse(values[3].ToString());
+                return new KeyValuePair<float, Vector3>(k, new Vector3(v1, v2, v3));
 
             }
             catch (Exception)
@@ -148,13 +150,48 @@ namespace ParticleEditor.Helpers
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            return new object[] { ((KeyValuePair<float, Vector3>)value).Key, ((KeyValuePair<float, Vector3>)value).Value };
+            return new object[]
+            {
+                ((KeyValuePair<float, Vector3>) value).Key, ((KeyValuePair<float, Vector3>) value).Value.X,
+                ((KeyValuePair<float, Vector3>) value).Value.Y, ((KeyValuePair<float, Vector3>) value).Value.Z
+            };
         }
 
         private static VectorToKeyValuePairConverter _converter = null;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new VectorToKeyValuePairConverter();
+            return _converter;
+        }
+    }
+
+    public class FloatsToVector3Converter : MarkupExtension, IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            try
+            {
+                float x = float.Parse(values[0].ToString());
+                float y = float.Parse(values[1].ToString());
+                float z = float.Parse(values[2].ToString());
+                return new Vector3(x, y, z);
+            }
+            catch (Exception)
+            {
+                return new Vector3();
+            }
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            Vector3 v = (Vector3) value;
+            return new object[] {v.X, v.Y, v.Z};
+        }
+
+        private static FloatsToVector3Converter _converter = null;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null) _converter = new FloatsToVector3Converter();
             return _converter;
         }
     }
