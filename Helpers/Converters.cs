@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -102,6 +103,58 @@ namespace ParticleEditor.Helpers
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new InvertBoolConverter();
+            return _converter;
+        }
+    }
+
+    public class FloatsToKeyValuePairConverter : MarkupExtension, IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            float k = float.Parse(values[0].ToString());
+            float v = float.Parse(values[1].ToString());
+            return new KeyValuePair<float, float>(k, v);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return new object[] {((KeyValuePair<float, float>) value).Key, ((KeyValuePair<float, float>) value).Value};
+        }
+
+        private static FloatsToKeyValuePairConverter _converter = null;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null) _converter = new FloatsToKeyValuePairConverter();
+            return _converter;
+        }
+    }
+
+    public class VectorToKeyValuePairConverter : MarkupExtension, IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            try
+            {
+                float k = float.Parse(values[0].ToString());
+                Vector3 v = (Vector3) values[1];
+                return new KeyValuePair<float, Vector3>(k, v);
+
+            }
+            catch (Exception)
+            {
+                return new KeyValuePair<float, Vector3>();
+            }
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return new object[] { ((KeyValuePair<float, Vector3>)value).Key, ((KeyValuePair<float, Vector3>)value).Value };
+        }
+
+        private static VectorToKeyValuePairConverter _converter = null;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null) _converter = new VectorToKeyValuePairConverter();
             return _converter;
         }
     }

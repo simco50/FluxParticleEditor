@@ -168,7 +168,9 @@
     <Compile Include="Model\Data\KeyFramedValue.cs" />
     <Compile Include="Model\Data\ParticleSystem.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\AnimationControls\VectorKeyframeViewModel.cs" />
     <Compile Include="ViewModels\DebugLogViewModel.cs" />
+    <Compile Include="ViewModels\AnimationControls\FloatKeyframeViewModel.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ParameterTabs\AnimationTabViewModel.cs" />
@@ -176,8 +178,14 @@
     <Compile Include="ViewModels\ParameterTabs\GeneralTabViewModel.cs" />
     <Compile Include="ViewModels\ParticleVisualizerViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
+    <Compile Include="Views\AnimationControls\VectorKeyframeView.xaml.cs">
+      <DependentUpon>VectorKeyframeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DebugLogView.xaml.cs">
       <DependentUpon>DebugLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AnimationControls\FloatKeyframeView.xaml.cs">
+      <DependentUpon>FloatKeyframeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HelpWindowView.xaml.cs">
       <DependentUpon>HelpWindowView.xaml</DependentUpon>
@@ -233,7 +241,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AnimationControls\VectorKeyframeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DebugLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AnimationControls\FloatKeyframeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

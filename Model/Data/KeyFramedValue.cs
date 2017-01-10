@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using DrWPF.Windows.Data;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 using ParticleEditor.Annotations;
 using SharpDX;
+
+using FloatEnumerator = DrWPF.Windows.Data.ObservableSortedDictionary<float, float>.Enumerator<float, float>;
+using VectorEnumerator = DrWPF.Windows.Data.ObservableSortedDictionary<float, SharpDX.Vector3>.Enumerator<float, SharpDX.Vector3>;
 
 namespace ParticleEditor.Model.Data
 {
@@ -16,7 +20,7 @@ namespace ParticleEditor.Model.Data
         void Remove(float key);
     }
 
-    public class KeyFramedValueFloat : IKeyFramedValue<float>
+    public class KeyFramedValueFloat : ObservableObject, IKeyFramedValue<float>
     {
         public KeyFramedValueFloat(float value)
         {
@@ -58,8 +62,9 @@ namespace ParticleEditor.Model.Data
                 if (t < Keys.First().Key)
                     return Keys.First().Value;
 
-                bool valid = true;
-                var e = Keys.GetEnumerator();
+                FloatEnumerator e = (FloatEnumerator)Keys.GetEnumerator();
+                bool valid = e.MoveNext();
+
                 var prev = e;
                 while (valid)
                 {
@@ -82,7 +87,7 @@ namespace ParticleEditor.Model.Data
             set { Keys[t] = value; }
         }
         [JsonProperty("Keys")]
-        public SortedDictionary<float, float> Keys { get; set; } = new SortedDictionary<float, float>();
+        public ObservableSortedDictionary<float, float> Keys { get; set; } = new ObservableSortedDictionary<float, float>(new KeyComparer());
         [JsonProperty("Constant")]
         public float Constant { get; set; }
     }
@@ -118,7 +123,7 @@ namespace ParticleEditor.Model.Data
                 //If there is only one keyframe
                 if (Keys.Count == 1)
                 {
-                    var keyframe = Keys.GetEnumerator().Current;
+                    var keyframe = Keys.First();
                     if (t > keyframe.Key)
                         return keyframe.Value;
                     float blendA = (keyframe.Key - t) / keyframe.Key;
@@ -130,8 +135,8 @@ namespace ParticleEditor.Model.Data
                 if (t < Keys.First().Key)
                     return Keys.First().Value;
 
-                bool valid = true;
-                var e = Keys.GetEnumerator();
+                VectorEnumerator e = (VectorEnumerator)Keys.GetEnumerator();
+                bool valid = e.MoveNext();
                 var prev = e;
                 while (valid)
                 {
@@ -155,7 +160,7 @@ namespace ParticleEditor.Model.Data
         }
 
         [JsonProperty("Keys")]
-        public SortedDictionary<float, Vector3> Keys { get; set; } = new SortedDictionary<float, Vector3>();
+        public ObservableSortedDictionary<float, Vector3> Keys { get; set; } = new ObservableSortedDictionary<float, Vector3>(new KeyComparer());
 
         private Vector3 _constant;
         [JsonProperty("Constant")]

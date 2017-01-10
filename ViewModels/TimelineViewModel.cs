@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
+using ParticleEditor.Views.AnimationControls;
 
 namespace ParticleEditor.ViewModels
 {
@@ -26,16 +27,12 @@ namespace ParticleEditor.ViewModels
             if (t == typeof(KeyFramedValueFloat))
             {
                 _timelineGrid.Children.Clear();
-                Label label = new Label();
-                label.Content = "Selected KeyFramedValueFloat";
-                _timelineGrid.Children.Add(label);
+                _timelineGrid.Children.Add(new FloatKeyframeView(data.Data as KeyFramedValueFloat));
             }
             else if(t == typeof(KeyFramedValueVector3))
             {
                 _timelineGrid.Children.Clear();
-                Label label = new Label();
-                label.Content = "Selected KeyFramedValueVector3";
-                _timelineGrid.Children.Add(label);
+                _timelineGrid.Children.Add(new VectorKeyframeView(data.Data as KeyFramedValueVector3));
             }
         }
     }

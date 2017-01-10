@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="ParticleEditor.Views.AnimationControls.FloatKeyframeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="800" Name="UserControl">
+    <Grid Name="Grid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush2}">
+                    <Label Content="ACTIONS" Foreground="White" FontWeight="Bold" FontFamily="Segoe UI Semilight" VerticalContentAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <TextBlock Height="50" TextWrapping="Wrap" Margin="3">
+                                <Run Text="Keyframed value currently has "/>
+                                <Run Text="{Binding Value.Keys.Count, Mode=OneWay}"/>
+                                <Run Text=" keyframes."/>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <controls:NumericUpDown Name="ConstantValue" Height="25" Grid.Column="0" Value="{Binding Value.Constant}" Minimum="-50" Maximum="50" Interval="0.2" InterceptMouseWheel="True" InterceptManualEnter="True" InterceptArrowKeys="True"/>
+                            <Button Height="25" Content="Set constant" Command="{Binding SetConstantCommand}" CommandParameter="{Binding ElementName=ConstantValue, Path=Value}"/>
+                            <Button Height="25" Content="Clear all" Command="{Binding ClearAllCommand}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+        <GridSplitter Grid.Column="1" Width="3" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" Background="{DynamicResource AccentColorBrush2}"/>
+        <Grid Grid.Column="2" Background="{DynamicResource AccentColorBrush2}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Image Source="/ParticleEditor;component/Resources/Icons/Time.png" Margin="5"/>
+                            <Label Foreground="White" Content="TIME" FontWeight="Bold" FontFamily="Segoe UI Semilight" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Image Source="/ParticleEditor;component/Resources/Icons/Particles.png" Margin="5"/>
+                            <Label Foreground="White" Content="VALUE" FontWeight="Bold" FontFamily="Segoe UI Semilight" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <ListBox ItemsSource="{Binding Value.Keys}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Content="{Binding Key, StringFormat=0:00}"/>
+                                    <Label Grid.Column="1" Content="{Binding Value, StringFormat=0.00}"/>
+                                    <Button Grid.Column="2" Content="Remove" Command="{Binding DataContext.RemoveKeyframeCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Key}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:NumericUpDown Name="Num_Key" Value="0" Minimum="0" Maximum="1" Interval="0.1" Grid.Column="0" HasDecimals="True" InterceptMouseWheel="True" InterceptManualEnter="True" InterceptArrowKeys="True"/>
+                    <controls:NumericUpDown Name="Num_Value" Value="0" Minimum="-50" Maximum="50" Interval="0.2" Grid.Column="1" HasDecimals="True" InterceptArrowKeys="True" InterceptManualEnter="True" InterceptMouseWheel="True"/>
+                    <Button Content="Add" Grid.Column="2" Command="{Binding AddKeyframeCommand}">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{helpers:FloatsToKeyValuePairConverter}">
+                                <Binding ElementName="Num_Key" Path="Value"/>
+                                <Binding ElementName="Num_Value" Path="Value"/>
+                            </MultiBinding>
+                        </Button.CommandParameter>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

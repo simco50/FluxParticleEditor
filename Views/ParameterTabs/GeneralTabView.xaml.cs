@@ -22,7 +22,5 @@ namespace ParticleEditor.Views.ParameterTabs
             get { return (ParticleSystem) GetValue(ParticleSystemProperty); }
             set { SetValue(ParticleSystemProperty, value); }
         }
-
-
     }
 }
