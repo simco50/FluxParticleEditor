@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
-            <Label Content="TIMELINE" FontFamily="Segoe UI Semilight" Foreground="White"/>
+            <Label Content="ANIMATION" FontFamily="Segoe UI Semilight" Foreground="White"/>
         </Grid>
         <Grid Name="TimelineGrid" Grid.Row="1"/>
     </Grid>

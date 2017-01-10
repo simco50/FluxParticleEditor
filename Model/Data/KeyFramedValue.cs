@@ -166,13 +166,8 @@ namespace ParticleEditor.Model.Data
         [JsonProperty("Constant")]
         public Vector3 Constant
         {
-
             get { return _constant; }
             set { _constant = value; }
         }
-
-        public float ConstantX { get { return Constant.X; } set { _constant.X = value; } }
-        public float ConstantY { get { return Constant.Y; } set { _constant.Y = value; } }
-        public float ConstantZ { get { return Constant.Z; } set { _constant.Z = value; } }
     }
 }
