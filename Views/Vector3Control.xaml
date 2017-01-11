@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ParticleEditor.Views"
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300" Name="UserControl">
     <Grid>
@@ -13,8 +14,8 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBox Text="{Binding ElementName=UserControl, Path=X, Mode=TwoWay}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="0"/>
-        <TextBox Text="{Binding ElementName=UserControl, Path=Y, Mode=TwoWay}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="1"/>
-        <TextBox Text="{Binding ElementName=UserControl, Path=Z, Mode=TwoWay}" helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" Grid.Column="2"/>
+        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.X, Mode=TwoWay}" Grid.Column="0" HasDecimals="True" StringFormat="0.##" HideUpDownButtons="True"/>
+        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Y, Mode=TwoWay}" Grid.Column="1" HasDecimals="True" StringFormat="0.##" HideUpDownButtons="True"/>
+        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Z, Mode=TwoWay}" Grid.Column="2" HasDecimals="True" StringFormat="0.##" HideUpDownButtons="True"/>
     </Grid>
 </UserControl>

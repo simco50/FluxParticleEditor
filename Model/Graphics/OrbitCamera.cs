@@ -9,7 +9,7 @@ namespace ParticleEditor.Model.Graphics
     public class OrbitCamera
     {
         public float MinimumDistance { get; set; } = 2.0f;
-        public float MaximumDistance { get; set; } = 15.0f;
+        public float MaximumDistance { get; set; } = 25.0f;
 
         public Vector3 ResetAngles { get; set; } = new Vector3();
         private Vector3 _eulerAngles;

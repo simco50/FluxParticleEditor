@@ -146,6 +146,7 @@
     <Compile Include="Helpers\UndoRedo\IUndoRedo.cs" />
     <Compile Include="Helpers\UndoRedo\UndoableProperty.cs" />
     <Compile Include="Helpers\UndoRedo\UndoManager.cs" />
+    <Compile Include="Model\Data\CustomVector3.cs" />
     <Compile Include="Model\Graphics\Grid.cs" />
     <Compile Include="Model\ImageControl\Disposer.cs" />
     <Compile Include="Model\ImageControl\DX10ImageSource.cs" />

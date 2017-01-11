@@ -70,7 +70,7 @@ namespace ParticleEditor.ViewModels
             {
                 _particleSystem = value;
                 SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
-                Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.ParticleSystemChanged));
+                Messenger.Default.Send(new MessageData(MessageID.ParticleSystemChanged));
                 RaisePropertyChanged("ParticleSystem");
             }
         }

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
+             xmlns:views="clr-namespace:ParticleEditor.Views"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="800">
     <Grid Name="Grid">
@@ -36,25 +37,8 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
-                            <Grid Height="25">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Name="Txt_Constant_X" Grid.Column="0" Text="{Binding Value.Constant[0]}"/>
-                                <TextBox Name="Txt_Constant_Y" Grid.Column="1" Text="{Binding Value.Constant[1]}"/>
-                                <TextBox Name="Txt_Constant_Z" Grid.Column="2" Text="{Binding Value.Constant[2]}"/>
-                            </Grid>
-                            <Button Height="25" Content="Set constant" Command="{Binding SetConstantCommand}">
-                                <Button.CommandParameter>
-                                    <MultiBinding Converter="{helpers:FloatsToVector3Converter}">
-                                        <Binding ElementName="Txt_Constant_X" Path="Text"/>
-                                        <Binding ElementName="Txt_Constant_Y" Path="Text"/>
-                                        <Binding ElementName="Txt_Constant_Z" Path="Text"/>
-                                    </MultiBinding>
-                                </Button.CommandParameter>
-                            </Button>
+                            <views:Vector3Control Height="25" x:Name="Value_Constant" Value="{Binding Value.Constant}"/>
+                            <Button Height="25" Content="Set constant" Command="{Binding SetConstantCommand}" CommandParameter="{Binding ElementName=Value_Constant, Path=Value}"/>
                             <Button Height="25" Content="Clear all" Command="{Binding ClearAllCommand}"/>
                         </StackPanel>
                     </Grid>
@@ -103,9 +87,9 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Content="{Binding Value[0]}"/>
-                                        <Label Grid.Column="1" Content="{Binding Value[1]}"/>
-                                        <Label Grid.Column="2" Content="{Binding Value[2]}"/>
+                                        <Label Grid.Column="0" Content="{Binding Value.X}"/>
+                                        <Label Grid.Column="1" Content="{Binding Value.Y}"/>
+                                        <Label Grid.Column="2" Content="{Binding Value.Z}"/>
                                     </Grid>
                                     <Button Grid.Column="2" Content="Remove" Command="{Binding DataContext.RemoveKeyframeCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Key}"/>
                                 </Grid>
@@ -120,23 +104,14 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <controls:NumericUpDown Name="Num_Key" Value="0" Minimum="0" Maximum="1" Interval="0.1" Grid.Column="0" HasDecimals="True" InterceptMouseWheel="True" InterceptManualEnter="True" InterceptArrowKeys="True"/>
-                    <Grid Grid.Column="1" Height="25">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Name="Txt_Value_X" Grid.Column="0" Text="0"/>
-                        <TextBox Name="Txt_Value_Y" Grid.Column="1" Text="0"/>
-                        <TextBox Name="Txt_Value_Z" Grid.Column="2" Text="0"/>
-                    </Grid>
+                    <views:Vector3Control x:Name="KeyframeValue" Grid.Column="1" Height="25"/>
                     <Button Content="Add" Grid.Column="2" Command="{Binding AddKeyframeCommand}">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{helpers:VectorToKeyValuePairConverter}">
                                 <Binding ElementName="Num_Key" Path="Value"/>
-                                <Binding ElementName="Txt_Value_X" Path="Text"/>
-                                <Binding ElementName="Txt_Value_Y" Path="Text"/>
-                                <Binding ElementName="Txt_Value_Z" Path="Text"/>
+                                <Binding ElementName="KeyframeValue" Path="Value.X"/>
+                                <Binding ElementName="KeyframeValue" Path="Value.Y"/>
+                                <Binding ElementName="KeyframeValue" Path="Value.Z"/>
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>

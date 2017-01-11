@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParticleEditor.Model.Data;
 using SharpDX;
 
 namespace ParticleEditor.Views
@@ -23,34 +24,17 @@ namespace ParticleEditor.Views
     {
         public Vector3Control()
         {
+            Value = new CustomVector3();
             InitializeComponent();
         }
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value", typeof(Vector3), typeof(Vector3Control), new PropertyMetadata(default(Vector3)));
+            "Value", typeof(CustomVector3), typeof(Vector3Control), new PropertyMetadata(default(CustomVector3)));
 
-        public Vector3 Value
+        public CustomVector3 Value
         {
-            get { return (Vector3) GetValue(ValueProperty); }
+            get { return (CustomVector3) GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
-        }
-
-        public float X
-        {
-            get { return Value.X; }
-            set { Value = new Vector3(value, Value.Y, Value.Z); }
-        }
-
-        public float Y
-        {
-            get { return Value.Y; }
-            set { Value = new Vector3(Value.X, value, Value.Z); }
-        }
-
-        public float Z
-        {
-            get { return Value.Z; }
-            set { Value = new Vector3(Value.X, Value.Y, value); }
         }
     }
 }

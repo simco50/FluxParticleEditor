@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using DrWPF.Windows.Data;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
-using ParticleEditor.Annotations;
-using SharpDX;
 
 using FloatEnumerator = DrWPF.Windows.Data.ObservableSortedDictionary<float, float>.Enumerator<float, float>;
-using VectorEnumerator = DrWPF.Windows.Data.ObservableSortedDictionary<float, SharpDX.Vector3>.Enumerator<float, SharpDX.Vector3>;
+using VectorEnumerator = DrWPF.Windows.Data.ObservableSortedDictionary<float, ParticleEditor.Model.Data.CustomVector3>.Enumerator<float, ParticleEditor.Model.Data.CustomVector3>;
 
 namespace ParticleEditor.Model.Data
 {
@@ -31,12 +26,16 @@ namespace ParticleEditor.Model.Data
         {
             Keys.Clear();
             Constant = value;
+            RaisePropertyChanged("IsAnimated");
         }
 
         public void Remove(float key)
         {
             if (Keys.ContainsKey(key))
+            {
                 Keys.Remove(key);
+                RaisePropertyChanged("IsAnimated");
+            }
         }
 
         public float this[float t]
@@ -84,35 +83,48 @@ namespace ParticleEditor.Model.Data
                 }
                 return Keys.Last().Value;
             }
-            set { Keys[t] = value; }
+            set
+            {
+                Keys[t] = value; 
+                RaisePropertyChanged("IsAnimated");
+            }
         }
         [JsonProperty("Keys")]
         public ObservableSortedDictionary<float, float> Keys { get; set; } = new ObservableSortedDictionary<float, float>(new KeyComparer());
         [JsonProperty("Constant")]
         public float Constant { get; set; }
+
+        public bool IsAnimated
+        {
+            get { return Keys.Count > 0; }
+        }
     }
 
-    public class KeyFramedValueVector3 : IKeyFramedValue<Vector3>
+    public class KeyFramedValueVector3 : ObservableObject, IKeyFramedValue<CustomVector3>
     {
 
-        public KeyFramedValueVector3(Vector3 value)
+        public KeyFramedValueVector3(CustomVector3 value)
         {
             Constant = value;
         }
 
-        public void SetConstant(Vector3 value)
+        public void SetConstant(CustomVector3 value)
         {
             Keys.Clear();
             Constant = value;
+            RaisePropertyChanged("IsAnimated");
         }
 
         public void Remove(float key)
         {
             if (Keys.ContainsKey(key))
+            {
                 Keys.Remove(key);
+                RaisePropertyChanged("IsAnimated");
+            }
         }
 
-        public Vector3 this[float t]
+        public CustomVector3 this[float t]
         {
             get
             {
@@ -127,7 +139,7 @@ namespace ParticleEditor.Model.Data
                     if (t > keyframe.Key)
                         return keyframe.Value;
                     float blendA = (keyframe.Key - t) / keyframe.Key;
-                    Vector3 result = (Constant * blendA) + (keyframe.Value * (1 - blendA));
+                    CustomVector3 result = (Constant * blendA) + (keyframe.Value * (1 - blendA));
                     return result;
                 }
 
@@ -148,7 +160,7 @@ namespace ParticleEditor.Model.Data
                         float blendA = (e.Current.Key - t) / length;
                         if (length == 0)
                             blendA = 0;
-                        Vector3 result = (prev.Current.Value * blendA) + (e.Current.Value * (1 - blendA));
+                        CustomVector3 result = (prev.Current.Value * blendA) + (e.Current.Value * (1 - blendA));
                         return result;
                     }
                     prev = e;
@@ -156,18 +168,22 @@ namespace ParticleEditor.Model.Data
                 }
                 return Keys.Last().Value;
             }
-            set { Keys[t] = value; }
+            set
+            {
+                Keys[t] = value; 
+                RaisePropertyChanged("IsAnimated");
+            }
         }
 
         [JsonProperty("Keys")]
-        public ObservableSortedDictionary<float, Vector3> Keys { get; set; } = new ObservableSortedDictionary<float, Vector3>(new KeyComparer());
+        public ObservableSortedDictionary<float, CustomVector3> Keys { get; set; } = new ObservableSortedDictionary<float, CustomVector3>(new KeyComparer());
 
-        private Vector3 _constant;
         [JsonProperty("Constant")]
-        public Vector3 Constant
+        public CustomVector3 Constant { get; set; }
+
+        public bool IsAnimated
         {
-            get { return _constant; }
-            set { _constant = value; }
+            get { return Keys.Count > 0; }
         }
     }
 }

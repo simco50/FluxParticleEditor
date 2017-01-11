@@ -58,7 +58,7 @@ namespace ParticleEditor.Model.Graphics.Particles
             //Constant velocity
             movement += _direction * _startVelocity;
             //World space velocity
-            movement += MainViewModel.MainParticleSystem.Velocity[_lifeTimer];
+            movement += (Vector3)MainViewModel.MainParticleSystem.Velocity[_lifeTimer];
             //Local space velocity
             Vector3 localVel = MainViewModel.MainParticleSystem.LocalVelocity[_lifeTimer];
             if (localVel.LengthSquared() > 0)
@@ -75,7 +75,7 @@ namespace ParticleEditor.Model.Graphics.Particles
             }
             _vertexInfo.Position += movement * deltaTime;
 
-            Vector3 color = MainViewModel.MainParticleSystem.Color[_lifeTimer];
+            CustomVector3 color = MainViewModel.MainParticleSystem.Color[_lifeTimer];
             _vertexInfo.Color = new Vector4(color.X, color.Y, color.Z, MainViewModel.MainParticleSystem.Transparancy[_lifeTimer]);
             _vertexInfo.Size = MainViewModel.MainParticleSystem.Size[_lifeTimer] * _startSize;
             _vertexInfo.Rotation = _startRotation + MainViewModel.MainParticleSystem.Rotation[_lifeTimer];

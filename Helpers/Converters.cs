@@ -69,7 +69,7 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Vector3 v = (Vector3) value;
+            CustomVector3 v = (CustomVector3) value;
             return new SolidColorBrush(Color.FromRgb((byte)(v.X * 255), (byte)(v.Y * 255), (byte)(v.Z * 255)));
         }
 

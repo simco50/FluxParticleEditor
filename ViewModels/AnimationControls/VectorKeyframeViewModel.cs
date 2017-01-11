@@ -24,8 +24,8 @@ namespace ParticleEditor.ViewModels.AnimationControls
             Value.SetConstant(Value.Constant);
         }
 
-        public RelayCommand<Vector3> SetConstantCommand => new RelayCommand<Vector3>(SetConstant);
-        private void SetConstant(Vector3 value)
+        public RelayCommand<CustomVector3> SetConstantCommand => new RelayCommand<CustomVector3>(SetConstant);
+        private void SetConstant(CustomVector3 value)
         {
             Value.SetConstant(value);
         }

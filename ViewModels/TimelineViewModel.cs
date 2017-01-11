@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using GalaSoft.MvvmLight;
@@ -19,21 +20,39 @@ namespace ParticleEditor.ViewModels
         {
             _timelineGrid = timelineGrid;
             Messenger.Default.Register<MessageData>(this, OnMessageReceived);
+            SetInfoText();
         }
 
         private void OnMessageReceived(MessageData data)
         {
-            Type t = data.Data.GetType();
-            if (t == typeof(KeyFramedValueFloat))
+            if (data.Id == MessageID.KeyframeSelected)
             {
-                _timelineGrid.Children.Clear();
-                _timelineGrid.Children.Add(new FloatKeyframeView(data.Data as KeyFramedValueFloat));
+                Type t = data.Data.GetType();
+                if (t == typeof(KeyFramedValueFloat))
+                {
+                    _timelineGrid.Children.Clear();
+                    _timelineGrid.Children.Add(new FloatKeyframeView(data.Data as KeyFramedValueFloat));
+                }
+                else if (t == typeof(KeyFramedValueVector3))
+                {
+                    _timelineGrid.Children.Clear();
+                    _timelineGrid.Children.Add(new VectorKeyframeView(data.Data as KeyFramedValueVector3));
+                }
             }
-            else if(t == typeof(KeyFramedValueVector3))
+            else if(data.Id == MessageID.ParticleSystemChanged)
             {
-                _timelineGrid.Children.Clear();
-                _timelineGrid.Children.Add(new VectorKeyframeView(data.Data as KeyFramedValueVector3));
+                SetInfoText();
             }
+        }
+
+        void SetInfoText()
+        {
+            _timelineGrid.Children.Clear();
+            Label lbl = new Label();
+            lbl.Content = "Select a property from the animation tab to start animating it.";
+            lbl.VerticalContentAlignment = VerticalAlignment.Center;
+            lbl.HorizontalContentAlignment = HorizontalAlignment.Center;
+            _timelineGrid.Children.Add(lbl);
         }
     }
 }
