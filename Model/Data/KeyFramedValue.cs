@@ -93,7 +93,7 @@ namespace ParticleEditor.Model.Data
         public ObservableSortedDictionary<float, float> Keys { get; set; } = new ObservableSortedDictionary<float, float>(new KeyComparer());
         [JsonProperty("Constant")]
         public float Constant { get; set; }
-
+        [JsonIgnore]
         public bool IsAnimated
         {
             get { return Keys.Count > 0; }
@@ -181,6 +181,7 @@ namespace ParticleEditor.Model.Data
         [JsonProperty("Constant")]
         public CustomVector3 Constant { get; set; }
 
+        [JsonIgnore]
         public bool IsAnimated
         {
             get { return Keys.Count > 0; }
