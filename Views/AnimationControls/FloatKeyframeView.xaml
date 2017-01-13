@@ -36,7 +36,7 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
-                            <controls:NumericUpDown Name="ConstantValue" Height="25" Grid.Column="0" Value="{Binding Value.Constant}" Minimum="-50" Maximum="50" Interval="0.2" TrackMouseWheelWhenMouseOver="True"/>
+                            <controls:NumericUpDown Name="ConstantValue" StringFormat="#.##" Height="25" Grid.Column="0" Value="{Binding Value.Constant}" Minimum="-50" Maximum="50" Interval="0.2" TrackMouseWheelWhenMouseOver="True"/>
                             <Button Height="25" Content="Set constant" Command="{Binding SetConstantCommand}" CommandParameter="{Binding ElementName=ConstantValue, Path=Value}"/>
                             <Button Height="25" Content="Clear all" Command="{Binding ClearAllCommand}"/>
                         </StackPanel>
@@ -93,8 +93,8 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:NumericUpDown Name="Num_Key" Value="0" Minimum="0" Maximum="1" Interval="0.1" Grid.Column="0" HasDecimals="True" TrackMouseWheelWhenMouseOver="True"/>
-                    <controls:NumericUpDown Name="Num_Value" Value="0" Minimum="-500" Maximum="500" Interval="0.2" Grid.Column="1" HasDecimals="True" TrackMouseWheelWhenMouseOver="True"/>
+                    <controls:NumericUpDown Name="Num_Key" StringFormat="#.##" Value="0" Minimum="0" Maximum="1" Interval="0.1" Grid.Column="0" HasDecimals="True" TrackMouseWheelWhenMouseOver="True"/>
+                    <controls:NumericUpDown Name="Num_Value" StringFormat="#.##" Value="0" Minimum="-500" Maximum="500" Interval="0.2" Grid.Column="1" HasDecimals="True" TrackMouseWheelWhenMouseOver="True"/>
                     <Button Content="Add" Grid.Column="2" Command="{Binding AddKeyframeCommand}">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{helpers:FloatsToKeyValuePairConverter}">

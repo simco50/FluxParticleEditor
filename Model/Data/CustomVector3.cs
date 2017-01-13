@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 using ParticleEditor.Annotations;
 using SharpDX;
 
 namespace ParticleEditor.Model.Data
 {
-    public class CustomVector3
+    public class CustomVector3 : ObservableObject
     {
         public CustomVector3(float x = 0.0f, float y = 0.0f, float z = 0.0f)
         {
@@ -18,11 +19,8 @@ namespace ParticleEditor.Model.Data
             Z = z;
         }
 
-        [JsonProperty("X")]
         public float X { get; set; }
-        [JsonProperty("Y")]
         public float Y { get; set; }
-        [JsonProperty("Z")]
         public float Z { get; set; }
 
         public static implicit operator CustomVector3(Vector3 other)

@@ -91,8 +91,18 @@ namespace ParticleEditor.Model.Data
         }
         [JsonProperty("Keys")]
         public ObservableSortedDictionary<float, float> Keys { get; set; } = new ObservableSortedDictionary<float, float>(new KeyComparer());
+
+        private float _constant;
         [JsonProperty("Constant")]
-        public float Constant { get; set; }
+        public float Constant
+        {
+            get { return _constant; }
+            set
+            {
+                _constant = value;
+                RaisePropertyChanged("Constant");
+            }
+        }
         [JsonIgnore]
         public bool IsAnimated
         {
@@ -178,8 +188,17 @@ namespace ParticleEditor.Model.Data
         [JsonProperty("Keys")]
         public ObservableSortedDictionary<float, CustomVector3> Keys { get; set; } = new ObservableSortedDictionary<float, CustomVector3>(new KeyComparer());
 
+        private CustomVector3 _constant;
         [JsonProperty("Constant")]
-        public CustomVector3 Constant { get; set; }
+        public CustomVector3 Constant
+        {
+            get { return _constant; }
+            set
+            {
+                _constant = value;
+                RaisePropertyChanged("Constant");
+            }
+        }
 
         [JsonIgnore]
         public bool IsAnimated

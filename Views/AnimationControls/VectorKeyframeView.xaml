@@ -37,7 +37,7 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
-                            <views:Vector3Control Height="25" x:Name="Value_Constant" Value="{Binding Value.Constant}"/>
+                            <views:Vector3Control Interval="0.25" Height="25" x:Name="Value_Constant" Value="{Binding Value.Constant}"/>
                             <Button Height="25" Content="Set constant" Command="{Binding SetConstantCommand}" CommandParameter="{Binding ElementName=Value_Constant, Path=Value}"/>
                             <Button Height="25" Content="Clear all" Command="{Binding ClearAllCommand}"/>
                         </StackPanel>
@@ -103,8 +103,8 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:NumericUpDown Name="Num_Key" Value="0" Minimum="0" Maximum="1" Interval="0.1" Grid.Column="0" HasDecimals="True" InterceptMouseWheel="True" InterceptManualEnter="True" InterceptArrowKeys="True"/>
-                    <views:Vector3Control x:Name="KeyframeValue" Grid.Column="1" Height="25"/>
+                    <controls:NumericUpDown Name="Num_Key" StringFormat="#.##" Value="0" Minimum="0" Maximum="1" Interval="0.1" Grid.Column="0" HasDecimals="True" InterceptMouseWheel="True" InterceptManualEnter="True" InterceptArrowKeys="True"/>
+                    <views:Vector3Control Interval="0.25" x:Name="KeyframeValue" Grid.Column="1" Height="25"/>
                     <Button Content="Add" Grid.Column="2" Command="{Binding AddKeyframeCommand}">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{helpers:VectorToKeyValuePairConverter}">

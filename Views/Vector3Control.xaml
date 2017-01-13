@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ParticleEditor.Views"
-             xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300" Name="UserControl">
@@ -14,8 +12,8 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.X}" Grid.Column="0" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True"/>
-        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Y}" Grid.Column="1" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True"/>
-        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Z}" Grid.Column="2" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True"/>
+        <controls:NumericUpDown Interval="{Binding ElementName=UserControl, Path=Interval}" Value="{Binding ElementName=UserControl, Path=Value.X}" Grid.Column="0" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True" StringFormat="0.##"/>
+        <controls:NumericUpDown Interval="{Binding ElementName=UserControl, Path=Interval}" Value="{Binding ElementName=UserControl, Path=Value.Y}" Grid.Column="1" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True" StringFormat="0.##"/>
+        <controls:NumericUpDown Interval="{Binding ElementName=UserControl, Path=Interval}" Value="{Binding ElementName=UserControl, Path=Value.Z}" Grid.Column="2" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True" StringFormat="0.##"/>
     </Grid>
 </UserControl>
