@@ -111,9 +111,12 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            float k = float.Parse(values[0].ToString());
-            float v = float.Parse(values[1].ToString());
-            return new KeyValuePair<float, float>(k, v);
+            float key, value;
+            if (float.TryParse(values[0].ToString(), out key) == false)
+                return new KeyValuePair<float, float>(0, 0);
+            if(float.TryParse(values[1].ToString(), out value) == false)
+                return new KeyValuePair<float, float>(0, 0);
+            return new KeyValuePair<float, float>(key, value);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -133,27 +136,18 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            try
-            {
-                float k = float.Parse(values[0].ToString());
-                float v1 = float.Parse(values[1].ToString());
-                float v2 = float.Parse(values[2].ToString());
-                float v3 = float.Parse(values[3].ToString());
-                return new KeyValuePair<float, Vector3>(k, new Vector3(v1, v2, v3));
-
-            }
-            catch (Exception)
-            {
-                return new KeyValuePair<float, Vector3>();
-            }
+            float key;
+            if(float.TryParse(values[0].ToString(), out key) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
+            CustomVector3 value = values[1] as CustomVector3;
+            if (value == null) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
+            return new KeyValuePair<float, Vector3>(key, value);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             return new object[]
             {
-                ((KeyValuePair<float, Vector3>) value).Key, ((KeyValuePair<float, Vector3>) value).Value.X,
-                ((KeyValuePair<float, Vector3>) value).Value.Y, ((KeyValuePair<float, Vector3>) value).Value.Z
+                ((KeyValuePair<float, Vector3>) value).Key, ((KeyValuePair<float, Vector3>) value).Value
             };
         }
 
@@ -169,17 +163,11 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            try
-            {
-                float x = float.Parse(values[0].ToString());
-                float y = float.Parse(values[1].ToString());
-                float z = float.Parse(values[2].ToString());
-                return new Vector3(x, y, z);
-            }
-            catch (Exception)
-            {
-                return new Vector3();
-            }
+            float x, y, z;
+            if (float.TryParse(values[0].ToString(), out x) == false) return new CustomVector3();
+            if (float.TryParse(values[1].ToString(), out y) == false) return new CustomVector3();
+            if (float.TryParse(values[2].ToString(), out z) == false) return new CustomVector3();
+            return new CustomVector3(x, y, z);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

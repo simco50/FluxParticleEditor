@@ -14,8 +14,8 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.X, Mode=TwoWay}" Grid.Column="0" HasDecimals="True" StringFormat="0.##" HideUpDownButtons="True"/>
-        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Y, Mode=TwoWay}" Grid.Column="1" HasDecimals="True" StringFormat="0.##" HideUpDownButtons="True"/>
-        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Z, Mode=TwoWay}" Grid.Column="2" HasDecimals="True" StringFormat="0.##" HideUpDownButtons="True"/>
+        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.X}" Grid.Column="0" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True"/>
+        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Y}" Grid.Column="1" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True"/>
+        <controls:NumericUpDown Value="{Binding ElementName=UserControl, Path=Value.Z}" Grid.Column="2" TrackMouseWheelWhenMouseOver="True" HideUpDownButtons="True"/>
     </Grid>
 </UserControl>

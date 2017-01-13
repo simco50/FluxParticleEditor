@@ -109,9 +109,7 @@
                         <Button.CommandParameter>
                             <MultiBinding Converter="{helpers:VectorToKeyValuePairConverter}">
                                 <Binding ElementName="Num_Key" Path="Value"/>
-                                <Binding ElementName="KeyframeValue" Path="Value.X"/>
-                                <Binding ElementName="KeyframeValue" Path="Value.Y"/>
-                                <Binding ElementName="KeyframeValue" Path="Value.Z"/>
+                                <Binding ElementName="KeyframeValue" Path="Value"/>
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>

@@ -45,7 +45,7 @@
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Size" Grid.Column="0"/>
-                <controls:NumericUpDown Grid.Column="1" Value="{Binding ElementName=UserControl, Path=ParticleSystem.Size.Constant}" IsEnabled="{Binding ElementName=UserControl, Path=ParticleSystem.Size.IsAnimated, Converter={helpers:InvertBoolConverter}}"/>
+                <controls:NumericUpDown Grid.Column="1" Minimum="0" Maximum="20" Interval="0.5" Value="{Binding ElementName=UserControl, Path=ParticleSystem.Size.Constant}" IsEnabled="{Binding ElementName=UserControl, Path=ParticleSystem.Size.IsAnimated, Converter={helpers:InvertBoolConverter}}" TrackMouseWheelWhenMouseOver="True"/>
                 <CheckBox Name="CheckBox_Size" IsEnabled="False" Margin="2" IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Size.IsAnimated, Mode=OneWay}" Grid.Column="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right"/>
             </Grid>
             <Grid Margin="0,2" Tag="{Binding ElementName=UserControl, Path=ParticleSystem.Velocity}">
@@ -89,7 +89,7 @@
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Transparancy" Grid.Column="0"/>
-                <controls:NumericUpDown Grid.Column="1" Interval="0.1" Minimum="0" Maximum="1" IsEnabled="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy.IsAnimated, Converter={helpers:InvertBoolConverter}, Mode=OneWay}" Value="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy.Constant}" />
+                <controls:NumericUpDown Grid.Column="1" StringFormat="0.##" Interval="0.1" Minimum="0" Maximum="1" IsEnabled="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy.IsAnimated, Converter={helpers:InvertBoolConverter}, Mode=OneWay}" Value="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy.Constant}" TrackMouseWheelWhenMouseOver="True"/>
                 <CheckBox IsEnabled="False" Margin="2" IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Transparancy.IsAnimated, Mode=OneWay}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
             <Grid Margin="0,2" Tag="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation}">
@@ -99,7 +99,7 @@
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Rotation" Grid.Column="0"/>
-                <controls:NumericUpDown Grid.Column="1" Interval="5" Minimum="-720" Maximum="720" IsEnabled="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation.IsAnimated, Converter={helpers:InvertBoolConverter}, Mode=OneWay}" Value="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation.Constant}" />
+                <controls:NumericUpDown Grid.Column="1" StringFormat="0.##" Interval="5" Minimum="-720" Maximum="720" IsEnabled="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation.IsAnimated, Converter={helpers:InvertBoolConverter}, Mode=OneWay}" Value="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation.Constant}" TrackMouseWheelWhenMouseOver="True"/>
                 <CheckBox IsEnabled="False" Margin="2" IsChecked="{Binding ElementName=UserControl, Path=ParticleSystem.Rotation.IsAnimated, Mode=OneWay}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </ListBox>
