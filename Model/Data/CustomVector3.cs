@@ -19,9 +19,41 @@ namespace ParticleEditor.Model.Data
             Z = z;
         }
 
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
+        private float _x;
+
+        public float X
+        {
+            get { return _x; }
+            set
+            {
+                _x = value;
+                RaisePropertyChanged("X");
+            }
+        }
+
+        private float _y;
+
+        public float Y
+        {
+            get { return _y; }
+            set
+            {
+                _y = value;
+                RaisePropertyChanged("Y");
+            }
+        }
+
+        private float _z;
+
+        public float Z
+        {
+            get { return _z; }
+            set
+            {
+                _z = value;
+                RaisePropertyChanged("Z");
+            }
+        }
 
         public static implicit operator CustomVector3(Vector3 other)
         {

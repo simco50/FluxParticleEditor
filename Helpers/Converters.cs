@@ -136,11 +136,12 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            float key;
+            float key, x, y, z;
             if(float.TryParse(values[0].ToString(), out key) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
-            CustomVector3 value = values[1] as CustomVector3;
-            if (value == null) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
-            return new KeyValuePair<float, Vector3>(key, value);
+            if(float.TryParse(values[1].ToString(), out x) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
+            if(float.TryParse(values[2].ToString(), out y) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
+            if (float.TryParse(values[3].ToString(), out z) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
+            return new KeyValuePair<float, Vector3>(key, new CustomVector3(x, y, z));
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
