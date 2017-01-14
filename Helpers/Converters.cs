@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
-using ParticleEditor.Model;
 using ParticleEditor.Model.Data;
 using ParticleEditor.ViewModels.ParameterTabs;
 using SharpDX;
@@ -16,6 +11,7 @@ using Color = System.Windows.Media.Color;
 
 namespace ParticleEditor.Helpers
 {
+    //Used for particle system sorting mode, shape and rendering mode
     public class EnumToInt : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -36,6 +32,8 @@ namespace ParticleEditor.Helpers
         }
     }
 
+    //Used to add a burst (In burst tab)
+    [ValueConversion(typeof(object[]), typeof(Burst))]
     public class BurstConverter : MarkupExtension, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -65,18 +63,22 @@ namespace ParticleEditor.Helpers
         }
     }
 
+    //Used for color picker in animation tab
+    [ValueConversion(typeof(CustomVector3), typeof(SolidColorBrush))]
     public class Vector3ToBrushConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             CustomVector3 v = (CustomVector3) value;
+            if(v == null) throw new Exception("[Vector3ToBrushConverter] > Conversion failed!");
             return new SolidColorBrush(Color.FromRgb((byte)(v.X * 255), (byte)(v.Y * 255), (byte)(v.Z * 255)));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Color c = ((SolidColorBrush) value).Color;
-            return new Vector3(c.R / 255.0f, c.G / 255.0f, c.B / 255.0f);
+            SolidColorBrush c = (SolidColorBrush) value;
+            if(c == null) throw new Exception("[ConvertBack] > Conversion failed!");
+            return new Vector3(c.Color.R / 255.0f, c.Color.G / 255.0f, c.Color.B / 255.0f);
         }
 
         private static Vector3ToBrushConverter _converter = null;
@@ -87,6 +89,8 @@ namespace ParticleEditor.Helpers
         }
     }
 
+    //Used to enable/disable the constant value in the animation tab
+    [ValueConversion(typeof(bool), typeof(bool))]
     public class InvertBoolConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -106,7 +110,9 @@ namespace ParticleEditor.Helpers
             return _converter;
         }
     }
-
+    
+    //Used for adding a float keyframe (FloatKeyframeView)
+    [ValueConversion(typeof(float[]), typeof(KeyValuePair<float, float>))]
     public class FloatsToKeyValuePairConverter : MarkupExtension, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -116,7 +122,7 @@ namespace ParticleEditor.Helpers
                 return new KeyValuePair<float, float>(0, 0);
             if(float.TryParse(values[1].ToString(), out value) == false)
                 return new KeyValuePair<float, float>(0, 0);
-            return new KeyValuePair<float, float>(key, value);
+            return new KeyValuePair<float, float>(ApplicationHelper.Round(key, 2), ApplicationHelper.Round(value, 2));
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -132,16 +138,19 @@ namespace ParticleEditor.Helpers
         }
     }
 
+    //Used for adding a vector3 keyframe (VectorKeyframeView)
+    [ValueConversion(typeof(float[]), typeof(KeyValuePair<float, Vector3>))]
     public class VectorToKeyValuePairConverter : MarkupExtension, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             float key, x, y, z;
-            if(float.TryParse(values[0].ToString(), out key) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
-            if(float.TryParse(values[1].ToString(), out x) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
-            if(float.TryParse(values[2].ToString(), out y) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
-            if (float.TryParse(values[3].ToString(), out z) == false) return new KeyValuePair<float, CustomVector3>(0, new CustomVector3());
-            return new KeyValuePair<float, Vector3>(key, new CustomVector3(x, y, z));
+            if(float.TryParse(values[0].ToString(), out key) == false) return new KeyValuePair<float, Vector3>(0, new Vector3());
+            if(float.TryParse(values[1].ToString(), out x) == false) return new KeyValuePair<float, Vector3>(0, new Vector3());
+            if(float.TryParse(values[2].ToString(), out y) == false) return new KeyValuePair<float, Vector3>(0, new Vector3());
+            if (float.TryParse(values[3].ToString(), out z) == false) return new KeyValuePair<float, Vector3>(0, new Vector3());
+            return new KeyValuePair<float, Vector3>(ApplicationHelper.Round(key, 2),
+                new Vector3(ApplicationHelper.Round(x, 2), ApplicationHelper.Round(y, 2), ApplicationHelper.Round(z, 2)));
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -160,27 +169,25 @@ namespace ParticleEditor.Helpers
         }
     }
 
-    public class FloatsToVector3Converter : MarkupExtension, IMultiValueConverter
+    public class NumericValueToFloat : MarkupExtension, IValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            float x, y, z;
-            if (float.TryParse(values[0].ToString(), out x) == false) return new CustomVector3();
-            if (float.TryParse(values[1].ToString(), out y) == false) return new CustomVector3();
-            if (float.TryParse(values[2].ToString(), out z) == false) return new CustomVector3();
-            return new CustomVector3(x, y, z);
+            double? v = value as double?;
+            if (v != null)
+                return v.Value;
+            return 0;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Vector3 v = (Vector3) value;
-            return new object[] {v.X, v.Y, v.Z};
+            return (double)value;
         }
 
-        private static FloatsToVector3Converter _converter = null;
+        private static NumericValueToFloat _converter = null;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (_converter == null) _converter = new FloatsToVector3Converter();
+            if (_converter == null) _converter = new NumericValueToFloat();
             return _converter;
         }
     }

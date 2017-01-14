@@ -20,7 +20,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush2}">
-                    <Label Content="ACTIONS" Foreground="White" FontWeight="Bold" FontFamily="Segoe UI Semilight" VerticalContentAlignment="Center"/>
+                    <Label Name="Label_Name" Foreground="White" FontWeight="Bold" FontFamily="Segoe UI Semilight" VerticalContentAlignment="Center"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid>
@@ -36,7 +36,7 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
-                            <controls:NumericUpDown Name="ConstantValue" StringFormat="#.##" Height="25" Grid.Column="0" Value="{Binding Value.Constant}" Minimum="-50" Maximum="50" Interval="0.2" TrackMouseWheelWhenMouseOver="True"/>
+                            <controls:NumericUpDown Name="ConstantValue" StringFormat="0.##" Height="25" Grid.Column="0" Value="{Binding Value.Constant}" Minimum="-50" Maximum="50" Interval="0.2" TrackMouseWheelWhenMouseOver="True"/>
                             <Button Height="25" Content="Set constant" Command="{Binding SetConstantCommand}" CommandParameter="{Binding ElementName=ConstantValue, Path=Value}"/>
                             <Button Height="25" Content="Clear all" Command="{Binding ClearAllCommand}"/>
                         </StackPanel>

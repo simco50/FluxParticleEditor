@@ -9,12 +9,13 @@ namespace ParticleEditor.Views.AnimationControls
     /// </summary>
     public partial class FloatKeyframeView : UserControl
     {
-        public FloatKeyframeView(KeyFramedValueFloat value)
+        public FloatKeyframeView(KeyFramedValueFloat value, string name = "")
         {
             InitializeComponent();
             FloatKeyframeViewModel vm = new FloatKeyframeViewModel();
             vm.Value = value;
             Grid.DataContext = vm;
+            Label_Name.Content = $"{name.ToUpper()} (float)";
         }
     }
 }

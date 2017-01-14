@@ -134,8 +134,7 @@ namespace ParticleEditor.Model.Graphics.Particles
                     {
                         float d1 = Vector3.DistanceSquared(_context.Camera.Position, a.VertexInfo.Position);
                         float d2 = Vector3.DistanceSquared(_context.Camera.Position, b.VertexInfo.Position);
-                        if (d1 == d2) return 0;
-                        return d1 < d2 ? 1 : -1;
+                        return d2.CompareTo(d1);
                     });
                     break;
                 case ParticleSortingMode.BackToFront:
@@ -143,23 +142,14 @@ namespace ParticleEditor.Model.Graphics.Particles
                     {
                         float d1 = Vector3.DistanceSquared(_context.Camera.Position, a.VertexInfo.Position);
                         float d2 = Vector3.DistanceSquared(_context.Camera.Position, b.VertexInfo.Position);
-                        if (d1 == d2) return 0;
-                        return d1 > d2 ? 1 : -1;
+                        return d1.CompareTo(d2);
                     });
                     break;
                 case ParticleSortingMode.OldestFirst:
-                    _particles.Sort((Particle a, Particle b) =>
-                    {
-                        if (a.Lifetime == b.Lifetime) return 0;
-                        return a.Lifetime > b.Lifetime ? 1 : -1;
-                    });
+                    _particles.Sort((Particle a, Particle b) => a.Lifetime.CompareTo(b.Lifetime));
                     break;
                 case ParticleSortingMode.YoungestFirst:
-                    _particles.Sort((Particle a, Particle b) =>
-                    {
-                        if (a.Lifetime == b.Lifetime) return 0;
-                        return a.Lifetime < b.Lifetime ? 1 : -1;
-                    });
+                    _particles.Sort((Particle a, Particle b) => b.Lifetime.CompareTo(a.Lifetime));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

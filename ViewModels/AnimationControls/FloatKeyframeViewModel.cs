@@ -8,8 +8,6 @@ namespace ParticleEditor.ViewModels.AnimationControls
 {
     class FloatKeyframeViewModel : ViewModelBase
     {
-        public FloatKeyframeViewModel() {}
-
         public KeyFramedValueFloat Value { get; set; }
 
         public RelayCommand<KeyValuePair<float, float>> AddKeyframeCommand => new RelayCommand<KeyValuePair<float, float>>(AddKeyframe);
@@ -21,6 +19,7 @@ namespace ParticleEditor.ViewModels.AnimationControls
         public RelayCommand ClearAllCommand => new RelayCommand(ClearAll);
         private void ClearAll()
         {
+            DebugLog.Log("Cleared animation property", "Animation");
             Value.SetConstant(Value.Constant);
         }
 

@@ -34,10 +34,22 @@ namespace ParticleEditor.ViewModels.ParameterTabs
             ParticleSystem.RaisePropertyChanged("Color");
         }
 
+        public class KeyframeElement
+        {
+            public KeyframeElement(string n, object d)
+            {
+                Name = n;
+                Data = d;
+            }
+            public string Name;
+            public object Data;
+        }
+
         public RelayCommand<FrameworkElement> OnSelectionChangedCommand => new RelayCommand<FrameworkElement>(OnSelectionChanged);
         private void OnSelectionChanged(FrameworkElement selectedItem)
         {
-            Messenger.Default.Send<MessageData, TimelineViewModel>(new MessageData(MessageID.KeyframeSelected, selectedItem.Tag));
+            Messenger.Default.Send<MessageData, TimelineViewModel>(new MessageData(MessageID.KeyframeSelected,
+                new KeyframeElement(selectedItem.Name, selectedItem.Tag)));
         }
     }
 }

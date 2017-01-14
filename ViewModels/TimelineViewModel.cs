@@ -6,7 +6,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
+using ParticleEditor.ViewModels.ParameterTabs;
 using ParticleEditor.Views.AnimationControls;
+using KeyframeElement = ParticleEditor.ViewModels.ParameterTabs.AnimationTabViewModel.KeyframeElement;
 
 namespace ParticleEditor.ViewModels
 {
@@ -27,17 +29,29 @@ namespace ParticleEditor.ViewModels
         {
             if (data.Id == MessageID.KeyframeSelected)
             {
-                Type t = data.Data.GetType();
+                KeyframeElement element = data.Data as KeyframeElement;
+                if (element == null)
+                {
+                    DebugLog.Log("Data received is not of type 'KeyframeElement!'", "Animation", LogSeverity.Error);
+                    return;
+                }
+                Type t = element.Data.GetType();
                 if (t == typeof(KeyFramedValueFloat))
                 {
                     _timelineGrid.Children.Clear();
-                    _timelineGrid.Children.Add(new FloatKeyframeView(data.Data as KeyFramedValueFloat));
+                    FloatKeyframeView kfv = new FloatKeyframeView(element.Data as KeyFramedValueFloat, element.Name);
+                    _timelineGrid.Children.Add(kfv);
                 }
                 else if (t == typeof(KeyFramedValueVector3))
                 {
                     _timelineGrid.Children.Clear();
-                    _timelineGrid.Children.Add(new VectorKeyframeView(data.Data as KeyFramedValueVector3));
+                    VectorKeyframeView kfv = new VectorKeyframeView(element.Data as KeyFramedValueVector3, element.Name);
+                    _timelineGrid.Children.Add(kfv);
                 }
+                else
+                    DebugLog.Log(
+                        $"Invalid keyframe type '{t.Name}'. Type must be either 'KeyFramedValueFloat' or 'KeyFramedValueVector3'",
+                        "Animation", LogSeverity.Error);
             }
             else if(data.Id == MessageID.ParticleSystemChanged)
             {

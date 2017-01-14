@@ -21,6 +21,7 @@ namespace ParticleEditor.ViewModels.AnimationControls
         public RelayCommand ClearAllCommand => new RelayCommand(ClearAll);
         private void ClearAll()
         {
+            DebugLog.Log("Cleared animation property", "Animation");
             Value.SetConstant(Value.Constant);
         }
 
