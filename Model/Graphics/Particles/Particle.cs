@@ -21,11 +21,6 @@ namespace ParticleEditor.Model.Graphics.Particles
 
         private static Random _random = new Random();
 
-        public Particle()
-        {
-
-        }
-
         public void Initialize()
         {
             Active = true;

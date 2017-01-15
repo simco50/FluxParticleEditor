@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -48,7 +47,7 @@ namespace ParticleEditor.ViewModels.ParameterTabs
         public RelayCommand<FrameworkElement> OnSelectionChangedCommand => new RelayCommand<FrameworkElement>(OnSelectionChanged);
         private void OnSelectionChanged(FrameworkElement selectedItem)
         {
-            Messenger.Default.Send<MessageData, TimelineViewModel>(new MessageData(MessageID.KeyframeSelected,
+            Messenger.Default.Send<MessageData, TimelineViewModel>(new MessageData(MessageId.KeyframeSelected,
                 new KeyframeElement(selectedItem.Name, selectedItem.Tag)));
         }
     }

@@ -16,15 +16,17 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (int) value;
+            if (value != null) return (int) value;
+            throw new Exception("[EnumToInt::Convert] > Conversion failed!");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Enum.ToObject(targetType, value);
+            if (value != null) return Enum.ToObject(targetType, value);
+            throw new Exception("[EnumToInt::ConvertBack] > Conversion failed!");
         }
 
-        private static EnumToInt _converter = null;
+        private static EnumToInt _converter;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new EnumToInt();
@@ -55,7 +57,7 @@ namespace ParticleEditor.Helpers
             return values;
         }
 
-        private static BurstConverter _converter = null;
+        private static BurstConverter _converter;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new BurstConverter();
@@ -81,7 +83,7 @@ namespace ParticleEditor.Helpers
             return new Vector3(c.Color.R / 255.0f, c.Color.G / 255.0f, c.Color.B / 255.0f);
         }
 
-        private static Vector3ToBrushConverter _converter = null;
+        private static Vector3ToBrushConverter _converter;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new Vector3ToBrushConverter();
@@ -95,15 +97,15 @@ namespace ParticleEditor.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool) value;
+            return value != null && !(bool) value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool) value;
+            return value != null && !(bool) value;
         }
 
-        private static InvertBoolConverter _converter = null;
+        private static InvertBoolConverter _converter;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new InvertBoolConverter();
@@ -130,7 +132,7 @@ namespace ParticleEditor.Helpers
             return new object[] {((KeyValuePair<float, float>) value).Key, ((KeyValuePair<float, float>) value).Value};
         }
 
-        private static FloatsToKeyValuePairConverter _converter = null;
+        private static FloatsToKeyValuePairConverter _converter;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new FloatsToKeyValuePairConverter();
@@ -161,7 +163,7 @@ namespace ParticleEditor.Helpers
             };
         }
 
-        private static VectorToKeyValuePairConverter _converter = null;
+        private static VectorToKeyValuePairConverter _converter;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new VectorToKeyValuePairConverter();
@@ -181,10 +183,11 @@ namespace ParticleEditor.Helpers
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)value;
+            if (value != null) return (double)value;
+            throw new Exception("[NumericValueToFloat::ConvertBack] Conversion failed!");
         }
 
-        private static NumericValueToFloat _converter = null;
+        private static NumericValueToFloat _converter;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null) _converter = new NumericValueToFloat();

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ParticleEditor.Helpers.UndoRedo
+﻿namespace ParticleEditor.Helpers.UndoRedo
 {
     public interface IUndoRedo
     {

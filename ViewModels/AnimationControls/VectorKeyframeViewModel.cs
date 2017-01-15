@@ -8,8 +8,6 @@ namespace ParticleEditor.ViewModels.AnimationControls
 {
     class VectorKeyframeViewModel
     {
-        public VectorKeyframeViewModel() { }
-
         public KeyFramedValueVector3 Value { get; set; }
 
         public RelayCommand<KeyValuePair<float, Vector3>> AddKeyframeCommand => new RelayCommand<KeyValuePair<float, Vector3>>(AddKeyframe);

@@ -23,7 +23,9 @@ namespace ParticleEditor.Views.ParameterTabs
 
         private static void OnParticleSystemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            (d as AnimationTabView)._vm.ParticleSystem = args.NewValue as ParticleSystem;
+            AnimationTabView view = d as AnimationTabView;
+            if(view != null)
+                view._vm.ParticleSystem = args.NewValue as ParticleSystem;
         }
 
         public ParticleSystem ParticleSystem

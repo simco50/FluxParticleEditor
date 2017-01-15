@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace ParticleEditor.Helpers.UndoRedo
 {
     public class UndoableProperty<T> : IUndoRedo

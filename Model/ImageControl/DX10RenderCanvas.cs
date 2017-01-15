@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using SharpDX;
 using SharpDX.Direct3D10;

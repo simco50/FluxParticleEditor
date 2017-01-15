@@ -1,5 +1,4 @@
-﻿using System;
-using SharpDX.Direct3D10;
+﻿using SharpDX.Direct3D10;
 using Device = SharpDX.Direct3D10.Device1;
 
 namespace ParticleEditor.Model.ImageControl

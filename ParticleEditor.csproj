@@ -154,8 +154,6 @@
     <Compile Include="Model\Graphics\OrbitCamera.cs" />
     <Compile Include="Model\Graphics\Particles\ParticleViewport.cs" />
     <Compile Include="Model\ImageControl\IDX10Viewport.cs" />
-    <Compile Include="Model\Graphics\Interfaces\IEffect.cs" />
-    <Compile Include="Model\Graphics\Interfaces\IModel.cs" />
     <Compile Include="Model\Graphics\Particles\Particle.cs" />
     <Compile Include="Model\Graphics\Particles\ParticleEmitter.cs" />
     <Compile Include="Helpers\ApplicationHelper.cs" />

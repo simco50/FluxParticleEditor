@@ -95,8 +95,6 @@ namespace ParticleEditor.Model.Graphics.Particles
 
             _bufferSize = _particleSystem.MaxParticles;
 
-            ResetBurstEnumerator();
-
             if (_particleSystem.PlayOnAwake)
                 _playing = true;
 
@@ -105,6 +103,8 @@ namespace ParticleEditor.Model.Graphics.Particles
 
             //Recreate buffer
             CreateBuffer();
+
+            Reset();
 
             DebugLog.Log("Changed particle system", "Particle Emitter");
         }

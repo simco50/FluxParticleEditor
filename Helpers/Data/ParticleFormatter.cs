@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ParticleEditor.Model.Data;
 
@@ -11,6 +7,8 @@ namespace ParticleEditor.Helpers.Data
 {
     public static class ParticleFormatter
     {
+        private static int VERSION = 2;
+
         private static string _currentLocation = "";
 
         public static bool SaveAs(ParticleSystem particleSystem)
@@ -69,6 +67,9 @@ namespace ParticleEditor.Helpers.Data
                 DebugLog.Log($"Import from {dialog.FileName}...", "Json import");
                 string data = File.ReadAllText(dialog.FileName);
                 ParticleSystem particleSystem = JsonConvert.DeserializeObject<ParticleSystem>(data);
+                if (particleSystem.Version != VERSION)
+                    throw new Exception($"Version mismatch! Expection version {VERSION} but system is of version {particleSystem.Version}");
+  
                 DebugLog.Log("Import successful");
                 _currentLocation = dialog.FileName;
                 return particleSystem;

@@ -2,17 +2,17 @@
 {
     public struct MessageData
     {
-        public MessageData(MessageID id, object data = null)
+        public MessageData(MessageId id, object data = null)
         {
             Id = id;
             Data = data;
         }
 
         public object Data;
-        public MessageID Id;
+        public MessageId Id;
     }
 
-    public enum MessageID
+    public enum MessageId
     {
         ParticleSystemChanged,
         ImageChanged,

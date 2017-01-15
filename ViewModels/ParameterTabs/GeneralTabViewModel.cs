@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using ParticleEditor.Model.Data;
 

@@ -1,5 +1,5 @@
-﻿using DrWPF.Windows.Data;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
+using ParticleEditor.Helpers.ObservableDictionary;
 using ParticleEditor.Model.Data;
 using ParticleEditor.ViewModels;
 using ParticleEditor.ViewModels.ParameterTabs;
@@ -22,7 +22,7 @@ namespace ParticleEditor.Helpers.UndoRedo
         {
             var list = (ObservableSortedDictionary<float, int>)instance.GetType().GetProperty("Bursts").GetValue(instance);
             list.Remove(burst.Time);
-            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.BurstChanged));
         }
 
         public void Redo()
@@ -30,7 +30,7 @@ namespace ParticleEditor.Helpers.UndoRedo
             var list = (ObservableSortedDictionary<float, int>)instance.GetType().GetProperty("Bursts").GetValue(instance);
             list[burst.Time] = burst.Amount;
             UndoManager.Instance.Add(new BurstAddCommand(instance, burst));
-            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.BurstChanged));
         }
     }
 
@@ -50,7 +50,7 @@ namespace ParticleEditor.Helpers.UndoRedo
         {
             var list = (ObservableSortedDictionary<float, int>)instance.GetType().GetProperty("Bursts").GetValue(instance);
             list[burst.Time] = burst.Amount;
-            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.BurstChanged));
         }
 
         public void Redo()
@@ -58,7 +58,7 @@ namespace ParticleEditor.Helpers.UndoRedo
             var list = (ObservableSortedDictionary<float, int>)instance.GetType().GetProperty("Bursts").GetValue(instance);
             list.Remove(burst.Time);
             UndoManager.Instance.Add(new BurstRemoveCommand(instance, burst));
-            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.BurstChanged));
         }
     }
 }

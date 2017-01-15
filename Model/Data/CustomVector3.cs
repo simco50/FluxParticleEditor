@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using Newtonsoft.Json;
-using ParticleEditor.Annotations;
+﻿using GalaSoft.MvvmLight;
 using SharpDX;
 
 namespace ParticleEditor.Model.Data

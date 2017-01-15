@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using DrWPF.Windows.Data;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
-
-using FloatEnumerator = DrWPF.Windows.Data.ObservableSortedDictionary<float, float>.Enumerator<float, float>;
-using VectorEnumerator = DrWPF.Windows.Data.ObservableSortedDictionary<float, ParticleEditor.Model.Data.CustomVector3>.Enumerator<float, ParticleEditor.Model.Data.CustomVector3>;
+using ParticleEditor.Helpers.ObservableDictionary;
+using FloatEnumerator = ParticleEditor.Helpers.ObservableDictionary.ObservableSortedDictionary<float, float>.Enumerator<float, float>;
+using VectorEnumerator = ParticleEditor.Helpers.ObservableDictionary.ObservableSortedDictionary<float, ParticleEditor.Model.Data.CustomVector3>.Enumerator<float, ParticleEditor.Model.Data.CustomVector3>;
 
 namespace ParticleEditor.Model.Data
 {

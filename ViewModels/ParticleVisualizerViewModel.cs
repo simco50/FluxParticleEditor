@@ -27,16 +27,16 @@ namespace ParticleEditor.ViewModels
         {
             switch (message.Id)
             {
-                case MessageID.ParticleSystemChanged:
+                case MessageId.ParticleSystemChanged:
                     Viewport.ParticleEmitter?.OnParticleSystemChanged();
                     break;
-                case MessageID.ImageChanged:
+                case MessageId.ImageChanged:
                     Viewport.ParticleEmitter?.OnImageChanged();
                     break;
-                case MessageID.BurstChanged:
+                case MessageId.BurstChanged:
                     Viewport.ParticleEmitter?.Reset();
                     break;
-                case MessageID.ColorChanged:
+                case MessageId.ColorChanged:
                     Viewport.GraphicsContext.RenderControl.ClearColor = (Color)message.Data;
                     break;
                 default:

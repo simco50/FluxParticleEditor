@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using ParticleEditor.Model.Data;
-using ParticleEditor.ViewModels;
-using SharpDX;
+﻿using System.Windows.Controls;
 
 namespace ParticleEditor.Views
 {

@@ -24,6 +24,7 @@ namespace ParticleEditor.Model.ImageControl
                 }
                 catch
                 {
+                    
                 }
             }
 

@@ -29,12 +29,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Runtime.Serialization;
 
-namespace DrWPF.Windows.Data
+namespace ParticleEditor.Helpers.ObservableDictionary
 {
     public class KeyComparer : IComparer<DictionaryEntry>
     {

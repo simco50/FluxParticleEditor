@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ParticleEditor.Views"
-             xmlns:viewModels="clr-namespace:ParticleEditor.ViewModels"
-             xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MahApps.Metro" x:Class="ParticleEditor.Views.TimelineView"
+             x:Class="ParticleEditor.Views.TimelineView"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600" x:Name="UserControl">
     <Grid x:Name="Root">

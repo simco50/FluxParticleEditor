@@ -23,7 +23,9 @@ namespace ParticleEditor.Views.ParameterTabs
 
         private static void OnParticleSystemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            (d as BurstTabView)._vm.ParticleSystem = args.NewValue as ParticleSystem;
+            BurstTabView view = d as BurstTabView;
+            if(view != null)
+                view._vm.ParticleSystem = args.NewValue as ParticleSystem;
         }
 
         public ParticleSystem ParticleSystem

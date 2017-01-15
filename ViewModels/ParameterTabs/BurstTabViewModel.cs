@@ -39,7 +39,7 @@ namespace ParticleEditor.ViewModels.ParameterTabs
 
             ParticleSystem.Bursts[burst.Time] = burst.Amount;
 
-            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.BurstChanged));
         }
 
         public RelayCommand<float> RemoveBurstCommand => new RelayCommand<float>(RemoveBurst);
@@ -50,7 +50,7 @@ namespace ParticleEditor.ViewModels.ParameterTabs
             if (ParticleSystem.Bursts.Remove(key) == false)
                 DebugLog.Log($"Key with value {key} does not exists!", "Particle System", LogSeverity.Warning);
 
-            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.BurstChanged));
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.BurstChanged));
         }
     }
 }

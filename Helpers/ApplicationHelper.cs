@@ -4,7 +4,7 @@ using System;
 
 namespace ParticleEditor.Helpers
 {
-    class ApplicationHelper
+    public static class ApplicationHelper
     {
         public static bool IsDesignMode
     => (bool)(DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue);

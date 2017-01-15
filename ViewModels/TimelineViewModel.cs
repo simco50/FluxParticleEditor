@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using ParticleEditor.Helpers;
 using ParticleEditor.Model.Data;
-using ParticleEditor.ViewModels.ParameterTabs;
 using ParticleEditor.Views.AnimationControls;
 using KeyframeElement = ParticleEditor.ViewModels.ParameterTabs.AnimationTabViewModel.KeyframeElement;
 
@@ -27,7 +25,7 @@ namespace ParticleEditor.ViewModels
 
         private void OnMessageReceived(MessageData data)
         {
-            if (data.Id == MessageID.KeyframeSelected)
+            if (data.Id == MessageId.KeyframeSelected)
             {
                 KeyframeElement element = data.Data as KeyframeElement;
                 if (element == null)
@@ -53,7 +51,7 @@ namespace ParticleEditor.ViewModels
                         $"Invalid keyframe type '{t.Name}'. Type must be either 'KeyFramedValueFloat' or 'KeyFramedValueVector3'",
                         "Animation", LogSeverity.Error);
             }
-            else if(data.Id == MessageID.ParticleSystemChanged)
+            else if(data.Id == MessageId.ParticleSystemChanged)
             {
                 SetInfoText();
             }

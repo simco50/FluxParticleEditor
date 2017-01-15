@@ -70,7 +70,7 @@ namespace ParticleEditor.ViewModels
             {
                 _particleSystem = value;
                 SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
-                Messenger.Default.Send(new MessageData(MessageID.ParticleSystemChanged));
+                Messenger.Default.Send(new MessageData(MessageId.ParticleSystemChanged));
                 RaisePropertyChanged("ParticleSystem");
             }
         }
@@ -98,7 +98,7 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _backgroundColor = value;
-                Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.ColorChanged, SharpDX.Color.FromBgra(Int32.Parse(_backgroundColor.ToString().Substring(1), System.Globalization.NumberStyles.HexNumber))));
+                Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.ColorChanged, SharpDX.Color.FromBgra(Int32.Parse(_backgroundColor.ToString().Substring(1), System.Globalization.NumberStyles.HexNumber))));
                 RaisePropertyChanged("BackgroundColor");
             }
         }
@@ -137,7 +137,7 @@ namespace ParticleEditor.ViewModels
                 return;
             ParticleSystem.ImagePath = dialog.FileName;
             SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
-            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageID.ImageChanged));
+            Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.ImageChanged));
         }
 
         public RelayCommand ShutdownCommand => new RelayCommand(Shutdown);

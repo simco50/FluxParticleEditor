@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using DrWPF.Windows.Data;
+﻿using System.ComponentModel;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
+using ParticleEditor.Helpers.ObservableDictionary;
 using ParticleEditor.Helpers.UndoRedo;
 using SharpDX;
 
 namespace ParticleEditor.Model.Data
 {
+
     public enum ParticleSortingMode
     {
         [Description("Front to back")]
@@ -30,10 +30,6 @@ namespace ParticleEditor.Model.Data
 
     public class ParticleSystem : ObservableObject
     {
-        public ParticleSystem()
-        {
-        }
-
         [JsonProperty("Version")]
         public int Version = 2;
 
@@ -44,10 +40,10 @@ namespace ParticleEditor.Model.Data
         private int _emission = 20;
         private bool _loop = true;
         private float _lifetime = 1.0f;
-        private float _lifetimeVariance = 0.0f;
+        private float _lifetimeVariance;
         private float _startVelocity = 1.0f;
-        private float _startVelocityVariance = 0.0f;
-        private float _startSizeVariance = 0.0f;
+        private float _startVelocityVariance;
+        private float _startSizeVariance;
         private bool _randomStartRotation = false;
         private bool _playOnAwake = true;
         private ParticleSortingMode _sortingMode = ParticleSortingMode.FrontToBack;
