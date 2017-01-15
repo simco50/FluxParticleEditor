@@ -194,4 +194,29 @@ namespace ParticleEditor.Helpers
             return _converter;
         }
     }
+
+    //Used for setting the backgroundcolor of an animated property depending on if its animated
+    [ValueConversion(typeof(bool), typeof(SolidColorBrush))]
+    public class BoolToSolidColorBrush : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool v = (bool)value;
+            return v
+                ? new SolidColorBrush(Color.FromArgb(80, 255, 0, 0))
+                : null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static BoolToSolidColorBrush _converter;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null) _converter = new BoolToSolidColorBrush();
+            return _converter;
+        }
+    }
 }
