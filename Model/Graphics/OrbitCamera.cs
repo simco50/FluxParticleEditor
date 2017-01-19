@@ -32,7 +32,7 @@ namespace ParticleEditor.Model.Graphics
         public Matrix ViewProjectionMatrix { get; set; }
         private Matrix _rotationInverseMatrix;
 
-        public Vector3 Position { get { return ViewMatrix.TranslationVector; } }
+        public Vector3 Position { get { return ViewInverseMatrix.TranslationVector; } }
         private Vector3 _offset;
 
         private DX10RenderCanvas _canvasControl;
