@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:helpers="clr-namespace:ParticleEditor.Helpers"
              xmlns:parameterTabs="clr-namespace:ParticleEditor.ViewModels.ParameterTabs"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              x:Class="ParticleEditor.Views.ParameterTabs.BurstTabView"
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" x:Name="UserControl">
     <Grid Name="Root">
@@ -60,13 +61,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="Text_Key" Text="0" Grid.Column="0" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="Text_Value" Text="0" Grid.Column="1" VerticalContentAlignment="Center"/>
+            <controls:NumericUpDown x:Name="Numeric_Key" Value="0" Grid.Column="0" Minimum="0" Maximum="{Binding ElementName=UserControl, Path=ParticleSystem.Duration}" Interval="0.1" StringFormat="0.##" HasDecimals="True" TrackMouseWheelWhenMouseOver="True"/>
+            <controls:NumericUpDown x:Name="Numeric_Value" Value="0" Grid.Column="1" Minimum="0" Maximum="{Binding ElementName=UserControl, Path=ParticleSystem.MaxParticles}" Interval="1" TrackMouseWheelWhenMouseOver="True"/>
             <Button FontSize="16" Content="+" Command="{Binding AddBurstCommand}" Grid.Column="2" ToolTip="Add burst">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{helpers:BurstConverter}">
-                        <Binding ElementName="Text_Key" Path="Text"/>
-                        <Binding ElementName="Text_Value" Path="Text"/>
+                        <Binding ElementName="Numeric_Key" Path="Value"/>
+                        <Binding ElementName="Numeric_Value" Path="Value"/>
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>

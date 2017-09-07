@@ -288,7 +288,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ErrorTexture.jpg" />
+    <None Include="Resources\ErrorTexture.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Logo.png" />

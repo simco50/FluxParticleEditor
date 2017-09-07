@@ -69,7 +69,9 @@ namespace ParticleEditor.ViewModels
             set
             {
                 _particleSystem = value;
-                SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
+                string imagePath;
+                SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath, out imagePath);
+                ParticleSystem.ImagePath = imagePath;
                 Messenger.Default.Send(new MessageData(MessageId.ParticleSystemChanged));
                 RaisePropertyChanged("ParticleSystem");
             }
@@ -135,8 +137,9 @@ namespace ParticleEditor.ViewModels
             bool? success = dialog.ShowDialog();
             if (success == false)
                 return;
-            ParticleSystem.ImagePath = dialog.FileName;
-            SpriteImage = ImageLoader.ToImageSource(_particleSystem.ImagePath);
+            string filePath;
+            SpriteImage = ImageLoader.ToImageSource(dialog.FileName, out filePath);
+            ParticleSystem.ImagePath = filePath;
             Messenger.Default.Send<MessageData, ParticleVisualizerViewModel>(new MessageData(MessageId.ImageChanged));
         }
 

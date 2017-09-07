@@ -41,10 +41,10 @@ namespace ParticleEditor.Helpers
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             Burst b = new Burst();
-            if (float.TryParse(values[0].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out b.Time) ==
+            if (float.TryParse(values[0].ToString(), out b.Time) ==
                 false)
                 return new Burst();
-            if (int.TryParse(values[1].ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out b.Amount) ==
+            if (int.TryParse(values[1].ToString(), out b.Amount) ==
                 false)
                 return new Burst();
             return b;
